@@ -16,21 +16,25 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-content">
-                <img src="headshot.jpg" alt="William T. Christie" class="profile-photo">
-                <h1 class="name">William T. Christie</h1>
-                <p class="tagline">Finance & Business Consulting</p>
-
-                <p class="bio">Hey! I'm a finance student at the University of Miami who loves tackling complex problems and helping businesses run smarter. When I'm not crunching numbers or building pitch decks, you'll find me volunteering in my community or exploring Miami's food scene. Always happy to connect!</p>
+                <div class="sidebar-header">
+                    <img src="headshot.jpg" alt="William T. Christie" class="profile-photo">
+                    <div class="name-row">
+                        <h1 class="name">William T. Christie</h1>
+                        <button class="palette-toggle" onclick="togglePalette()"></button>
+                    </div>
+                </div>
+                <p class="tagline">Developer · Finance & Business Consulting</p>
 
                 <nav class="nav">
                     <a href="#experience">Experience</a>
+                    <a href="#projects">Projects</a>
                     <a href="#education">Education</a>
                     <a href="#involvement">Involvement</a>
                 </nav>
 
                 <div class="contact">
                     <h4>Contact</h4>
-                    <a href="mailto:Wtc23@miami.edu">Wtc23@miami.edu</a>
+                    <a href="mailto:Christie.William@icloud.com">Christie.William@icloud.com</a>
                     <a href="tel:+13054982171">305-498-2171</a>
                     <a href="https://www.linkedin.com/in/christie-william" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                     <a href="William_Christie_Resume.docx" download="William_Christie_Resume.docx">Download CV</a>
@@ -42,6 +46,18 @@
 
         <!-- Main Content -->
         <main class="main">
+            <div class="main-inner">
+            <!-- Welcome Section -->
+            <section class="welcome">
+                <h1 class="welcome-heading">Hey, I'm William!</h1>
+                <p class="welcome-text">I'm a finance student at the University of Miami who loves tackling complex problems and building things that help businesses run smarter. When I'm not crunching numbers, writing code, or building pitch decks, you'll find me volunteering in my community or exploring Miami's food scene.</p>
+                <p class="welcome-subtext">Always learning. Always building. Always happy to connect!</p>
+                <div class="welcome-buttons">
+                    <a href="#experience" class="btn">About Me</a>
+                    <a href="mailto:Christie.William@icloud.com" class="btn btn-outline">Get in Touch</a>
+                </div>
+            </section>
+
             <!-- Experience Section -->
             <section id="experience" class="section">
                 <h2>Experience</h2>
@@ -99,6 +115,35 @@
                 </article>
             </section>
 
+            <!-- Projects Section -->
+            <section id="projects" class="section">
+                <h2>Projects</h2>
+                <p class="section-subtitle">Things I've built</p>
+
+                <div class="project-grid">
+                    <article class="project-card">
+                        <h3>Meeting Cost Calculator</h3>
+                        <p>Real-time calculator that shows how much money is being burned while people argue about the font on slide 7. Enter attendee salaries, watch the dollar counter climb.</p>
+                        <span class="tech">JavaScript · Existential Dread</span>
+                    </article>
+                    <article class="project-card">
+                        <h3>Miami Food Roulette</h3>
+                        <p>Can't decide where to eat? Spin the wheel and let fate (and a random number generator) pick your next meal in Miami. No take-backs.</p>
+                        <span class="tech">React · Google Places API</span>
+                    </article>
+                    <article class="project-card">
+                        <h3>Buzzword Bingo</h3>
+                        <p>Paste any earnings call transcript and watch it highlight every instance of "synergy," "leverage," and "going forward." High scores are not a good sign.</p>
+                        <span class="tech">Python · NLP · Corporate Therapy</span>
+                    </article>
+                    <article class="project-card">
+                        <h3>This Website</h3>
+                        <p>You're looking at it. Features a palette switcher because I couldn't pick just one color scheme.</p>
+                        <span class="tech">HTML · CSS · Indecision</span>
+                    </article>
+                </div>
+            </section>
+
             <!-- Education Section -->
             <section id="education" class="section">
                 <h2>Education</h2>
@@ -149,6 +194,7 @@
             <footer class="footer">
                 <p>&copy; 2025 William T. Christie</p>
             </footer>
+            </div>
         </main>
     </div>
 
