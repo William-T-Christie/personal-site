@@ -18,6 +18,20 @@
     --sidebar-width: 300px;
 }
 
+/* Hacker Mode Variables */
+body.hacker-mode {
+    --color-bg: #0a0a0f;
+    --color-text: #00ffff;
+    --color-text-secondary: #00cccc;
+    --color-text-muted: #008888;
+    --color-border: #1a1a2e;
+    --color-accent: #ff00ff;
+    --color-neon-green: #39ff14;
+    --color-neon-pink: #ff00ff;
+    --color-neon-cyan: #00ffff;
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+}
+
 /* Reset */
 *, *::before, *::after {
     box-sizing: border-box;
@@ -99,18 +113,31 @@ body {
     gap: 10px;
 }
 
+.photo-wrapper {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
 .profile-photo {
-    width: 90px;
-    height: 90px;
+    display: block;
+    width: 140px;
+    height: 140px;
     border-radius: 50%;
     object-fit: cover;
-    flex-shrink: 0;
+}
+
+.cyber-avatar {
+    display: none;
 }
 
 .name {
     font-family: var(--font-heading);
     font-size: 18px;
     font-weight: 700;
+    white-space: nowrap;
     letter-spacing: -0.3px;
     margin: 0;
     color: var(--color-text);
@@ -247,13 +274,14 @@ body {
     margin-bottom: 24px;
     line-height: 1.1;
     color: var(--color-text);
+    width: 100%;
 }
 
 .welcome-text {
     font-size: 18px;
     line-height: 1.7;
     color: var(--color-text-secondary);
-    max-width: 600px;
+    width: 100%;
     margin-bottom: 16px;
 }
 
@@ -381,6 +409,17 @@ h2 {
 .project-card .tech {
     font-size: 13px;
     color: var(--color-text-muted);
+}
+
+/* Project Link Wrapper */
+.project-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.project-link .project-card {
+    cursor: pointer;
 }
 
 /* Entry (Experience, Education, etc.) */
@@ -574,4 +613,432 @@ a:focus-visible {
 /* Selection */
 ::selection {
     background-color: rgba(99, 102, 241, 0.2);
+}
+
+/* ============================================
+   HACKER MODE STYLES
+   ============================================ */
+
+/* Grid Background */
+body.hacker-mode {
+    background: var(--color-bg);
+}
+
+body.hacker-mode .layout {
+    background:
+        linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+        var(--color-bg);
+    background-size: 50px 50px;
+}
+
+/* Scanline Overlay */
+body.hacker-mode::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.1) 0px,
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 3px
+    );
+    z-index: 9999;
+}
+
+/* Hacker Mode Typography */
+body.hacker-mode {
+    font-family: var(--font-mono);
+}
+
+body.hacker-mode .name,
+body.hacker-mode h1,
+body.hacker-mode h2,
+body.hacker-mode h3,
+body.hacker-mode h4 {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Glitch Effect on Main Heading */
+body.hacker-mode .welcome-heading {
+    position: relative;
+    animation: glitch 3s infinite;
+}
+
+body.hacker-mode .welcome-heading::before,
+body.hacker-mode .welcome-heading::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body.hacker-mode .welcome-heading::before {
+    animation: glitch-1 0.3s infinite;
+    color: var(--color-neon-pink);
+    clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+    transform: translate(-2px);
+}
+
+body.hacker-mode .welcome-heading::after {
+    animation: glitch-2 0.3s infinite;
+    color: var(--color-neon-green);
+    clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+    transform: translate(2px);
+}
+
+@keyframes glitch {
+    0%, 90%, 100% { opacity: 1; }
+    91% { opacity: 0.8; }
+    92% { opacity: 1; }
+}
+
+@keyframes glitch-1 {
+    0%, 100% { transform: translate(0); }
+    20% { transform: translate(-3px, 1px); }
+    40% { transform: translate(2px, -1px); }
+    60% { transform: translate(-1px, 2px); }
+    80% { transform: translate(1px, -2px); }
+}
+
+@keyframes glitch-2 {
+    0%, 100% { transform: translate(0); }
+    20% { transform: translate(2px, -1px); }
+    40% { transform: translate(-3px, 1px); }
+    60% { transform: translate(1px, -2px); }
+    80% { transform: translate(-2px, 2px); }
+}
+
+/* Neon Glow Effects */
+body.hacker-mode .welcome {
+    background: rgba(0, 255, 255, 0.05);
+    border: 1px solid var(--color-neon-cyan);
+    box-shadow:
+        0 0 10px rgba(0, 255, 255, 0.3),
+        inset 0 0 20px rgba(0, 255, 255, 0.1);
+}
+
+body.hacker-mode .project-card {
+    background: rgba(255, 0, 255, 0.05);
+    border: 1px solid var(--color-neon-pink);
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+body.hacker-mode .project-card:hover {
+    box-shadow:
+        0 0 20px rgba(255, 0, 255, 0.5),
+        0 0 40px rgba(255, 0, 255, 0.3),
+        inset 0 0 20px rgba(255, 0, 255, 0.1);
+    transform: translateY(-4px);
+}
+
+body.hacker-mode .project-link .project-card:hover {
+    box-shadow:
+        0 0 20px rgba(255, 0, 255, 0.5),
+        0 0 40px rgba(255, 0, 255, 0.3),
+        inset 0 0 20px rgba(255, 0, 255, 0.1);
+    transform: translateY(-4px);
+}
+
+body.hacker-mode .project-link {
+    text-decoration: none;
+}
+
+body.hacker-mode .project-card h3 {
+    color: var(--color-neon-green);
+    text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+}
+
+body.hacker-mode .project-card .tech {
+    color: var(--color-neon-pink);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+/* Sidebar in Hacker Mode */
+body.hacker-mode .sidebar {
+    border-right-color: var(--color-neon-cyan);
+    box-shadow: 1px 0 20px rgba(0, 255, 255, 0.2);
+}
+
+/* Profile photo hidden in hacker mode - cyber avatar shown instead */
+
+/* Photo Switching for Boomer/Hacker Mode */
+
+/* Cyber avatar base styles */
+.cyber-avatar {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 140px !important;
+    height: 140px !important;
+    border-radius: 50%;
+    display: none;
+}
+
+/* Hacker mode: hide photo, show avatar */
+body.hacker-mode .profile-photo {
+    display: none !important;
+}
+
+body.hacker-mode .palette-toggle {
+    display: none !important;
+}
+
+body.hacker-mode .cyber-avatar {
+    display: block !important;
+    animation: avatarGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes avatarGlow {
+    from {
+        filter: drop-shadow(0 0 5px rgba(0, 255, 255, 0.5));
+    }
+    to {
+        filter: drop-shadow(0 0 15px rgba(255, 0, 255, 0.7));
+    }
+}
+
+body.hacker-mode .nav a {
+    color: var(--color-neon-pink);
+    transition: all 0.2s;
+}
+
+body.hacker-mode .nav a:hover {
+    color: var(--color-neon-green);
+    text-shadow: 0 0 10px rgba(57, 255, 20, 0.8);
+}
+
+/* Buttons in Hacker Mode */
+body.hacker-mode .btn {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-color: var(--color-neon-cyan);
+    color: var(--color-neon-cyan);
+    background: transparent;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+body.hacker-mode .btn::before {
+    background: var(--color-neon-cyan);
+}
+
+body.hacker-mode .btn:hover {
+    color: var(--color-bg);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+}
+
+body.hacker-mode .btn-outline {
+    border-color: var(--color-neon-pink);
+    color: var(--color-neon-pink);
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
+}
+
+body.hacker-mode .btn-outline::before {
+    background: var(--color-neon-pink);
+}
+
+body.hacker-mode .btn-outline:hover {
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.6);
+}
+
+/* Section Headers with Terminal Style */
+body.hacker-mode h2::before {
+    content: '> ';
+    color: var(--color-neon-green);
+}
+
+body.hacker-mode .section {
+    border-bottom-color: var(--color-border);
+}
+
+/* Collapsible Sections in Hacker Mode */
+body.hacker-mode .section.collapsible {
+    cursor: pointer;
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+}
+
+body.hacker-mode .section.collapsible .section-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+
+body.hacker-mode .section.collapsible.expanded .section-content {
+    max-height: 2000px;
+    opacity: 1;
+}
+
+body.hacker-mode .section.collapsible h2::after {
+    content: ' [+]';
+    color: var(--color-neon-pink);
+    font-size: 0.7em;
+}
+
+body.hacker-mode .section.collapsible.expanded h2::after {
+    content: ' [-]';
+}
+
+body.hacker-mode .section.collapsible:hover h2 {
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+/* Projects Section Enhanced */
+body.hacker-mode #projects {
+    border: 1px solid var(--color-neon-green);
+    border-radius: 8px;
+    padding: 24px;
+    margin: 0 -24px 56px -24px;
+    background: rgba(57, 255, 20, 0.02);
+    box-shadow: 0 0 30px rgba(57, 255, 20, 0.1);
+}
+
+body.hacker-mode #projects h2 {
+    color: var(--color-neon-green);
+    text-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
+}
+
+body.hacker-mode .section-subtitle {
+    font-family: var(--font-mono);
+    color: var(--color-neon-pink);
+}
+
+/* Entry styling in hacker mode */
+body.hacker-mode .entry {
+    border-bottom-color: var(--color-border);
+}
+
+body.hacker-mode .entry h3 {
+    color: var(--color-neon-cyan);
+}
+
+body.hacker-mode .date {
+    font-family: var(--font-mono);
+    color: var(--color-neon-pink);
+}
+
+body.hacker-mode .role {
+    font-family: var(--font-mono);
+}
+
+body.hacker-mode li::marker {
+    color: var(--color-neon-green);
+}
+
+/* Footer in Hacker Mode */
+body.hacker-mode .footer {
+    border-top-color: var(--color-border);
+}
+
+body.hacker-mode .footer p {
+    font-family: var(--font-mono);
+    color: var(--color-neon-cyan);
+}
+
+body.hacker-mode .footer p::before {
+    content: '// ';
+    color: var(--color-neon-green);
+}
+
+/* Scrollbar in Hacker Mode */
+body.hacker-mode .main::-webkit-scrollbar-thumb {
+    background: var(--color-neon-cyan);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+body.hacker-mode .main::-webkit-scrollbar-track {
+    background: rgba(0, 255, 255, 0.05);
+}
+
+/* Mode Toggle Button */
+.mode-toggle {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    padding: 12px;
+    border: 2px solid var(--color-text);
+    border-radius: 8px;
+    background: var(--color-bg);
+    color: var(--color-text);
+    cursor: pointer;
+    z-index: 10000;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.mode-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.mode-toggle .mode-label {
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.mode-toggle .mode-label.boomer {
+    display: flex;
+}
+
+.mode-icon {
+    width: 24px;
+    height: 24px;
+}
+
+body.hacker-mode .mode-toggle {
+    border-color: var(--color-neon-cyan);
+    color: var(--color-neon-cyan);
+    background: var(--color-bg);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+body.hacker-mode .mode-toggle:hover {
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+}
+
+body.hacker-mode .mode-toggle .mode-label.boomer {
+    display: none;
+}
+
+body.hacker-mode .mode-toggle .mode-label.hacker {
+    display: inline-flex;
+}
+
+/* Flicker animation for hacker elements */
+@keyframes flicker {
+    0%, 100% { opacity: 1; }
+    92% { opacity: 0.8; }
+    94% { opacity: 1; }
+    97% { opacity: 0.9; }
+}
+
+body.hacker-mode .project-card h3 {
+    animation: flicker 4s infinite;
+}
+
+/* Terminal cursor blink */
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+body.hacker-mode .welcome-subtext::after {
+    content: '_';
+    animation: blink 1s infinite;
+    color: var(--color-neon-green);
 }

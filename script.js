@@ -2,6 +2,151 @@
    William T. Christie - Personal Website
    ============================================ */
 
+// ============================================
+// HACKER MODE - Project Content
+// ============================================
+
+const projectContent = {
+    boomer: [
+        {
+            title: 'Meeting Cost Calculator',
+            description: 'Real-time calculator that shows how much money is being burned while people argue about the font on slide 7. Enter attendee salaries, watch the dollar counter climb.',
+            tech: 'JavaScript · Existential Dread'
+        },
+        {
+            title: 'Miami Food Roulette',
+            description: "Can't decide where to eat? Spin the wheel and let fate (and a random number generator) pick your next meal in Miami. No take-backs.",
+            tech: 'React · Google Places API'
+        },
+        {
+            title: 'Buzzword Bingo',
+            description: 'Paste any earnings call transcript and watch it highlight every instance of "synergy," "leverage," and "going forward." High scores are not a good sign.',
+            tech: 'Python · NLP · Corporate Therapy'
+        },
+        {
+            title: 'This Website',
+            description: "You're looking at it. Features a palette switcher because I couldn't pick just one color scheme.",
+            tech: 'HTML · CSS · Indecision'
+        }
+    ],
+    hacker: [
+        {
+            title: 'BURN_RATE.exe',
+            description: 'CORPORATE RESOURCE HEMORRHAGE TRACKER // Monitors capital evaporation in real-time as stakeholders debate font kerning. Salary data injected directly into the doom counter. Press F to pay respects to the budget.',
+            tech: 'JavaScript · setTimeout · existentialDread.js'
+        },
+        {
+            title: 'HUNGER.exe',
+            description: 'QUANTUM CALORIC DEPLOYMENT SYSTEM // Entropy-based randomization engine determines optimal nutrient intake coordinates. Location data exfiltrated from Google mainframe. Decision paralysis: eliminated.',
+            tech: 'React · Google Places API · Math.random()'
+        },
+        {
+            title: 'SYNERGY_DETECTOR v4.20',
+            description: 'CORPORATE CRINGE PATTERN RECOGNITION // Neural language processor identifies peak buzzword density in earnings transmissions. Alert level: leverage detected. Synergy approaching critical mass.',
+            tech: 'Python · NLP · corporate_therapy.dll'
+        },
+        {
+            title: 'YOU_ARE_HERE.exe',
+            description: 'RECURSIVE SELF-REFERENCE IN THE MATRIX // Currently rendering this very description. 7 color palettes because commitment is for databases. Toggle button added because chaos is a feature.',
+            tech: 'HTML · CSS · crippling_indecision.min.js'
+        }
+    ]
+};
+
+// ============================================
+// MODE TOGGLE
+// ============================================
+
+let isHackerMode = false;
+
+function toggleMode() {
+    isHackerMode = !isHackerMode;
+    document.body.classList.toggle('hacker-mode', isHackerMode);
+    localStorage.setItem('siteMode', isHackerMode ? 'hacker' : 'boomer');
+    updateProjectContent();
+    updateWelcomeContent();
+    updateModeToggleTooltip();
+}
+
+function updateModeToggleTooltip() {
+    const btn = document.querySelector('.mode-toggle');
+    if (btn) {
+        btn.title = isHackerMode ? 'Switch to Boomer Mode' : 'Switch to Hacker Mode';
+    }
+}
+
+function updateProjectContent() {
+    const projects = document.querySelectorAll('.project-card');
+    const content = isHackerMode ? projectContent.hacker : projectContent.boomer;
+
+    projects.forEach((card, index) => {
+        if (content[index]) {
+            const titleEl = card.querySelector('h3');
+            const descEl = card.querySelector('p');
+            const techEl = card.querySelector('.tech');
+
+            if (titleEl) titleEl.textContent = content[index].title;
+            if (descEl) descEl.textContent = content[index].description;
+            if (techEl) techEl.textContent = content[index].tech;
+        }
+    });
+
+    // Update section subtitle
+    const subtitle = document.querySelector('#projects .section-subtitle');
+    if (subtitle) {
+        subtitle.textContent = isHackerMode ? '// DEPLOYED EXPLOITS' : 'Things I\'ve built';
+    }
+}
+
+function updateWelcomeContent() {
+    const heading = document.querySelector('.welcome-heading');
+    const text = document.querySelector('.welcome-text');
+    const subtext = document.querySelector('.welcome-subtext');
+
+    if (isHackerMode) {
+        heading.textContent = 'WELCOME_USER';
+        heading.setAttribute('data-text', 'WELCOME_USER');
+        text.textContent = 'William Christie // Finance & Code // Miami. I build tools that solve problems and break down complexity. Currently studying at University of Miami, interning at Ernst & Young. Side projects always in progress.';
+        subtext.textContent = '> status: online // open to connect';
+    } else {
+        heading.textContent = "Hey, I'm William!";
+        heading.setAttribute('data-text', "Hey, I'm William!");
+        text.textContent = "I'm a finance student at the University of Miami who loves tackling complex problems and building things that help businesses run smarter. When I'm not crunching numbers, writing code, or building pitch decks, you'll find me volunteering in my community or exploring Miami's food scene.";
+        subtext.textContent = 'Always learning. Always building. Always happy to connect!';
+    }
+}
+
+function initMode() {
+    // Always start in boomer mode
+    isHackerMode = false;
+    document.body.classList.remove('hacker-mode');
+    updateModeToggleTooltip();
+}
+
+// ============================================
+// COLLAPSIBLE SECTIONS
+// ============================================
+
+function initCollapsibles() {
+    const collapsibles = document.querySelectorAll('.section.collapsible');
+
+    collapsibles.forEach(section => {
+        const header = section.querySelector('h2');
+        if (header) {
+            header.addEventListener('click', () => {
+                // Only toggle if in hacker mode
+                if (document.body.classList.contains('hacker-mode')) {
+                    section.classList.toggle('expanded');
+                }
+            });
+        }
+    });
+}
+
+// ============================================
+// COLOR PALETTES
+// ============================================
+
 // Color Palettes with SVG icons
 const palettes = [
     {
@@ -114,6 +259,10 @@ function togglePalette() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize hacker mode
+    initMode();
+    initCollapsibles();
+
     // Load saved palette preference
     const savedPalette = localStorage.getItem('palette');
     const savedIndex = palettes.findIndex(p => p.id === savedPalette);
