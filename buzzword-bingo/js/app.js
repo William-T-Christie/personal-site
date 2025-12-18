@@ -7,6 +7,7 @@
 let currentScore = 0;
 let currentAnalysis = null;
 let isProcessing = false;
+let isDemoMode = false;
 
 // Sample transcript for demo mode - packed with buzzwords!
 const DEMO_TRANSCRIPT = `
@@ -209,6 +210,7 @@ function setupKeyboardControls() {
  */
 async function handleFileUpload(file) {
     if (isProcessing) return;
+    isDemoMode = false;
 
     // Validate file type
     const mediaType = window.AudioExtractor?.getMediaType(file);
@@ -317,8 +319,10 @@ async function handleScoreSubmit() {
         return;
     }
 
-    // Add to leaderboard
-    const rank = await window.Leaderboard?.addHighScore(initials, currentScore);
+    // Only add to leaderboard if not in demo mode
+    if (!isDemoMode) {
+        const rank = await window.Leaderboard?.addHighScore(initials, currentScore);
+    }
 
     // Show results with the score highlighted
     await window.UI?.displayResults(currentScore, currentAnalysis.award, currentAnalysis.breakdown);
@@ -330,6 +334,7 @@ async function handleScoreSubmit() {
 async function runDemo() {
     if (isProcessing) return;
     isProcessing = true;
+    isDemoMode = true;
 
     // Show processing screen
     window.UI?.showScreen('processing');
@@ -397,6 +402,7 @@ window.BuzzwordBingo = {
         currentScore = 0;
         currentAnalysis = null;
         isProcessing = false;
+        isDemoMode = false;
         window.UI?.showScreen('landing');
     }
 };
