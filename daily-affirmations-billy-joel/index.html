@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Affirmations with Billy Joel</title>
+    <meta name="description" content="Start your day with wisdom from the Piano Man. Random Billy Joel lyrics served as daily affirmations.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Daily Affirmations with Billy Joel">
+    <meta property="og:description" content="Start your day with wisdom from the Piano Man">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="assets/og-image.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Album Collage Background -->
+    <div class="album-collage-bg">
+        <div class="album-tile cold-spring-harbor"></div>
+        <div class="album-tile piano-man"></div>
+        <div class="album-tile streetlife-serenade"></div>
+        <div class="album-tile turnstiles"></div>
+        <div class="album-tile the-stranger"></div>
+        <div class="album-tile street-52nd"></div>
+        <div class="album-tile glass-houses"></div>
+        <div class="album-tile nylon-curtain"></div>
+        <div class="album-tile innocent-man"></div>
+        <div class="album-tile the-bridge"></div>
+        <div class="album-tile storm-front"></div>
+        <div class="album-tile river-of-dreams"></div>
+    </div>
+    <div class="album-collage-overlay"></div>
+
+    <main class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="site-title">Daily Affirmations</h1>
+            <p class="site-subtitle">with Billy Joel</p>
+        </header>
+
+        <!-- Song Selector Dropdown -->
+        <div class="song-selector-container">
+            <label for="song-selector" class="selector-label">SELECT YOUR SONG</label>
+            <select id="song-selector" class="song-selector">
+                <option value="">Choose a Billy Joel song...</option>
+            </select>
+        </div>
+
+        <!-- TASCAM-Style Reel-to-Reel Player -->
+        <div class="tascam-player" role="application" aria-label="Billy Joel Affirmation Player">
+
+            <!-- Upper Deck - Reels Section -->
+            <div class="upper-deck">
+                <!-- Left Reel -->
+                <div class="tascam-reel" id="reel-left">
+                    <div class="reel-plate">
+                        <div class="spoke"></div>
+                        <div class="spoke"></div>
+                        <div class="spoke"></div>
+                    </div>
+                    <div class="reel-hub">
+                        <div class="hub-center"></div>
+                    </div>
+                </div>
+
+                <!-- Center Section - Head Block & Brand -->
+                <div class="center-section">
+                    <div class="power-indicator"></div>
+                    <div class="brand-badge">
+                        <span class="brand-name">PIANO MAN</span>
+                    </div>
+                    <div class="head-assembly">
+                        <div class="tension-arm left"></div>
+                        <div class="head-cover">
+                            <div class="head-window"></div>
+                        </div>
+                        <div class="tension-arm right"></div>
+                    </div>
+                    <div class="tape-path"></div>
+                </div>
+
+                <!-- Right Reel -->
+                <div class="tascam-reel" id="reel-right">
+                    <div class="reel-plate">
+                        <div class="spoke"></div>
+                        <div class="spoke"></div>
+                        <div class="spoke"></div>
+                    </div>
+                    <div class="reel-hub">
+                        <div class="hub-center"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Control Panel -->
+            <div class="control-panel">
+                <!-- Left Knob -->
+                <div class="panel-knob left">
+                    <div class="knob-cap"></div>
+                </div>
+
+                <!-- VU Meters Section -->
+                <div class="vu-section">
+                    <div class="vu-meter">
+                        <div class="vu-face">
+                            <div class="vu-scale">
+                                <span>-20</span>
+                                <span>-10</span>
+                                <span>-7</span>
+                                <span>-5</span>
+                                <span>-3</span>
+                                <span>0</span>
+                                <span>+3</span>
+                            </div>
+                            <div class="vu-needle" id="needle-left"></div>
+                            <div class="vu-label">VU</div>
+                        </div>
+                    </div>
+                    <div class="vu-meter">
+                        <div class="vu-face">
+                            <div class="vu-scale">
+                                <span>-20</span>
+                                <span>-10</span>
+                                <span>-7</span>
+                                <span>-5</span>
+                                <span>-3</span>
+                                <span>0</span>
+                                <span>+3</span>
+                            </div>
+                            <div class="vu-needle" id="needle-right"></div>
+                            <div class="vu-label">VU</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Counter Display -->
+                <div class="counter-section">
+                    <div class="model-badge">JOEL BR-77</div>
+                    <div class="led-counter" id="counter-digits">
+                        <span class="led-digit">0</span>
+                        <span class="led-digit">0</span>
+                        <span class="led-colon">:</span>
+                        <span class="led-digit">0</span>
+                        <span class="led-digit">0</span>
+                        <span class="led-colon">.</span>
+                        <span class="led-digit">0</span>
+                        <span class="led-digit">0</span>
+                    </div>
+                </div>
+
+                <!-- Right Knob -->
+                <div class="panel-knob right">
+                    <div class="knob-cap"></div>
+                </div>
+            </div>
+
+            <!-- LCD Affirmation Display -->
+            <div class="affirmation-display">
+                <div class="display-screen" aria-live="polite" aria-atomic="true">
+                    <blockquote class="lyric-text" id="lyric-display">
+                        "Select a song to receive your affirmation..."
+                    </blockquote>
+                </div>
+            </div>
+
+            <!-- Lower Control Panel -->
+            <div class="lower-panel">
+                <!-- Channel Controls -->
+                <div class="channel-controls">
+                    <div class="channel">
+                        <span class="ch-label">CH 1</span>
+                        <div class="small-knob"></div>
+                        <div class="small-knob"></div>
+                    </div>
+                    <div class="channel">
+                        <span class="ch-label">CH 2</span>
+                        <div class="small-knob"></div>
+                        <div class="small-knob"></div>
+                    </div>
+                </div>
+
+                <!-- Song Info -->
+                <div class="song-info-panel" id="track-info">
+                    <span class="info-title" id="song-title">Select a song</span>
+                    <span class="info-album" id="album-info">to receive your affirmation</span>
+                </div>
+
+                <!-- Transport Buttons -->
+                <div class="transport-section">
+                    <div class="transport-controls" role="toolbar" aria-label="Playback controls">
+                        <button class="transport-btn" id="btn-rewind" aria-label="Rewind">
+                            <span class="btn-icon">◀◀</span>
+                        </button>
+                        <button class="transport-btn" id="btn-forward" aria-label="Fast Forward">
+                            <span class="btn-icon">▶▶</span>
+                        </button>
+                        <button class="transport-btn" id="btn-stop" aria-label="Stop">
+                            <span class="btn-icon">⏹</span>
+                        </button>
+                        <button class="transport-btn play" id="btn-play" aria-label="Play" aria-pressed="false">
+                            <span class="btn-icon" id="play-icon">▶</span>
+                        </button>
+                        <button class="transport-btn record" id="btn-record" aria-label="Random">
+                            <span class="btn-icon">⏺</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Feet -->
+            <div class="player-feet">
+                <div class="foot"></div>
+                <div class="foot"></div>
+                <div class="foot"></div>
+                <div class="foot"></div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <p>Made with ♥ for the Piano Man</p>
+        <p class="keyboard-hint">
+            <kbd>Space</kbd> Play/Pause ·
+            <kbd>N</kbd> New
+        </p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/affirmations.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

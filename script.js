@@ -9,14 +9,14 @@
 const projectContent = {
     boomer: [
         {
+            title: 'Daily Affirmations with Billy Joel',
+            description: "Every morning the Piano Man tells you you're an innocent man",
+            tech: 'AI · Existential Comfort'
+        },
+        {
             title: 'Buzzword Bingo',
             description: 'AI that listens to your meetings and scores them for corporate speak',
             tech: 'JavaScript · Whisper AI'
-        },
-        {
-            title: 'Meeting Cost Calculator',
-            description: 'Watch your salary burn in real-time while people argue about fonts',
-            tech: 'JavaScript'
         },
         {
             title: 'Miami Food Roulette',
@@ -24,9 +24,14 @@ const projectContent = {
             tech: 'React · Google Places API'
         },
         {
-            title: 'Daily Affirmations with Billy Joel',
-            description: "Every morning the Piano Man tells you you're an innocent man",
-            tech: 'AI · Existential Comfort'
+            title: 'Doom Scroller Anonymous',
+            description: 'Tracks your screen time, roasts your choices',
+            tech: 'Swift · Screen Time API'
+        },
+        {
+            title: 'Super Secret Pending Project',
+            description: 'I bet you wish you knew what this was',
+            tech: '??? · ??? · ???'
         },
         {
             title: 'This Website',
@@ -36,14 +41,14 @@ const projectContent = {
     ],
     hacker: [
         {
+            title: 'Daily Affirmations with Billy Joel',
+            description: "Every morning the Piano Man tells you you're an innocent man",
+            tech: 'AI · Existential Comfort'
+        },
+        {
             title: 'Buzzword Bingo',
             description: 'AI that listens to your meetings and scores them for corporate speak',
             tech: 'JavaScript · Whisper AI'
-        },
-        {
-            title: 'Meeting Cost Calculator',
-            description: 'Watch your salary burn in real-time while people argue about fonts',
-            tech: 'JavaScript'
         },
         {
             title: 'Miami Food Roulette',
@@ -51,9 +56,14 @@ const projectContent = {
             tech: 'React · Google Places API'
         },
         {
-            title: 'Daily Affirmations with Billy Joel',
-            description: "Every morning the Piano Man tells you you're an innocent man",
-            tech: 'AI · Existential Comfort'
+            title: 'Doom Scroller Anonymous',
+            description: 'Tracks your screen time, roasts your choices',
+            tech: 'Swift · Screen Time API'
+        },
+        {
+            title: 'Super Secret Pending Project',
+            description: 'I bet you wish you knew what this was',
+            tech: '??? · ??? · ???'
         },
         {
             title: 'This Website',

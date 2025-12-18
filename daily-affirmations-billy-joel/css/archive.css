@@ -1,0 +1,491 @@
+/* ============================================
+   ARCHIVE PAGE STYLES
+   ============================================ */
+
+/* === ARCHIVE HEADER === */
+.archive-header {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto var(--space-xl);
+    padding: var(--space-lg);
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    color: var(--accent-gold);
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    transition: all var(--transition-fast);
+    margin-bottom: var(--space-lg);
+}
+
+.back-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--accent-cream);
+}
+
+.header-content {
+    text-align: center;
+}
+
+.archive-title {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: var(--accent-cream);
+    letter-spacing: 0.05em;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    margin-bottom: var(--space-xs);
+}
+
+.archive-subtitle {
+    font-size: 1rem;
+    color: var(--accent-gold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+/* === ARCHIVE MAIN === */
+.archive-main {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-lg) var(--space-xl);
+}
+
+/* === FILTERS === */
+.filters {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    padding: var(--space-lg);
+    margin-bottom: var(--space-lg);
+}
+
+.filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    align-items: flex-end;
+}
+
+.filter-row + .filter-row {
+    margin-top: var(--space-md);
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 150px;
+}
+
+.filter-group label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--chrome);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-xs);
+}
+
+.filter-group select {
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-surface);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: var(--accent-cream);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.filter-group select:hover {
+    border-color: var(--accent-gold);
+}
+
+.filter-group select:focus {
+    outline: none;
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 0 2px rgba(212, 160, 48, 0.2);
+}
+
+.search-group {
+    flex: 2;
+    min-width: 200px;
+}
+
+.search-group input {
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-surface);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: var(--accent-cream);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    transition: all var(--transition-fast);
+}
+
+.search-group input::placeholder {
+    color: var(--chrome-shadow);
+}
+
+.search-group input:focus {
+    outline: none;
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 0 2px rgba(212, 160, 48, 0.2);
+}
+
+/* View Toggle */
+.view-toggle {
+    display: flex;
+    gap: var(--space-xs);
+}
+
+.view-toggle button {
+    padding: var(--space-sm);
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: var(--chrome);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.view-toggle button:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--accent-cream);
+}
+
+.view-toggle button.active {
+    background: var(--accent-gold);
+    border-color: var(--accent-gold);
+    color: var(--bg-primary);
+}
+
+/* Favorites Toggle */
+.favorites-toggle button {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: var(--chrome);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.favorites-toggle button:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--accent-cream);
+}
+
+.favorites-toggle button[aria-pressed="true"] {
+    background: rgba(212, 160, 48, 0.2);
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
+}
+
+.favorites-toggle .count {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+}
+
+/* === RESULTS INFO === */
+.results-info {
+    margin-bottom: var(--space-md);
+}
+
+.results-count {
+    font-size: 0.9rem;
+    color: var(--chrome);
+}
+
+.results-count span {
+    color: var(--accent-gold);
+    font-weight: 600;
+}
+
+/* === AFFIRMATIONS GRID === */
+.affirmations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-lg);
+}
+
+.affirmations-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+/* === AFFIRMATION CARD (Grid View) === */
+.affirmation-card {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: var(--space-lg);
+    transition: all var(--transition-normal);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.affirmation-card:hover {
+    background: rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.affirmation-card .lyric {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--lcd-text);
+    line-height: 1.5;
+    text-shadow: 0 0 10px var(--lcd-glow);
+    margin: 0;
+}
+
+.affirmation-card footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: var(--space-md);
+}
+
+.affirmation-card cite {
+    display: block;
+    font-style: normal;
+    font-weight: 600;
+    color: var(--accent-cream);
+    margin-bottom: var(--space-xs);
+}
+
+.affirmation-card .album {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--chrome);
+}
+
+.card-actions {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: auto;
+}
+
+.card-actions button {
+    flex: 1;
+    padding: var(--space-sm);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: var(--accent-cream);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all var(--transition-fast);
+}
+
+.card-actions button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.card-actions .play-btn:hover {
+    background: rgba(57, 255, 20, 0.2);
+    border-color: var(--lcd-text);
+    color: var(--lcd-text);
+}
+
+.card-actions .favorite-btn.active {
+    background: rgba(212, 160, 48, 0.2);
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
+}
+
+/* === AFFIRMATION ROW (List View) === */
+.affirmation-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: var(--space-md);
+    transition: all var(--transition-fast);
+}
+
+.affirmation-row:hover {
+    background: rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.affirmation-row .play-btn {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    background: rgba(57, 255, 20, 0.1);
+    border: 1px solid rgba(57, 255, 20, 0.3);
+    border-radius: 50%;
+    color: var(--lcd-text);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.affirmation-row .play-btn:hover {
+    background: rgba(57, 255, 20, 0.2);
+    transform: scale(1.05);
+}
+
+.affirmation-row .row-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-sm);
+}
+
+.affirmation-row .lyric {
+    flex: 1;
+    min-width: 200px;
+    font-family: var(--font-display);
+    color: var(--lcd-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.affirmation-row .song {
+    color: var(--accent-cream);
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.affirmation-row .album {
+    color: var(--chrome);
+    font-size: 0.85rem;
+}
+
+.affirmation-row .favorite-btn {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: var(--chrome);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all var(--transition-fast);
+}
+
+.affirmation-row .favorite-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--accent-cream);
+}
+
+.affirmation-row .favorite-btn.active {
+    background: rgba(212, 160, 48, 0.2);
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
+}
+
+/* === EMPTY STATE === */
+.empty-state {
+    text-align: center;
+    padding: var(--space-2xl);
+    color: var(--chrome);
+}
+
+.empty-state .icon {
+    font-size: 3rem;
+    margin-bottom: var(--space-md);
+    opacity: 0.5;
+}
+
+.empty-state p {
+    margin-bottom: var(--space-md);
+}
+
+.empty-state button {
+    padding: var(--space-sm) var(--space-lg);
+    background: var(--accent-gold);
+    border: none;
+    border-radius: 8px;
+    color: var(--bg-primary);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all var(--transition-fast);
+}
+
+.empty-state button:hover {
+    transform: scale(1.02);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+    .archive-header {
+        padding: var(--space-md);
+    }
+
+    .archive-title {
+        font-size: 2rem;
+    }
+
+    .filter-row {
+        flex-direction: column;
+    }
+
+    .filter-group,
+    .search-group {
+        width: 100%;
+    }
+
+    .filter-row:last-child {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .search-group {
+        order: -1;
+        margin-bottom: var(--space-sm);
+    }
+
+    .affirmations-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .affirmation-row .row-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-xs);
+    }
+
+    .affirmation-row .lyric {
+        white-space: normal;
+    }
+}
+
+@media (max-width: 480px) {
+    .archive-main {
+        padding: 0 var(--space-md) var(--space-lg);
+    }
+
+    .filters {
+        padding: var(--space-md);
+    }
+
+    .favorites-toggle .label {
+        display: none;
+    }
+}

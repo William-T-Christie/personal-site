@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Miami Food Roulette - Spin the slot machine to discover amazing Miami restaurants. Filter by cuisine, neighborhood, and price.">
+    <meta name="theme-color" content="#40E0D0">
+
+    <title>Miami Food Roulette | Find Your Next Meal</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Background Decorations -->
+    <div class="tropical-bg">
+        <div class="wave-pattern"></div>
+        <div class="palm-tree palm-tree--left"></div>
+        <div class="palm-tree palm-tree--right"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="mfr-container">
+        <!-- Header -->
+        <header class="mfr-header">
+            <a href="../index.html" class="back-link" aria-label="Back to portfolio">
+                <svg class="back-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+            </a>
+            <div class="header-content">
+                <h1 class="header-title">Miami Food Roulette</h1>
+                <p class="header-subtitle">Spin to discover your next meal!</p>
+            </div>
+            <button class="btn btn--icon sound-toggle" id="soundToggle" aria-label="Toggle sound">
+                <svg class="sound-icon sound-icon--on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                </svg>
+                <svg class="sound-icon sound-icon--off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                    <line x1="23" y1="9" x2="17" y2="15"/>
+                    <line x1="17" y1="9" x2="23" y2="15"/>
+                </svg>
+            </button>
+        </header>
+
+        <!-- Main Content -->
+        <main class="mfr-main">
+            <!-- Slot Machine Cabinet -->
+            <section class="slot-cabinet" aria-label="Slot Machine">
+                <!-- Marquee / Top -->
+                <div class="slot-cabinet__marquee">
+                    <div class="marquee-lights">
+                        <span class="light"></span>
+                        <span class="light"></span>
+                        <span class="light"></span>
+                        <span class="light"></span>
+                        <span class="light"></span>
+                    </div>
+                    <div class="tiki-mask"></div>
+                </div>
+
+                <!-- Reels Container -->
+                <div class="slot-cabinet__body">
+                    <div class="slot-cabinet__reels-container">
+                        <!-- Reel 1: Cuisine -->
+                        <div class="reel" id="reelCuisine" data-reel="cuisine">
+                            <span class="reel__label">Cuisine</span>
+                            <div class="reel__window">
+                                <div class="reel__strip"></div>
+                            </div>
+                            <button class="reel__lock-btn" aria-label="Lock cuisine selection">
+                                <svg class="lock-icon lock-icon--unlocked" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                    <path d="M7 11V7a5 5 0 0 1 9.9-1"/>
+                                </svg>
+                                <svg class="lock-icon lock-icon--locked" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Reel 2: Neighborhood -->
+                        <div class="reel" id="reelNeighborhood" data-reel="neighborhood">
+                            <span class="reel__label">Area</span>
+                            <div class="reel__window">
+                                <div class="reel__strip"></div>
+                            </div>
+                            <button class="reel__lock-btn" aria-label="Lock neighborhood selection">
+                                <svg class="lock-icon lock-icon--unlocked" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                    <path d="M7 11V7a5 5 0 0 1 9.9-1"/>
+                                </svg>
+                                <svg class="lock-icon lock-icon--locked" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Reel 3: Price -->
+                        <div class="reel" id="reelPrice" data-reel="price">
+                            <span class="reel__label">Price</span>
+                            <div class="reel__window">
+                                <div class="reel__strip"></div>
+                            </div>
+                            <button class="reel__lock-btn" aria-label="Lock price selection">
+                                <svg class="lock-icon lock-icon--unlocked" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                    <path d="M7 11V7a5 5 0 0 1 9.9-1"/>
+                                </svg>
+                                <svg class="lock-icon lock-icon--locked" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Win Line Indicator -->
+                    <div class="win-line"></div>
+                </div>
+
+                <!-- Controls -->
+                <div class="slot-cabinet__controls">
+                    <button class="btn btn--lucky" id="btnLucky">
+                        <span class="btn-icon">🍀</span>
+                        <span class="btn-text">Feeling Lucky</span>
+                    </button>
+                    <button class="btn btn--spin" id="btnSpin">
+                        <span class="btn-text">SPIN!</span>
+                    </button>
+                </div>
+
+                <!-- Base / Coin Tray -->
+                <div class="slot-cabinet__base">
+                    <div class="flamingo-decoration"></div>
+                </div>
+            </section>
+
+            <!-- Result Area -->
+            <section class="result-area" id="resultArea" aria-live="polite">
+                <!-- Loading State -->
+                <div class="result-loading" id="resultLoading" hidden>
+                    <div class="loading-spinner"></div>
+                    <p class="loading-text">Finding the perfect spot...</p>
+                </div>
+
+                <!-- Error State -->
+                <div class="result-error" id="resultError" hidden>
+                    <p class="error-text"></p>
+                    <button class="btn btn--secondary" id="btnRetry">Try Again</button>
+                </div>
+
+                <!-- Restaurant Card -->
+                <article class="restaurant-card" id="restaurantCard" hidden>
+                    <div class="restaurant-card__image-container">
+                        <img class="restaurant-card__image" src="" alt="">
+                        <button class="btn btn--icon favorite-btn" id="btnFavorite" aria-label="Add to favorites">
+                            <svg class="heart-icon heart-icon--empty" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                            </svg>
+                            <svg class="heart-icon heart-icon--filled" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                            </svg>
+                        </button>
+                        <span class="open-badge" id="openBadge">Open Now</span>
+                    </div>
+                    <div class="restaurant-card__content">
+                        <h2 class="restaurant-card__name" id="restaurantName"></h2>
+                        <div class="restaurant-card__rating">
+                            <div class="stars" id="restaurantStars"></div>
+                            <span class="review-count" id="restaurantReviews"></span>
+                        </div>
+                        <div class="restaurant-card__meta">
+                            <span class="price-level" id="restaurantPrice"></span>
+                            <span class="separator">•</span>
+                            <span class="cuisine-tags" id="restaurantCuisine"></span>
+                        </div>
+                        <p class="restaurant-card__address" id="restaurantAddress"></p>
+                        <div class="restaurant-card__actions">
+                            <a class="btn btn--secondary" id="btnDirections" href="#" target="_blank" rel="noopener">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+                                </svg>
+                                Directions
+                            </a>
+                            <a class="btn btn--secondary" id="btnYelp" href="#" target="_blank" rel="noopener">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                    <polyline points="15 3 21 3 21 9"/>
+                                    <line x1="10" y1="14" x2="21" y2="3"/>
+                                </svg>
+                                View on Yelp
+                            </a>
+                            <button class="btn btn--primary" id="btnSpinAgain">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="23 4 23 10 17 10"/>
+                                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                                </svg>
+                                Spin Again
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Empty State (Initial) -->
+                <div class="result-empty" id="resultEmpty">
+                    <div class="empty-illustration">
+                        <span class="empty-icon">🎰</span>
+                    </div>
+                    <p class="empty-text">Spin the reels to discover your next Miami meal!</p>
+                    <p class="empty-hint">Lock any reel to keep your preference, or let fate decide everything.</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- Side Panels (Desktop) -->
+        <aside class="side-panels">
+            <!-- Favorites Panel -->
+            <div class="panel favorites-panel">
+                <div class="panel__header">
+                    <h3 class="panel__title">
+                        <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                        Favorites
+                    </h3>
+                    <span class="panel__count" id="favoritesCount">0</span>
+                </div>
+                <ul class="panel__list favorites-list" id="favoritesList">
+                    <li class="list-item list-item--empty">No favorites yet. Spin to find some!</li>
+                </ul>
+            </div>
+
+            <!-- History Panel -->
+            <div class="panel history-panel">
+                <div class="panel__header">
+                    <h3 class="panel__title">
+                        <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        Recent Spins
+                    </h3>
+                    <button class="btn btn--text" id="btnClearHistory">Clear</button>
+                </div>
+                <ul class="panel__list history-list" id="historyList">
+                    <li class="list-item list-item--empty">No spin history yet.</li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Mobile Tabs (Show panels on mobile) -->
+        <nav class="mobile-tabs" role="tablist">
+            <button class="mobile-tab" id="tabFavorites" role="tab" aria-selected="false" aria-controls="favoritesList">
+                <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                Favorites
+            </button>
+            <button class="mobile-tab" id="tabHistory" role="tab" aria-selected="false" aria-controls="historyList">
+                <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                </svg>
+                History
+            </button>
+        </nav>
+
+        <!-- Footer -->
+        <footer class="mfr-footer">
+            <p class="footer-text">
+                Made with <span class="heart">♥</span> in Miami
+                <span class="separator">|</span>
+                Data from <a href="https://www.yelp.com" target="_blank" rel="noopener">Yelp</a>
+            </p>
+        </footer>
+    </div>
+
+    <!-- Mobile Panel Modal -->
+    <div class="mobile-panel-modal" id="mobilePanelModal" hidden>
+        <div class="mobile-panel-modal__backdrop"></div>
+        <div class="mobile-panel-modal__content">
+            <div class="mobile-panel-modal__header">
+                <h3 class="mobile-panel-modal__title" id="mobilePanelTitle"></h3>
+                <button class="btn btn--icon" id="btnClosePanel" aria-label="Close panel">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="mobile-panel-modal__body" id="mobilePanelBody"></div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/reel.js"></script>
+    <script src="js/slot-machine.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
