@@ -8,6 +8,7 @@ let currentScore = 0;
 let currentAnalysis = null;
 let isProcessing = false;
 let isDemoMode = false;
+let isCancelled = false;
 
 // Sample transcript for demo mode - packed with buzzwords!
 const DEMO_TRANSCRIPT = `
@@ -192,6 +193,24 @@ function setupButtons() {
     if (demoBtn) {
         demoBtn.addEventListener('click', runDemo);
     }
+
+    // Cancel button
+    const cancelBtn = document.getElementById('cancel-btn');
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', handleCancel);
+    }
+}
+
+/**
+ * Handle cancel button click
+ */
+function handleCancel() {
+    if (!isProcessing) return;
+
+    isCancelled = true;
+    isProcessing = false;
+    window.UI?.stopLoadingMessages();
+    window.UI?.showScreen('landing');
 }
 
 /**
@@ -211,6 +230,7 @@ function setupKeyboardControls() {
 async function handleFileUpload(file) {
     if (isProcessing) return;
     isDemoMode = false;
+    isCancelled = false;
 
     // Validate file type
     const mediaType = window.AudioExtractor?.getMediaType(file);
@@ -246,6 +266,8 @@ async function handleFileUpload(file) {
             throw new Error('Failed to extract audio from file.');
         }
 
+        if (isCancelled) return;
+
         // Step 2: Load transcription model (if needed)
         window.UI?.updateProgress(30, 'Loading AI model...', window.BuzzwordData?.getRandomLoadingMessage());
 
@@ -253,6 +275,11 @@ async function handleFileUpload(file) {
             const adjustedPercent = 30 + (percent * 0.2); // 30-50%
             window.UI?.updateProgress(adjustedPercent, text);
         });
+
+        // Hide first-time note after model loads successfully
+        window.UI?.hideFirstTimeNote();
+
+        if (isCancelled) return;
 
         // Step 3: Transcribe
         window.UI?.updateProgress(50, 'Transcribing audio...', window.BuzzwordData?.getRandomLoadingMessage());
@@ -265,6 +292,8 @@ async function handleFileUpload(file) {
         if (!transcript) {
             throw new Error('Failed to transcribe audio. The file may not contain recognizable speech.');
         }
+
+        if (isCancelled) return;
 
         console.log('Transcript:', transcript.substring(0, 500) + '...');
 
@@ -406,3 +435,111 @@ window.BuzzwordBingo = {
         window.UI?.showScreen('landing');
     }
 };
+
+/**
+ * Mega Blast Arcade Cabinet - Random Bomb Drops
+ */
+function initMegaBlast() {
+    const megaBlastScreen = document.querySelector('.megablast');
+    if (!megaBlastScreen) return;
+
+    const bombs = megaBlastScreen.querySelectorAll('.bomb');
+    const explosions = megaBlastScreen.querySelectorAll('.explosion');
+
+    // Remove CSS animations - we'll handle them with JS
+    bombs.forEach(bomb => {
+        bomb.style.animation = 'none';
+        bomb.style.opacity = '0';
+    });
+    explosions.forEach(exp => {
+        exp.style.animation = 'none';
+        exp.style.opacity = '0';
+    });
+
+    // Track active animations
+    const bombPool = Array.from(bombs);
+    const explosionPool = Array.from(explosions);
+    let bombIndex = 0;
+    let explosionIndex = 0;
+
+    function getRandomX() {
+        // Random position between 15% and 85% of screen width
+        return 15 + Math.random() * 70;
+    }
+
+    function dropBomb() {
+        const bomb = bombPool[bombIndex % bombPool.length];
+        const explosion = explosionPool[explosionIndex % explosionPool.length];
+        bombIndex++;
+        explosionIndex++;
+
+        // Random drop position
+        const startX = getRandomX();
+        const endX = startX + (Math.random() * 20 - 10); // Slight drift
+        const endY = 60 + Math.random() * 10; // Land between 60-70% from top
+
+        // Reset bomb
+        bomb.style.transition = 'none';
+        bomb.style.top = '12%';
+        bomb.style.left = startX + '%';
+        bomb.style.opacity = '1';
+
+        // Force reflow
+        bomb.offsetHeight;
+
+        // Animate bomb falling
+        bomb.style.transition = 'top 1.5s ease-in, left 1.5s ease-out, opacity 0.2s';
+        bomb.style.top = endY + '%';
+        bomb.style.left = endX + '%';
+
+        // Trigger explosion when bomb lands
+        setTimeout(() => {
+            bomb.style.opacity = '0';
+            triggerExplosion(explosion, endX, 100 - endY);
+        }, 1400);
+    }
+
+    function triggerExplosion(explosion, x, bottomPercent) {
+        explosion.style.left = x + '%';
+        explosion.style.bottom = bottomPercent + '%';
+        explosion.style.opacity = '1';
+        explosion.style.transform = 'scale(0.2)';
+        explosion.style.background = 'radial-gradient(circle, #fff 0%, #ff0 30%, #f80 60%, #f00 100%)';
+        explosion.style.boxShadow = '0 0 10px #ff0, 0 0 20px #f80, 0 0 30px #f00';
+
+        // Force reflow
+        explosion.offsetHeight;
+
+        // Animate explosion
+        explosion.style.transition = 'transform 0.15s ease-out, opacity 0.8s ease-out';
+        explosion.style.transform = 'scale(1.8)';
+
+        // Fade out
+        setTimeout(() => {
+            explosion.style.opacity = '0';
+            explosion.style.transform = 'scale(0.5)';
+        }, 200);
+    }
+
+    // Drop bombs at random intervals
+    function scheduleBomb() {
+        const delay = 1500 + Math.random() * 2000; // 1.5-3.5 seconds
+        setTimeout(() => {
+            dropBomb();
+            scheduleBomb();
+        }, delay);
+    }
+
+    // Start with staggered initial bombs
+    setTimeout(() => dropBomb(), 500);
+    setTimeout(() => dropBomb(), 1500);
+    setTimeout(() => scheduleBomb(), 2500);
+    setTimeout(() => scheduleBomb(), 3500);
+}
+
+// Initialize Mega Blast when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMegaBlast);
+} else {
+    initMegaBlast();
+}

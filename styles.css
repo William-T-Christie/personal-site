@@ -18,18 +18,15 @@
     --sidebar-width: 300px;
 }
 
-/* Hacker Mode Variables */
+/* Hacker Mode Variables - Clean minimal light theme like walzr.com */
 body.hacker-mode {
-    --color-bg: #0a0a0f;
-    --color-text: #00ffff;
-    --color-text-secondary: #00cccc;
-    --color-text-muted: #008888;
-    --color-border: #1a1a2e;
-    --color-accent: #ff00ff;
-    --color-neon-green: #39ff14;
-    --color-neon-pink: #ff00ff;
-    --color-neon-cyan: #00ffff;
-    --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    --color-bg: #ffffff;
+    --color-text: #333333;
+    --color-text-secondary: #a9a9a9;
+    --color-text-muted: #555555;
+    --color-border: #e0e0e0;
+    --color-accent: #333333;
+    --font-mono: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 /* Reset */
@@ -86,7 +83,7 @@ body {
     left: 10px;
     width: var(--sidebar-width);
     height: calc(100vh - 10px);
-    padding: 80px 24px 32px 24px;
+    padding: 32px 24px 40px 24px;
     border-right: 1px solid var(--color-border);
     background-color: var(--color-bg);
     border-radius: 4px 0 0 0;
@@ -96,7 +93,7 @@ body {
 .sidebar-content {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 16px;
     height: 100%;
 }
 
@@ -111,6 +108,7 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
+    align-self: center;
 }
 
 .photo-wrapper {
@@ -119,6 +117,8 @@ body {
     height: 140px;
     flex-shrink: 0;
     overflow: hidden;
+    align-self: center;
+    margin-top: 16px;
 }
 
 .profile-photo {
@@ -146,8 +146,10 @@ body {
 .tagline {
     font-size: 13px;
     color: var(--color-text-muted);
-    margin-top: -12px;
+    margin-top: -8px;
     line-height: 1.4;
+    align-self: center;
+    text-align: center;
 }
 
 .bio {
@@ -160,9 +162,11 @@ body {
 .nav {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
     padding-top: 16px;
     border-top: 1px solid var(--color-border);
+    align-items: center;
+    text-align: center;
 }
 
 .nav a {
@@ -175,6 +179,77 @@ body {
 
 .nav a:hover {
     color: var(--color-text);
+}
+
+.nav a.active {
+    color: var(--color-text);
+    font-weight: 600;
+}
+
+/* View Toggle - Boomer Mode (Sidebar) */
+.boomer-view-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 90px;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    align-items: center;
+    margin-bottom: -16px;
+}
+
+.boomer-view-toggle .view-toggle-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+    width: 130px;
+}
+
+.boomer-view-toggle .view-toggle-option input[type="checkbox"] {
+    display: none;
+}
+
+.boomer-view-toggle .view-toggle-option .checkmark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--color-accent);
+    border-radius: 4px;
+    background: transparent;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.boomer-view-toggle .view-toggle-option input[type="checkbox"]:checked + .checkmark {
+    background: var(--color-accent);
+}
+
+.boomer-view-toggle .view-toggle-option input[type="checkbox"]:checked + .checkmark::after {
+    content: '✓';
+    color: var(--color-bg);
+    font-size: 14px;
+    font-weight: 700;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.boomer-view-toggle .view-toggle-option .view-label {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+}
+
+.boomer-view-toggle .view-toggle-option:hover .view-label {
+    color: var(--color-text);
+}
+
+/* Hide boomer view toggle in hacker mode */
+body.hacker-mode .boomer-view-toggle {
+    display: none;
 }
 
 .palette-toggle {
@@ -209,13 +284,15 @@ body {
     flex-direction: column;
     gap: 8px;
     padding-top: 16px;
-    margin-top: 32px;
+    margin-top: 0;
     border-top: 1px solid var(--color-border);
+    align-items: center;
+    text-align: center;
 }
 
 .contact h4 {
     font-family: var(--font-heading);
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
     color: var(--color-text);
     margin-bottom: 8px;
@@ -232,12 +309,25 @@ body {
 
 .contact a:hover {
     color: var(--color-accent);
+    text-decoration: underline;
 }
 
 .location {
     font-size: 13px;
     color: var(--color-text-muted);
     margin-top: 8px;
+}
+
+/* Download CV icon */
+.contact a[download]::after {
+    content: ' ↓';
+    font-size: 12px;
+}
+
+/* External link indicator */
+.contact a[target="_blank"]::after {
+    content: ' ↗';
+    font-size: 11px;
 }
 
 /* Main Content */
@@ -313,7 +403,7 @@ body {
     position: relative;
     overflow: hidden;
     z-index: 1;
-    transition: color 0.3s ease;
+    transition: color 0.5s ease;
 }
 
 .btn::before {
@@ -325,15 +415,17 @@ body {
     height: 100%;
     background: var(--color-text);
     z-index: -1;
-    transition: width 0.3s ease;
+    transition: width 0.5s ease;
 }
 
 .btn:hover {
     color: var(--color-bg);
+    transition: color 0.3s ease;
 }
 
 .btn:hover::before {
     width: 100%;
+    transition: width 0.3s ease;
 }
 
 .btn-outline {
@@ -389,6 +481,11 @@ h2 {
 
 .project-card:hover {
     border-color: var(--color-accent);
+}
+
+/* Hide project thumbnails in boomer mode */
+.project-thumb {
+    display: none;
 }
 
 .project-card h3 {
@@ -568,10 +665,12 @@ a {
 
     .welcome-buttons {
         flex-direction: column;
+        align-items: center;
     }
 
     .btn {
         width: 100%;
+        max-width: 280px;
         justify-content: center;
     }
 
@@ -616,44 +715,24 @@ a:focus-visible {
 }
 
 /* ============================================
-   HACKER MODE STYLES
+   HACKER MODE STYLES - Clean Minimal (walzr.com style)
    ============================================ */
 
-/* Grid Background */
+/* Clean white background */
 body.hacker-mode {
     background: var(--color-bg);
+    padding: 0;
 }
 
 body.hacker-mode .layout {
-    background:
-        linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px),
-        var(--color-bg);
-    background-size: 50px 50px;
+    background: var(--color-bg);
+    border-radius: 0;
 }
 
-/* Scanline Overlay */
-body.hacker-mode::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    background: repeating-linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.1) 0px,
-        rgba(0, 0, 0, 0.1) 1px,
-        transparent 1px,
-        transparent 3px
-    );
-    z-index: 9999;
-}
-
-/* Hacker Mode Typography */
+/* Clean typography */
 body.hacker-mode {
     font-family: var(--font-mono);
+    letter-spacing: -0.3px;
 }
 
 body.hacker-mode .name,
@@ -662,132 +741,16 @@ body.hacker-mode h2,
 body.hacker-mode h3,
 body.hacker-mode h4 {
     font-family: var(--font-mono);
-    text-transform: uppercase;
-    letter-spacing: 2px;
+    text-transform: none;
+    letter-spacing: -0.3px;
+    font-weight: 600;
 }
 
-/* Glitch Effect on Main Heading */
-body.hacker-mode .welcome-heading {
-    position: relative;
-    animation: glitch 3s infinite;
-}
-
-body.hacker-mode .welcome-heading::before,
-body.hacker-mode .welcome-heading::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-body.hacker-mode .welcome-heading::before {
-    animation: glitch-1 0.3s infinite;
-    color: var(--color-neon-pink);
-    clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
-    transform: translate(-2px);
-}
-
-body.hacker-mode .welcome-heading::after {
-    animation: glitch-2 0.3s infinite;
-    color: var(--color-neon-green);
-    clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
-    transform: translate(2px);
-}
-
-@keyframes glitch {
-    0%, 90%, 100% { opacity: 1; }
-    91% { opacity: 0.8; }
-    92% { opacity: 1; }
-}
-
-@keyframes glitch-1 {
-    0%, 100% { transform: translate(0); }
-    20% { transform: translate(-3px, 1px); }
-    40% { transform: translate(2px, -1px); }
-    60% { transform: translate(-1px, 2px); }
-    80% { transform: translate(1px, -2px); }
-}
-
-@keyframes glitch-2 {
-    0%, 100% { transform: translate(0); }
-    20% { transform: translate(2px, -1px); }
-    40% { transform: translate(-3px, 1px); }
-    60% { transform: translate(1px, -2px); }
-    80% { transform: translate(-2px, 2px); }
-}
-
-/* Neon Glow Effects */
-body.hacker-mode .welcome {
-    background: rgba(0, 255, 255, 0.05);
-    border: 1px solid var(--color-neon-cyan);
-    box-shadow:
-        0 0 10px rgba(0, 255, 255, 0.3),
-        inset 0 0 20px rgba(0, 255, 255, 0.1);
-}
-
-body.hacker-mode .project-card {
-    background: rgba(255, 0, 255, 0.05);
-    border: 1px solid var(--color-neon-pink);
-    box-shadow: 0 0 10px rgba(255, 0, 255, 0.2);
-    transition: all 0.3s ease;
-}
-
-body.hacker-mode .project-card:hover {
-    box-shadow:
-        0 0 20px rgba(255, 0, 255, 0.5),
-        0 0 40px rgba(255, 0, 255, 0.3),
-        inset 0 0 20px rgba(255, 0, 255, 0.1);
-    transform: translateY(-4px);
-}
-
-body.hacker-mode .project-link .project-card:hover {
-    box-shadow:
-        0 0 20px rgba(255, 0, 255, 0.5),
-        0 0 40px rgba(255, 0, 255, 0.3),
-        inset 0 0 20px rgba(255, 0, 255, 0.1);
-    transform: translateY(-4px);
-}
-
-body.hacker-mode .project-link {
-    text-decoration: none;
-}
-
-body.hacker-mode .project-card h3 {
-    color: var(--color-neon-green);
-    text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
-}
-
-body.hacker-mode .project-card .tech {
-    color: var(--color-neon-pink);
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 1px;
-}
-
-/* Sidebar in Hacker Mode */
-body.hacker-mode .sidebar {
-    border-right-color: var(--color-neon-cyan);
-    box-shadow: 1px 0 20px rgba(0, 255, 255, 0.2);
-}
-
-/* Profile photo hidden in hacker mode - cyber avatar shown instead */
-
-/* Photo Switching for Boomer/Hacker Mode */
-
-/* Cyber avatar base styles */
+/* Hide sidebar elements */
 .cyber-avatar {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 140px !important;
-    height: 140px !important;
-    border-radius: 50%;
     display: none;
 }
 
-/* Hacker mode: hide photo, show avatar */
 body.hacker-mode .profile-photo {
     display: none !important;
 }
@@ -796,193 +759,23 @@ body.hacker-mode .palette-toggle {
     display: none !important;
 }
 
-body.hacker-mode .cyber-avatar {
-    display: block !important;
-    animation: avatarGlow 2s ease-in-out infinite alternate;
-}
-
-@keyframes avatarGlow {
-    from {
-        filter: drop-shadow(0 0 5px rgba(0, 255, 255, 0.5));
-    }
-    to {
-        filter: drop-shadow(0 0 15px rgba(255, 0, 255, 0.7));
-    }
-}
-
-body.hacker-mode .nav a {
-    color: var(--color-neon-pink);
-    transition: all 0.2s;
-}
-
-body.hacker-mode .nav a:hover {
-    color: var(--color-neon-green);
-    text-shadow: 0 0 10px rgba(57, 255, 20, 0.8);
-}
-
-/* Buttons in Hacker Mode */
-body.hacker-mode .btn {
-    font-family: var(--font-mono);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    border-color: var(--color-neon-cyan);
-    color: var(--color-neon-cyan);
-    background: transparent;
-    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
-}
-
-body.hacker-mode .btn::before {
-    background: var(--color-neon-cyan);
-}
-
-body.hacker-mode .btn:hover {
-    color: var(--color-bg);
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
-}
-
-body.hacker-mode .btn-outline {
-    border-color: var(--color-neon-pink);
-    color: var(--color-neon-pink);
-    box-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
-}
-
-body.hacker-mode .btn-outline::before {
-    background: var(--color-neon-pink);
-}
-
-body.hacker-mode .btn-outline:hover {
-    box-shadow: 0 0 20px rgba(255, 0, 255, 0.6);
-}
-
-/* Section Headers with Terminal Style */
-body.hacker-mode h2::before {
-    content: '> ';
-    color: var(--color-neon-green);
-}
-
-body.hacker-mode .section {
-    border-bottom-color: var(--color-border);
-}
-
-/* Collapsible Sections in Hacker Mode */
-body.hacker-mode .section.collapsible {
-    cursor: pointer;
-    padding-bottom: 16px;
-    margin-bottom: 24px;
-}
-
-body.hacker-mode .section.collapsible .section-content {
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: all 0.4s ease;
-}
-
-body.hacker-mode .section.collapsible.expanded .section-content {
-    max-height: 2000px;
-    opacity: 1;
-}
-
-body.hacker-mode .section.collapsible h2::after {
-    content: ' [+]';
-    color: var(--color-neon-pink);
-    font-size: 0.7em;
-}
-
-body.hacker-mode .section.collapsible.expanded h2::after {
-    content: ' [-]';
-}
-
-body.hacker-mode .section.collapsible:hover h2 {
-    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-}
-
-/* Projects Section Enhanced */
-body.hacker-mode #projects {
-    border: 1px solid var(--color-neon-green);
-    border-radius: 8px;
-    padding: 24px;
-    margin: 0 -24px 56px -24px;
-    background: rgba(57, 255, 20, 0.02);
-    box-shadow: 0 0 30px rgba(57, 255, 20, 0.1);
-}
-
-body.hacker-mode #projects h2 {
-    color: var(--color-neon-green);
-    text-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
-}
-
-body.hacker-mode .section-subtitle {
-    font-family: var(--font-mono);
-    color: var(--color-neon-pink);
-}
-
-/* Entry styling in hacker mode */
-body.hacker-mode .entry {
-    border-bottom-color: var(--color-border);
-}
-
-body.hacker-mode .entry h3 {
-    color: var(--color-neon-cyan);
-}
-
-body.hacker-mode .date {
-    font-family: var(--font-mono);
-    color: var(--color-neon-pink);
-}
-
-body.hacker-mode .role {
-    font-family: var(--font-mono);
-}
-
-body.hacker-mode li::marker {
-    color: var(--color-neon-green);
-}
-
-/* Footer in Hacker Mode */
-body.hacker-mode .footer {
-    border-top-color: var(--color-border);
-}
-
-body.hacker-mode .footer p {
-    font-family: var(--font-mono);
-    color: var(--color-neon-cyan);
-}
-
-body.hacker-mode .footer p::before {
-    content: '// ';
-    color: var(--color-neon-green);
-}
-
-/* Scrollbar in Hacker Mode */
-body.hacker-mode .main::-webkit-scrollbar-thumb {
-    background: var(--color-neon-cyan);
-    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-}
-
-body.hacker-mode .main::-webkit-scrollbar-track {
-    background: rgba(0, 255, 255, 0.05);
-}
-
 /* Mode Toggle Button */
 .mode-toggle {
     position: fixed;
     bottom: 24px;
     right: 24px;
     padding: 12px;
-    border: 2px solid var(--color-text);
+    border: 1px solid var(--color-border);
     border-radius: 8px;
     background: var(--color-bg);
-    color: var(--color-text);
+    color: var(--color-text-muted);
     cursor: pointer;
     z-index: 10000;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease;
 }
 
 .mode-toggle:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    border-color: var(--color-text-muted);
 }
 
 .mode-toggle .mode-label {
@@ -1000,17 +793,6 @@ body.hacker-mode .main::-webkit-scrollbar-track {
     height: 24px;
 }
 
-body.hacker-mode .mode-toggle {
-    border-color: var(--color-neon-cyan);
-    color: var(--color-neon-cyan);
-    background: var(--color-bg);
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
-}
-
-body.hacker-mode .mode-toggle:hover {
-    box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
-}
-
 body.hacker-mode .mode-toggle .mode-label.boomer {
     display: none;
 }
@@ -1019,32 +801,9 @@ body.hacker-mode .mode-toggle .mode-label.hacker {
     display: inline-flex;
 }
 
-/* Flicker animation for hacker elements */
-@keyframes flicker {
-    0%, 100% { opacity: 1; }
-    92% { opacity: 0.8; }
-    94% { opacity: 1; }
-    97% { opacity: 0.9; }
-}
-
-body.hacker-mode .project-card h3 {
-    animation: flicker 4s infinite;
-}
-
-/* Terminal cursor blink */
-@keyframes blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
-}
-
-body.hacker-mode .welcome-subtext::after {
-    content: '_';
-    animation: blink 1s infinite;
-    color: var(--color-neon-green);
-}
-
 /* ============================================
    HACKER MODE - NEW LAYOUT (walzr.com inspired)
+   Bold header stripe, projects only
    ============================================ */
 
 /* Hide hacker header in normal mode */
@@ -1052,88 +811,107 @@ body.hacker-mode .welcome-subtext::after {
     display: none;
 }
 
-/* Show hacker header and restructure layout in hacker mode */
+/* Show hacker header - bold colored stripe */
 body.hacker-mode .hacker-header {
     display: block;
     width: 100%;
-    padding: 60px 48px 40px;
-    border-bottom: 1px solid var(--color-neon-cyan);
-    background: var(--color-bg);
+    padding: 60px 40px;
+    background: var(--hacker-header-color, #ff1493);
 }
 
 body.hacker-mode .hacker-header-content {
     display: flex;
     align-items: center;
-    gap: 24px;
-    max-width: 900px;
-    margin: 0 auto 24px;
-}
-
-body.hacker-mode .hacker-avatar-wrapper {
-    flex-shrink: 0;
-}
-
-body.hacker-mode .hacker-avatar {
-    width: 80px;
-    height: 80px;
-    animation: avatarGlow 2s ease-in-out infinite alternate;
-}
-
-body.hacker-mode .hacker-header-text {
-    flex: 1;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 body.hacker-mode .hacker-name {
     font-family: var(--font-mono);
-    font-size: 32px;
-    font-weight: 700;
-    color: var(--color-neon-cyan);
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    margin: 0 0 4px 0;
-    text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
-}
-
-body.hacker-mode .hacker-tagline {
-    font-family: var(--font-mono);
-    font-size: 14px;
-    color: var(--color-text-muted);
+    font-size: 4rem;
+    font-weight: 600;
+    color: #000;
     margin: 0;
-    letter-spacing: 1px;
+    letter-spacing: -0.5px;
 }
 
-body.hacker-mode .hacker-nav {
+body.hacker-mode .hacker-icon {
+    flex-shrink: 0;
+    margin-right: 30px;
+}
+
+body.hacker-mode .hacker-icon svg {
+    width: 240px;
+    height: 240px;
+    color: #000;
+}
+
+/* Header right section - icon + checkboxes */
+body.hacker-mode .hacker-header-right {
     display: flex;
-    gap: 32px;
-    max-width: 900px;
-    margin: 0 auto;
+    align-items: center;
+    gap: 50px;
 }
 
-body.hacker-mode .hacker-nav a {
-    font-family: var(--font-mono);
-    font-size: 14px;
-    color: var(--color-text-muted);
-    text-decoration: none;
-    text-transform: lowercase;
-    transition: all 0.2s;
+/* View toggle checkboxes */
+body.hacker-mode .view-toggle-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+body.hacker-mode .view-toggle-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+body.hacker-mode .view-toggle-option input[type="checkbox"] {
+    display: none;
+}
+
+body.hacker-mode .view-toggle-option .checkmark {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #000;
+    border-radius: 4px;
+    background: transparent;
     position: relative;
+    flex-shrink: 0;
+    overflow: visible;
 }
 
-body.hacker-mode .hacker-nav a:hover {
-    color: var(--color-neon-pink);
-    text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+body.hacker-mode .view-toggle-option input[type="checkbox"]:checked + .checkmark {
+    background: transparent;
 }
 
-body.hacker-mode .hacker-nav a::before {
-    content: '>';
-    margin-right: 6px;
-    color: var(--color-neon-green);
-    opacity: 0;
-    transition: opacity 0.2s;
+body.hacker-mode .view-toggle-option input[type="checkbox"]:checked + .checkmark::after {
+    content: '✓';
+    color: #f5f5f5;
+    font-size: 42px;
+    font-weight: 900;
+    position: absolute;
+    top: 45%;
+    left: 55%;
+    transform: translate(-50%, -50%) rotate(-8deg);
+    text-shadow:
+        0 0 2px rgba(255, 255, 255, 0.8),
+        1px 1px 0 rgba(200, 200, 200, 0.5),
+        -1px -1px 0 rgba(220, 220, 220, 0.4),
+        2px 2px 4px rgba(0, 0, 0, 0.15),
+        0 0 8px rgba(255, 255, 255, 0.3);
+    filter: url(#chalk);
+    opacity: 0.95;
 }
 
-body.hacker-mode .hacker-nav a:hover::before {
-    opacity: 1;
+body.hacker-mode .view-toggle-option .view-label {
+    font-family: var(--font-mono);
+    font-size: 1.17rem;
+    font-weight: 500;
+    color: #000;
 }
 
 /* Hide sidebar in hacker mode */
@@ -1146,214 +924,349 @@ body.hacker-mode .layout {
     flex-direction: column;
 }
 
+html.hacker-mode-html,
+body.hacker-mode {
+    overflow: auto !important;
+    overflow-x: hidden !important;
+    height: auto !important;
+}
+
 body.hacker-mode .main {
     margin-left: 0;
     width: 100%;
-    padding: 48px;
+    padding: 40px 80px;
     height: auto;
-    min-height: calc(100vh - 200px);
+    min-height: auto;
+    overflow: visible;
 }
 
 body.hacker-mode .main-inner {
-    max-width: 900px;
+    max-width: 1400px;
     padding-top: 0;
+    margin: 0 auto;
 }
 
-/* Hide the old welcome section's heading in hacker mode (we have the header now) */
-body.hacker-mode .welcome {
-    background: transparent;
+/* Hide welcome section and all non-project sections */
+body.hacker-mode .welcome,
+body.hacker-mode #experience,
+body.hacker-mode #education,
+body.hacker-mode #involvement,
+body.hacker-mode .footer {
+    display: none !important;
+}
+
+/* Projects Section - walzr.com style */
+body.hacker-mode #projects {
     border: none;
-    box-shadow: none;
-    padding: 0 0 32px 0;
-    margin-bottom: 32px;
-    border-bottom: 1px solid var(--color-border);
+    padding: 20px;
+    margin: 0;
+    background: transparent;
+    border-bottom: none;
 }
 
-body.hacker-mode .welcome-heading {
+body.hacker-mode #projects h2 {
     display: none;
 }
 
-body.hacker-mode .welcome-text {
-    font-size: 16px;
-    line-height: 1.8;
-    color: var(--color-text-secondary);
-    max-width: 700px;
+body.hacker-mode .section-subtitle {
+    display: none;
 }
 
-body.hacker-mode .welcome-subtext {
-    font-size: 14px;
-    margin-bottom: 24px;
-}
-
-body.hacker-mode .welcome-buttons {
-    gap: 16px;
-}
-
-body.hacker-mode .btn {
-    padding: 10px 20px;
-    font-size: 13px;
-}
-
-/* Project Grid - 2 columns like walzr.com */
+/* Project Grid - 2 columns with image + text layout */
 body.hacker-mode .project-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    justify-content: flex-start;
 }
 
-body.hacker-mode #projects {
-    border: none;
-    padding: 0;
-    margin: 0 0 56px 0;
-    background: transparent;
-    box-shadow: none;
+body.hacker-mode .project-grid > .project-card,
+body.hacker-mode .project-grid > .project-link {
+    width: calc(50% - 25px);
+}
+
+body.hacker-mode .project-link .project-card {
+    width: 100%;
 }
 
 body.hacker-mode .project-card {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
     background: transparent;
-    border: 1px solid var(--color-border);
-    padding: 24px;
-    transition: all 0.2s ease;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    transition: none;
 }
 
 body.hacker-mode .project-card:hover {
-    border-color: var(--color-neon-pink);
-    box-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
+    border-color: transparent;
+    box-shadow: none;
     transform: none;
 }
 
+body.hacker-mode .project-thumb {
+    display: block;
+    flex-shrink: 0;
+    width: 200px;
+    height: 130px;
+    border-radius: 7px;
+    overflow: hidden;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+body.hacker-mode .project-thumb svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+body.hacker-mode .project-text {
+    flex: 1;
+    min-width: 0;
+}
+
 body.hacker-mode .project-card h3 {
-    font-size: 16px;
-    margin-bottom: 12px;
-    animation: none;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #333;
+    letter-spacing: -0.3px;
+    display: inline;
+}
+
+body.hacker-mode .project-card h3::after {
+    content: ': ';
+    font-weight: 700;
 }
 
 body.hacker-mode .project-card p {
-    font-size: 14px;
-    line-height: 1.6;
-    color: var(--color-text-muted);
+    font-size: 1.3rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #a9a9a9;
+    margin: 0;
+    display: inline;
 }
 
 body.hacker-mode .project-card .tech {
-    font-size: 12px;
-    opacity: 0.7;
+    display: none;
 }
 
-/* Section styling adjustments */
-body.hacker-mode .section {
-    margin-bottom: 48px;
-    padding-bottom: 40px;
+/* Links in hacker mode */
+body.hacker-mode .project-link {
+    text-decoration: none;
 }
 
-body.hacker-mode h2 {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--color-text-muted);
-    margin-bottom: 24px;
-    text-transform: lowercase;
+/* Mode toggle - minimal */
+body.hacker-mode .mode-toggle {
+    border-color: #ddd;
+    color: #666;
+    background: #fff;
+    box-shadow: rgba(100, 100, 111, 0.1) 0px 4px 12px 0px;
 }
 
-body.hacker-mode h2::before {
-    content: '// ';
-    color: var(--color-neon-green);
-}
-
-body.hacker-mode .section-subtitle {
-    font-size: 13px;
-    margin-top: -16px;
-    margin-bottom: 20px;
-}
-
-/* Entry styling - cleaner */
-body.hacker-mode .entry {
-    margin-bottom: 24px;
-    padding-bottom: 24px;
-}
-
-body.hacker-mode .entry h3 {
-    font-size: 16px;
-    font-weight: 600;
-    text-transform: none;
-    letter-spacing: 0;
-}
-
-body.hacker-mode .entry-header {
-    margin-bottom: 8px;
-}
-
-body.hacker-mode .date {
-    font-size: 13px;
-}
-
-body.hacker-mode .role {
-    font-size: 14px;
-    margin-bottom: 8px;
-}
-
-body.hacker-mode li {
-    font-size: 14px;
-    color: var(--color-text-muted);
-}
-
-/* Collapsible sections - simpler */
-body.hacker-mode .section.collapsible {
-    cursor: default;
-    padding-bottom: 40px;
-    margin-bottom: 48px;
-}
-
-body.hacker-mode .section.collapsible h2 {
-    cursor: pointer;
-}
-
-body.hacker-mode .section.collapsible h2::after {
-    content: ' [expand]';
-    font-size: 11px;
-    color: var(--color-neon-pink);
-    opacity: 0.6;
-}
-
-body.hacker-mode .section.collapsible.expanded h2::after {
-    content: ' [collapse]';
-}
-
-/* Footer */
-body.hacker-mode .footer {
-    margin-top: 32px;
-    padding-top: 32px;
-    text-align: center;
-}
-
-body.hacker-mode .footer p::before {
-    content: '';
+body.hacker-mode .mode-toggle:hover {
+    border-color: #999;
 }
 
 /* Responsive for hacker mode */
-@media (max-width: 900px) {
+@media (max-width: 800px) {
     body.hacker-mode .hacker-header {
-        padding: 40px 24px 32px;
+        padding: 40px 20px;
     }
 
     body.hacker-mode .hacker-header-content {
-        flex-direction: column;
+        flex-direction: column-reverse;
         text-align: center;
+        gap: 20px;
     }
 
-    body.hacker-mode .hacker-nav {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 16px 24px;
-    }
-
-    body.hacker-mode .main {
-        padding: 32px 24px;
-    }
-
-    body.hacker-mode .project-grid {
-        grid-template-columns: 1fr;
+    body.hacker-mode .hacker-icon svg {
+        width: 80px;
+        height: 80px;
     }
 
     body.hacker-mode .hacker-name {
-        font-size: 24px;
+        font-size: 2.5rem;
     }
+
+    body.hacker-mode .project-grid > .project-card,
+    body.hacker-mode .project-grid > .project-link {
+        width: 100%;
+        max-width: none;
+    }
+
+    body.hacker-mode .project-card h3,
+    body.hacker-mode .project-card p {
+        font-size: 1.2rem;
+    }
+
+    body.hacker-mode .project-thumb {
+        width: 150px;
+        height: 100px;
+    }
+}
+
+@media (max-width: 500px) {
+    body.hacker-mode .hacker-name {
+        font-size: 2rem;
+    }
+
+    body.hacker-mode .project-card h3,
+    body.hacker-mode .project-card p {
+        font-size: 1.1rem;
+    }
+
+    body.hacker-mode .project-thumb {
+        width: 120px;
+        height: 80px;
+    }
+}
+
+/* ============================================
+   VIEW TRANSITION - STATIC DISSOLVE EFFECT
+   ============================================ */
+
+/* Static noise overlay */
+.static-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100000;
+    pointer-events: none;
+}
+
+.static-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Checkmark animation states */
+.view-toggle-option .checkmark {
+    position: relative;
+    overflow: visible;
+}
+
+.view-toggle-option .checkmark::after {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Animating checkmark - flies to target */
+.view-toggle-option .checkmark.animating-out::after {
+    animation: checkmarkFlyOut 0.4s ease-in forwards;
+}
+
+.view-toggle-option .checkmark.animating-in::after {
+    animation: checkmarkFlyIn 0.4s ease-out forwards;
+}
+
+@keyframes checkmarkFlyOut {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5) translateY(-20px);
+    }
+}
+
+@keyframes checkmarkFlyIn {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5) translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* Boomer mode checkmark animation adjustments */
+.boomer-view-toggle .view-toggle-option .checkmark.animating-out::after {
+    animation: checkmarkFlyOutBoomer 0.4s ease-in forwards;
+}
+
+.boomer-view-toggle .view-toggle-option .checkmark.animating-in::after {
+    animation: checkmarkFlyInBoomer 0.4s ease-out forwards;
+}
+
+@keyframes checkmarkFlyOutBoomer {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5) translateY(-15px);
+    }
+}
+
+@keyframes checkmarkFlyInBoomer {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5) translateY(-15px);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* Hide content during transition */
+body.transitioning .layout {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+body.transitioning.reveal .layout {
+    opacity: 1;
+}
+
+/* ============================================
+   HACKER MODE FOOTER
+   ============================================ */
+
+/* Hide hacker footer in boomer mode */
+.hacker-footer {
+    display: none;
+}
+
+/* Show hacker footer in hacker mode */
+body.hacker-mode .hacker-footer {
+    display: block;
+    padding: 60px 0 40px 0;
+    margin-top: 40px;
+}
+
+body.hacker-mode .hacker-footer-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+body.hacker-mode .hacker-footer-links a {
+    font-family: var(--font-mono);
+    font-size: 1.43rem;
+    font-weight: 500;
+    color: var(--hacker-header-color, #ff1493);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+body.hacker-mode .hacker-footer-links a:hover {
+    opacity: 0.7;
+}
+
+body.hacker-mode .hacker-footer-separator {
+    color: var(--hacker-header-color, #ff1493);
+    font-size: 1.43rem;
+    font-weight: 400;
+    opacity: 0.5;
 }

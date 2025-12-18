@@ -241,11 +241,100 @@ function escapeHtml(text) {
 }
 
 /**
- * Show error message
+ * Show error message in arcade-style modal
  */
 function showError(message) {
-    alert(message); // Simple for now, could be enhanced with custom modal
+    const modal = document.getElementById('error-modal');
+    const messageEl = document.getElementById('error-message');
+    const closeBtn = document.getElementById('error-close-btn');
+
+    if (!modal || !messageEl) {
+        // Fallback to alert if modal not found
+        alert(message);
+        return;
+    }
+
+    messageEl.textContent = message;
+    modal.classList.add('active');
+
+    // Close on button click
+    const closeHandler = () => {
+        modal.classList.remove('active');
+        closeBtn.removeEventListener('click', closeHandler);
+    };
+    closeBtn.addEventListener('click', closeHandler);
+
+    // Close on Escape key
+    const escHandler = (e) => {
+        if (e.key === 'Escape') {
+            modal.classList.remove('active');
+            document.removeEventListener('keydown', escHandler);
+        }
+    };
+    document.addEventListener('keydown', escHandler);
 }
+
+/**
+ * Hide the first-time note (after model is loaded)
+ */
+function hideFirstTimeNote() {
+    const note = document.getElementById('first-time-note');
+    if (note) {
+        note.classList.add('hidden');
+    }
+}
+
+/**
+ * Handle keyboard input for initials entry
+ */
+function handleInitialsKeyboard(e) {
+    if (currentScreen !== 'highscore-entry') return;
+
+    const key = e.key.toUpperCase();
+
+    // Handle A-Z keys - type into focused slot
+    if (/^[A-Z]$/.test(key)) {
+        // Find which slot should receive the letter (first non-filled or cycle through)
+        const slots = document.querySelectorAll('.initial-slot');
+        let targetIndex = 0;
+
+        // Set letter in first slot, then move focus concept
+        currentInitials[targetIndex] = key;
+        const letterEl = slots[targetIndex]?.querySelector('.letter');
+        if (letterEl) {
+            letterEl.textContent = key;
+        }
+
+        // Shift initials left for "typing" effect
+        if (currentInitials.every(l => l !== 'A' || key === 'A')) {
+            // Just update first slot on each keypress
+            currentInitials.unshift(key);
+            currentInitials.pop();
+            slots.forEach((slot, i) => {
+                const el = slot.querySelector('.letter');
+                if (el) el.textContent = currentInitials[i];
+            });
+        }
+    }
+
+    // Arrow keys for first slot
+    if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        changeInitial(0, 1);
+    } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        changeInitial(0, -1);
+    }
+
+    // Enter to submit
+    if (e.key === 'Enter') {
+        const submitBtn = document.getElementById('submit-score-btn');
+        if (submitBtn) submitBtn.click();
+    }
+}
+
+// Add keyboard listener
+document.addEventListener('keydown', handleInitialsKeyboard);
 
 // Export for use in other modules
 window.UI = {
@@ -260,5 +349,6 @@ window.UI = {
     startLoadingMessages,
     stopLoadingMessages,
     showError,
+    hideFirstTimeNote,
     get currentScreen() { return currentScreen; }
 };

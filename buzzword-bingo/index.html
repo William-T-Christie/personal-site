@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buzzword Bingo</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -55,7 +56,12 @@
             <div class="bg-controls">
                 <div class="bg-control-surface">
                     <div class="bg-coin-slot">INSERT COIN</div>
-                    <div class="bg-joystick"></div>
+                    <div class="bg-joystick">
+                        <div class="joystick-handle">
+                            <div class="joystick-shaft"></div>
+                            <div class="joystick-ball"></div>
+                        </div>
+                    </div>
                     <div class="bg-buttons">
                         <span class="bg-btn red"></span>
                         <span class="bg-btn yellow"></span>
@@ -109,9 +115,6 @@
                             <p class="instructions">Upload a meeting recording and discover<br>how much corporate speak was used</p>
 
                             <div class="upload-zone" id="upload-zone">
-                                <div class="upload-icon">
-                                    <span class="icon-tape"></span>
-                                </div>
                                 <p>DRAG & DROP</p>
                                 <p class="small">or click to select file</p>
                                 <p class="formats">MP4 / WebM / MOV / MP3 / WAV</p>
@@ -120,11 +123,11 @@
 
                             <button class="demo-btn" id="demo-btn">TRY DEMO</button>
 
-                            <button class="privacy-badge" id="privacy-toggle">
+                            <div class="privacy-badge" id="privacy-toggle" onclick="this.classList.toggle('active'); document.getElementById('disclaimer').classList.toggle('active');">
                                 <span class="lock-icon">&#128274;</span>
                                 <span>Your video never leaves this device</span>
                                 <span class="expand-icon">&#9660;</span>
-                            </button>
+                            </div>
 
                             <div class="disclaimer" id="disclaimer">
                                 <div class="disclaimer-content">
@@ -152,6 +155,7 @@
                             </div>
                             <p class="progress-text" id="progress-text">Initializing...</p>
                             <p class="fun-message" id="fun-message">Detecting synergies...</p>
+                            <button class="cancel-btn" id="cancel-btn">CANCEL</button>
                         </div>
                     </section>
 
@@ -241,7 +245,12 @@
                     </div>
                 </div>
                 <div class="joystick-area">
-                    <div class="joystick"></div>
+                    <div class="joystick">
+                        <div class="joystick-handle">
+                            <div class="joystick-shaft"></div>
+                            <div class="joystick-ball"></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="buttons-area">
                     <div class="arcade-button red"></div>
@@ -252,7 +261,17 @@
 
         <!-- Cabinet Base -->
         <div class="cabinet-base">
+            <a href="../index.html" class="back-link">&larr; Back to Portfolio</a>
             <p class="footer-text">100% BROWSER-BASED &bull; NO DATA STORED</p>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div class="error-modal" id="error-modal">
+        <div class="error-modal-content">
+            <h3 class="error-title">ERROR!</h3>
+            <p class="error-message" id="error-message"></p>
+            <button class="arcade-btn" id="error-close-btn">OK</button>
         </div>
     </div>
 
@@ -265,12 +284,24 @@
             <div class="bg-screen">
                 <div class="bg-screen-glow"></div>
                 <div class="fake-game megablast">
-                    <!-- Explosion effects -->
-                    <div class="explosions">
-                        <span class="boom boom1">💥</span>
-                        <span class="boom boom2">💥</span>
-                        <span class="boom boom3">💥</span>
+                    <!-- City skyline at bottom -->
+                    <div class="city-skyline">
+                        <div class="building b1"></div>
+                        <div class="building b2"></div>
+                        <div class="building b3"></div>
+                        <div class="building b4"></div>
+                        <div class="building b5"></div>
                     </div>
+                    <!-- Bomber plane -->
+                    <div class="bomber">✈</div>
+                    <!-- Falling bombs -->
+                    <div class="bomb bomb1">●</div>
+                    <div class="bomb bomb2">●</div>
+                    <div class="bomb bomb3">●</div>
+                    <!-- Explosion effects -->
+                    <div class="explosion exp1"></div>
+                    <div class="explosion exp2"></div>
+                    <div class="explosion exp3"></div>
                     <!-- Target reticle -->
                     <div class="reticle">⊕</div>
                     <!-- Game UI -->
@@ -285,7 +316,12 @@
             <div class="bg-controls">
                 <div class="bg-control-surface">
                     <div class="bg-coin-slot">INSERT COIN</div>
-                    <div class="bg-joystick"></div>
+                    <div class="bg-joystick">
+                        <div class="joystick-handle">
+                            <div class="joystick-shaft"></div>
+                            <div class="joystick-ball"></div>
+                        </div>
+                    </div>
                     <div class="bg-buttons">
                         <span class="bg-btn blue"></span>
                         <span class="bg-btn green"></span>
@@ -304,6 +340,7 @@
     <script src="js/audio.js"></script>
     <script src="js/transcribe.js"></script>
     <script src="js/analyzer.js"></script>
+    <script src="js/controls.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
