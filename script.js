@@ -272,8 +272,8 @@ document.addEventListener('DOMContentLoaded', () => {
         applyPalette(0);
     }
 
-    // Smooth scrolling for nav links
-    const navLinks = document.querySelectorAll('.nav a[href^="#"]');
+    // Smooth scrolling for nav links (both sidebar and hacker nav)
+    const navLinks = document.querySelectorAll('.nav a[href^="#"], .hacker-nav a[href^="#"]');
     const main = document.querySelector('.main');
 
     navLinks.forEach(link => {

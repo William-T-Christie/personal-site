@@ -1042,3 +1042,318 @@ body.hacker-mode .welcome-subtext::after {
     animation: blink 1s infinite;
     color: var(--color-neon-green);
 }
+
+/* ============================================
+   HACKER MODE - NEW LAYOUT (walzr.com inspired)
+   ============================================ */
+
+/* Hide hacker header in normal mode */
+.hacker-header {
+    display: none;
+}
+
+/* Show hacker header and restructure layout in hacker mode */
+body.hacker-mode .hacker-header {
+    display: block;
+    width: 100%;
+    padding: 60px 48px 40px;
+    border-bottom: 1px solid var(--color-neon-cyan);
+    background: var(--color-bg);
+}
+
+body.hacker-mode .hacker-header-content {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    max-width: 900px;
+    margin: 0 auto 24px;
+}
+
+body.hacker-mode .hacker-avatar-wrapper {
+    flex-shrink: 0;
+}
+
+body.hacker-mode .hacker-avatar {
+    width: 80px;
+    height: 80px;
+    animation: avatarGlow 2s ease-in-out infinite alternate;
+}
+
+body.hacker-mode .hacker-header-text {
+    flex: 1;
+}
+
+body.hacker-mode .hacker-name {
+    font-family: var(--font-mono);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--color-neon-cyan);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin: 0 0 4px 0;
+    text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+}
+
+body.hacker-mode .hacker-tagline {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--color-text-muted);
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+body.hacker-mode .hacker-nav {
+    display: flex;
+    gap: 32px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+body.hacker-mode .hacker-nav a {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    text-transform: lowercase;
+    transition: all 0.2s;
+    position: relative;
+}
+
+body.hacker-mode .hacker-nav a:hover {
+    color: var(--color-neon-pink);
+    text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+}
+
+body.hacker-mode .hacker-nav a::before {
+    content: '>';
+    margin-right: 6px;
+    color: var(--color-neon-green);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+body.hacker-mode .hacker-nav a:hover::before {
+    opacity: 1;
+}
+
+/* Hide sidebar in hacker mode */
+body.hacker-mode .sidebar {
+    display: none !important;
+}
+
+/* Full-width main in hacker mode */
+body.hacker-mode .layout {
+    flex-direction: column;
+}
+
+body.hacker-mode .main {
+    margin-left: 0;
+    width: 100%;
+    padding: 48px;
+    height: auto;
+    min-height: calc(100vh - 200px);
+}
+
+body.hacker-mode .main-inner {
+    max-width: 900px;
+    padding-top: 0;
+}
+
+/* Hide the old welcome section's heading in hacker mode (we have the header now) */
+body.hacker-mode .welcome {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0 0 32px 0;
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+body.hacker-mode .welcome-heading {
+    display: none;
+}
+
+body.hacker-mode .welcome-text {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--color-text-secondary);
+    max-width: 700px;
+}
+
+body.hacker-mode .welcome-subtext {
+    font-size: 14px;
+    margin-bottom: 24px;
+}
+
+body.hacker-mode .welcome-buttons {
+    gap: 16px;
+}
+
+body.hacker-mode .btn {
+    padding: 10px 20px;
+    font-size: 13px;
+}
+
+/* Project Grid - 2 columns like walzr.com */
+body.hacker-mode .project-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+body.hacker-mode #projects {
+    border: none;
+    padding: 0;
+    margin: 0 0 56px 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+body.hacker-mode .project-card {
+    background: transparent;
+    border: 1px solid var(--color-border);
+    padding: 24px;
+    transition: all 0.2s ease;
+}
+
+body.hacker-mode .project-card:hover {
+    border-color: var(--color-neon-pink);
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
+    transform: none;
+}
+
+body.hacker-mode .project-card h3 {
+    font-size: 16px;
+    margin-bottom: 12px;
+    animation: none;
+}
+
+body.hacker-mode .project-card p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+}
+
+body.hacker-mode .project-card .tech {
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+/* Section styling adjustments */
+body.hacker-mode .section {
+    margin-bottom: 48px;
+    padding-bottom: 40px;
+}
+
+body.hacker-mode h2 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin-bottom: 24px;
+    text-transform: lowercase;
+}
+
+body.hacker-mode h2::before {
+    content: '// ';
+    color: var(--color-neon-green);
+}
+
+body.hacker-mode .section-subtitle {
+    font-size: 13px;
+    margin-top: -16px;
+    margin-bottom: 20px;
+}
+
+/* Entry styling - cleaner */
+body.hacker-mode .entry {
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+}
+
+body.hacker-mode .entry h3 {
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+body.hacker-mode .entry-header {
+    margin-bottom: 8px;
+}
+
+body.hacker-mode .date {
+    font-size: 13px;
+}
+
+body.hacker-mode .role {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+body.hacker-mode li {
+    font-size: 14px;
+    color: var(--color-text-muted);
+}
+
+/* Collapsible sections - simpler */
+body.hacker-mode .section.collapsible {
+    cursor: default;
+    padding-bottom: 40px;
+    margin-bottom: 48px;
+}
+
+body.hacker-mode .section.collapsible h2 {
+    cursor: pointer;
+}
+
+body.hacker-mode .section.collapsible h2::after {
+    content: ' [expand]';
+    font-size: 11px;
+    color: var(--color-neon-pink);
+    opacity: 0.6;
+}
+
+body.hacker-mode .section.collapsible.expanded h2::after {
+    content: ' [collapse]';
+}
+
+/* Footer */
+body.hacker-mode .footer {
+    margin-top: 32px;
+    padding-top: 32px;
+    text-align: center;
+}
+
+body.hacker-mode .footer p::before {
+    content: '';
+}
+
+/* Responsive for hacker mode */
+@media (max-width: 900px) {
+    body.hacker-mode .hacker-header {
+        padding: 40px 24px 32px;
+    }
+
+    body.hacker-mode .hacker-header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    body.hacker-mode .hacker-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px 24px;
+    }
+
+    body.hacker-mode .main {
+        padding: 32px 24px;
+    }
+
+    body.hacker-mode .project-grid {
+        grid-template-columns: 1fr;
+    }
+
+    body.hacker-mode .hacker-name {
+        font-size: 24px;
+    }
+}
