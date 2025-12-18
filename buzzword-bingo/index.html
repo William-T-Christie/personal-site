@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buzzword Bingo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- CRT Screen Effect Overlay -->
+    <div class="crt-overlay"></div>
+
+    <!-- Arcade Floor / Room -->
+    <div class="arcade-room">
+        <!-- Background Cabinet Left - Space Wars -->
+        <div class="bg-cabinet left">
+            <div class="bg-cabinet-top"></div>
+            <div class="bg-marquee">
+                <span class="bg-title">SPACE<br>WARS</span>
+            </div>
+            <div class="bg-screen">
+                <div class="bg-screen-glow"></div>
+                <div class="fake-game spacewars">
+                    <!-- Starfield -->
+                    <div class="stars">
+                        <span></span><span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                    <!-- Drifting Asteroids -->
+                    <div class="asteroids">
+                        <span class="asteroid large a1">⬡</span>
+                        <span class="asteroid medium a2">⬢</span>
+                        <span class="asteroid small a3">⬡</span>
+                        <span class="asteroid large a4">⬢</span>
+                        <span class="asteroid medium a5">⬡</span>
+                    </div>
+                    <!-- Spaceship -->
+                    <div class="spaceship">▲</div>
+                    <!-- Laser shots -->
+                    <div class="lasers">
+                        <span class="laser l1"></span>
+                        <span class="laser l2"></span>
+                    </div>
+                    <!-- Game UI -->
+                    <div class="fake-game-ui">
+                        <div class="fake-score">HI 99999</div>
+                        <div class="fake-title">SPACE WARS</div>
+                        <div class="fake-prompt blink">INSERT COIN</div>
+                        <div class="fake-credit">CREDIT 0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-controls">
+                <div class="bg-control-surface">
+                    <div class="bg-coin-slot">INSERT COIN</div>
+                    <div class="bg-joystick"></div>
+                    <div class="bg-buttons">
+                        <span class="bg-btn red"></span>
+                        <span class="bg-btn yellow"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-base"></div>
+        </div>
+
+        <!-- Main Cabinet - Buzzword Bingo -->
+        <div class="arcade-cabinet">
+        <!-- Cabinet Top -->
+        <div class="cabinet-top"></div>
+
+        <!-- Marquee (Lit-up sign at top) -->
+        <div class="marquee">
+            <div class="marquee-inner">
+                <h1 class="title">BUZZWORD BINGO</h1>
+                <p class="subtitle">Corporate Jargon Detector</p>
+            </div>
+            <div class="marquee-lights">
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+
+        <!-- Main Cabinet Body -->
+        <div class="cabinet-body">
+            <!-- Left Side Panel -->
+            <div class="side-panel left">
+                <div class="stripe"></div>
+                <div class="stripe"></div>
+                <div class="stripe"></div>
+            </div>
+
+            <!-- Screen Bezel -->
+            <div class="screen-bezel">
+                <!-- Speaker Grilles -->
+                <div class="speaker-grille top">
+                    <div class="grille-lines"></div>
+                </div>
+
+                <!-- Main Screen Area -->
+                <main class="screen">
+                    <!-- Landing Screen -->
+                    <section id="landing-screen" class="game-screen active">
+                        <div class="landing-content">
+                            <div class="coin-slot">
+                                <span class="blink">INSERT MEETING</span>
+                            </div>
+                            <p class="instructions">Upload a meeting recording and discover<br>how much corporate speak was used</p>
+
+                            <div class="upload-zone" id="upload-zone">
+                                <div class="upload-icon">
+                                    <span class="icon-tape"></span>
+                                </div>
+                                <p>DRAG & DROP</p>
+                                <p class="small">or click to select file</p>
+                                <p class="formats">MP4 / WebM / MOV / MP3 / WAV</p>
+                                <input type="file" id="file-input" accept="video/*,audio/*" hidden>
+                            </div>
+
+                            <button class="demo-btn" id="demo-btn">TRY DEMO</button>
+
+                            <button class="privacy-badge" id="privacy-toggle">
+                                <span class="lock-icon">&#128274;</span>
+                                <span>Your video never leaves this device</span>
+                                <span class="expand-icon">&#9660;</span>
+                            </button>
+
+                            <div class="disclaimer" id="disclaimer">
+                                <div class="disclaimer-content">
+                                    <h4>Privacy & Data</h4>
+                                    <ul>
+                                        <li><strong>100% Local Processing</strong> - All video/audio analysis happens entirely in your browser using AI that runs on your device.</li>
+                                        <li><strong>Nothing Uploaded</strong> - Your files are never sent to any server. Zero. Zilch. Nada.</li>
+                                        <li><strong>No Data Collection</strong> - We don't collect, store, or transmit any data about you or your meetings.</li>
+                                        <li><strong>No Cookies or Tracking</strong> - No analytics, no fingerprinting, no third-party scripts watching you.</li>
+                                        <li><strong>Local Storage Only</strong> - High scores (just your 3-letter name + score) are stored in your browser's local storage. That's it.</li>
+                                        <li><strong>Open Processing</strong> - Once you close or refresh the page, your video and transcript are gone from memory.</li>
+                                    </ul>
+                                    <p class="disclaimer-note">This is a satirical tool for entertainment. Have fun responsibly!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Processing Screen -->
+                    <section id="processing-screen" class="game-screen">
+                        <div class="processing-content">
+                            <h2 class="processing-title">ANALYZING...</h2>
+                            <div class="progress-container">
+                                <div class="progress-bar" id="progress-bar"></div>
+                            </div>
+                            <p class="progress-text" id="progress-text">Initializing...</p>
+                            <p class="fun-message" id="fun-message">Detecting synergies...</p>
+                        </div>
+                    </section>
+
+                    <!-- Results Screen -->
+                    <section id="results-screen" class="game-screen">
+                        <div class="results-content">
+                            <h2 class="results-title">FINAL SCORE</h2>
+                            <div class="score-display">
+                                <span class="score-value" id="score-value">0</span>
+                                <span class="score-label">POINTS</span>
+                            </div>
+                            <div class="award-display">
+                                <p class="award-label">RANK:</p>
+                                <h3 class="award-title" id="award-title">REFRESHINGLY HUMAN</h3>
+                            </div>
+                            <div class="buzzword-breakdown" id="buzzword-breakdown">
+                                <!-- Filled dynamically -->
+                            </div>
+                            <div class="results-buttons">
+                                <button class="arcade-btn" id="play-again-btn">PLAY AGAIN</button>
+                                <button class="arcade-btn secondary" id="view-scores-btn">HIGH SCORES</button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- High Score Entry Screen -->
+                    <section id="highscore-entry-screen" class="game-screen">
+                        <div class="highscore-content">
+                            <h2 class="blink">NEW HIGH SCORE!</h2>
+                            <p class="your-score">YOUR SCORE: <span id="entry-score">0</span></p>
+                            <div class="name-entry">
+                                <p>ENTER YOUR INITIALS</p>
+                                <div class="initial-slots">
+                                    <div class="initial-slot" data-index="0">
+                                        <button class="arrow up" data-dir="up">&#9650;</button>
+                                        <span class="letter">A</span>
+                                        <button class="arrow down" data-dir="down">&#9660;</button>
+                                    </div>
+                                    <div class="initial-slot" data-index="1">
+                                        <button class="arrow up" data-dir="up">&#9650;</button>
+                                        <span class="letter">A</span>
+                                        <button class="arrow down" data-dir="down">&#9660;</button>
+                                    </div>
+                                    <div class="initial-slot" data-index="2">
+                                        <button class="arrow up" data-dir="up">&#9650;</button>
+                                        <span class="letter">A</span>
+                                        <button class="arrow down" data-dir="down">&#9660;</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="arcade-btn" id="submit-score-btn">SUBMIT</button>
+                        </div>
+                    </section>
+
+                    <!-- Leaderboard Screen -->
+                    <section id="leaderboard-screen" class="game-screen">
+                        <div class="leaderboard-content">
+                            <h2>HIGH SCORES</h2>
+                            <div class="leaderboard-table" id="leaderboard-table">
+                                <!-- Filled dynamically -->
+                            </div>
+                            <button class="arcade-btn" id="back-btn">BACK</button>
+                        </div>
+                    </section>
+                </main>
+
+                <!-- Speaker Grille Bottom -->
+                <div class="speaker-grille bottom">
+                    <div class="grille-lines"></div>
+                </div>
+            </div>
+
+            <!-- Right Side Panel -->
+            <div class="side-panel right">
+                <div class="stripe"></div>
+                <div class="stripe"></div>
+                <div class="stripe"></div>
+            </div>
+        </div>
+
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <div class="control-panel-surface">
+                <div class="coin-insert">
+                    <div class="coin-slot-visual">
+                        <span>INSERT COIN</span>
+                    </div>
+                </div>
+                <div class="joystick-area">
+                    <div class="joystick"></div>
+                </div>
+                <div class="buttons-area">
+                    <div class="arcade-button red"></div>
+                    <div class="arcade-button blue"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cabinet Base -->
+        <div class="cabinet-base">
+            <p class="footer-text">100% BROWSER-BASED &bull; NO DATA STORED</p>
+        </div>
+    </div>
+
+        <!-- Background Cabinet Right - Mega Blast -->
+        <div class="bg-cabinet right">
+            <div class="bg-cabinet-top"></div>
+            <div class="bg-marquee">
+                <span class="bg-title">MEGA<br>BLAST</span>
+            </div>
+            <div class="bg-screen">
+                <div class="bg-screen-glow"></div>
+                <div class="fake-game megablast">
+                    <!-- Explosion effects -->
+                    <div class="explosions">
+                        <span class="boom boom1">💥</span>
+                        <span class="boom boom2">💥</span>
+                        <span class="boom boom3">💥</span>
+                    </div>
+                    <!-- Target reticle -->
+                    <div class="reticle">⊕</div>
+                    <!-- Game UI -->
+                    <div class="fake-game-ui">
+                        <div class="fake-score">TOP 50000</div>
+                        <div class="fake-title">MEGA BLAST</div>
+                        <div class="fake-prompt blink">PRESS START</div>
+                        <div class="fake-credit">1 PLAYER</div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-controls">
+                <div class="bg-control-surface">
+                    <div class="bg-coin-slot">INSERT COIN</div>
+                    <div class="bg-joystick"></div>
+                    <div class="bg-buttons">
+                        <span class="bg-btn blue"></span>
+                        <span class="bg-btn green"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-base"></div>
+        </div>
+
+    </div> <!-- Close arcade-room -->
+
+    <!-- Scripts -->
+    <script src="js/buzzwords.js"></script>
+    <script src="js/leaderboard.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/transcribe.js"></script>
+    <script src="js/analyzer.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
