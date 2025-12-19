@@ -391,9 +391,19 @@ function updateWelcomeContent() {
 }
 
 function initMode() {
-    // Restore saved mode from localStorage
-    const savedMode = localStorage.getItem('siteMode');
-    if (savedMode === 'hacker') {
+    // Check for URL parameter override
+    const urlParams = new URLSearchParams(window.location.search);
+    const viewParam = urlParams.get('view');
+
+    // URL parameter takes priority, then localStorage, then default to boomer
+    let mode;
+    if (viewParam === 'hacker' || viewParam === 'boomer') {
+        mode = viewParam;
+    } else {
+        mode = localStorage.getItem('siteMode') || 'boomer';
+    }
+
+    if (mode === 'hacker') {
         isHackerMode = true;
         document.body.classList.add('hacker-mode');
         document.documentElement.classList.add('hacker-mode-html');
