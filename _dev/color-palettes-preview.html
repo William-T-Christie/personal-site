@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Palette Options - Browns & Beiges</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #1a1a1a;
+            color: #fff;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #888;
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+
+        .palettes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 32px;
+        }
+
+        .palette-card {
+            border-radius: 16px;
+            overflow: hidden;
+            background: #2a2a2a;
+        }
+
+        .palette-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #3a3a3a;
+        }
+
+        .palette-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .palette-header p {
+            font-size: 14px;
+            color: #888;
+        }
+
+        .palette-preview {
+            padding: 24px;
+        }
+
+        .color-swatches {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .swatch {
+            flex: 1;
+            height: 60px;
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-end;
+            padding: 8px;
+            font-size: 11px;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .swatch-label {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            font-size: 11px;
+            color: #666;
+        }
+
+        .swatch-hex {
+            background: rgba(0,0,0,0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #fff;
+        }
+
+        .mini-preview {
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 16px;
+        }
+
+        .mini-preview h3 {
+            font-size: 24px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .mini-preview p {
+            font-size: 14px;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .mini-preview .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-right: 8px;
+        }
+
+        .mini-preview .btn-primary {
+            color: #fff;
+        }
+
+        .mini-preview .btn-outline {
+            background: transparent;
+            border: 2px solid;
+        }
+
+        .mini-preview .entry {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid;
+        }
+
+        .mini-preview .entry h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .mini-preview .entry span {
+            font-size: 13px;
+        }
+
+        /* Palette 1 - Espresso */
+        .palette-1 .mini-preview {
+            background: #faf8f6;
+            color: #2c2420;
+        }
+        .palette-1 .mini-preview .secondary { color: #5c524a; }
+        .palette-1 .mini-preview .muted { color: #8a7f75; }
+        .palette-1 .mini-preview .btn-primary { background: #4a3728; }
+        .palette-1 .mini-preview .btn-outline { border-color: #e0d6cc; color: #2c2420; }
+        .palette-1 .mini-preview .entry { border-color: #e0d6cc; }
+
+        /* Palette 2 - Latte */
+        .palette-2 .mini-preview {
+            background: #f9f6f2;
+            color: #3d3530;
+        }
+        .palette-2 .mini-preview .secondary { color: #6b5f56; }
+        .palette-2 .mini-preview .muted { color: #9a8d82; }
+        .palette-2 .mini-preview .btn-primary { background: #8b7355; }
+        .palette-2 .mini-preview .btn-outline { border-color: #e5ddd3; color: #3d3530; }
+        .palette-2 .mini-preview .entry { border-color: #e5ddd3; }
+
+        /* Palette 3 - Taupe */
+        .palette-3 .mini-preview {
+            background: #f7f5f3;
+            color: #2e2b28;
+        }
+        .palette-3 .mini-preview .secondary { color: #5a5652; }
+        .palette-3 .mini-preview .muted { color: #87837e; }
+        .palette-3 .mini-preview .btn-primary { background: #6b6560; }
+        .palette-3 .mini-preview .btn-outline { border-color: #ddd9d5; color: #2e2b28; }
+        .palette-3 .mini-preview .entry { border-color: #ddd9d5; }
+
+        /* Palette 4 - Mocha */
+        .palette-4 .mini-preview {
+            background: #faf7f4;
+            color: #352a24;
+        }
+        .palette-4 .mini-preview .secondary { color: #5e4d42; }
+        .palette-4 .mini-preview .muted { color: #8a7768; }
+        .palette-4 .mini-preview .btn-primary { background: #6f4e37; }
+        .palette-4 .mini-preview .btn-outline { border-color: #e3d9cf; color: #352a24; }
+        .palette-4 .mini-preview .entry { border-color: #e3d9cf; }
+
+        /* Palette 5 - Sand */
+        .palette-5 .mini-preview {
+            background: #fdfbf7;
+            color: #33302b;
+        }
+        .palette-5 .mini-preview .secondary { color: #5f5a52; }
+        .palette-5 .mini-preview .muted { color: #8f887d; }
+        .palette-5 .mini-preview .btn-primary { background: #a69685; }
+        .palette-5 .mini-preview .btn-outline { border-color: #e8e2d9; color: #33302b; }
+        .palette-5 .mini-preview .entry { border-color: #e8e2d9; }
+
+        /* Palette 6 - Cocoa */
+        .palette-6 .mini-preview {
+            background: #f8f5f2;
+            color: #2a2118;
+        }
+        .palette-6 .mini-preview .secondary { color: #524638; }
+        .palette-6 .mini-preview .muted { color: #7d6e5c; }
+        .palette-6 .mini-preview .btn-primary { background: #5c4033; }
+        .palette-6 .mini-preview .btn-outline { border-color: #dfd6cb; color: #2a2118; }
+        .palette-6 .mini-preview .entry { border-color: #dfd6cb; }
+
+        /* Palette 7 - Stone */
+        .palette-7 .mini-preview {
+            background: #f5f4f2;
+            color: #2d2d2a;
+        }
+        .palette-7 .mini-preview .secondary { color: #58574f; }
+        .palette-7 .mini-preview .muted { color: #85847a; }
+        .palette-7 .mini-preview .btn-primary { background: #78756d; }
+        .palette-7 .mini-preview .btn-outline { border-color: #d9d7d2; color: #2d2d2a; }
+        .palette-7 .mini-preview .entry { border-color: #d9d7d2; }
+
+        /* Palette 8 - Walnut */
+        .palette-8 .mini-preview {
+            background: #fcf9f6;
+            color: #3b2f28;
+        }
+        .palette-8 .mini-preview .secondary { color: #65554a; }
+        .palette-8 .mini-preview .muted { color: #917f70; }
+        .palette-8 .mini-preview .btn-primary { background: #5d4037; }
+        .palette-8 .mini-preview .btn-outline { border-color: #e6ddd4; color: #3b2f28; }
+        .palette-8 .mini-preview .entry { border-color: #e6ddd4; }
+
+        /* Palette 9 - Cream */
+        .palette-9 .mini-preview {
+            background: #fffcf8;
+            color: #3a3632;
+        }
+        .palette-9 .mini-preview .secondary { color: #666058; }
+        .palette-9 .mini-preview .muted { color: #958d82; }
+        .palette-9 .mini-preview .btn-primary { background: #b5a898; }
+        .palette-9 .mini-preview .btn-outline { border-color: #ebe5dc; color: #3a3632; }
+        .palette-9 .mini-preview .entry { border-color: #ebe5dc; }
+
+        /* Palette 10 - Chestnut */
+        .palette-10 .mini-preview {
+            background: #faf6f3;
+            color: #31241c;
+        }
+        .palette-10 .mini-preview .secondary { color: #594840; }
+        .palette-10 .mini-preview .muted { color: #856f62; }
+        .palette-10 .mini-preview .btn-primary { background: #8b4513; }
+        .palette-10 .mini-preview .btn-outline { border-color: #e2d5ca; color: #31241c; }
+        .palette-10 .mini-preview .entry { border-color: #e2d5ca; }
+
+        /* Palette 11 - Greige */
+        .palette-11 .mini-preview {
+            background: #f6f5f3;
+            color: #2f2e2c;
+        }
+        .palette-11 .mini-preview .secondary { color: #5b5955; }
+        .palette-11 .mini-preview .muted { color: #88857f; }
+        .palette-11 .mini-preview .btn-primary { color: #f6f5f3; background: #4a4845; }
+        .palette-11 .mini-preview .btn-outline { border-color: #d8d6d2; color: #2f2e2c; }
+        .palette-11 .mini-preview .entry { border-color: #d8d6d2; }
+
+        /* Palette 12 - Caramel */
+        .palette-12 .mini-preview {
+            background: #fdf9f5;
+            color: #362d26;
+        }
+        .palette-12 .mini-preview .secondary { color: #5f5145; }
+        .palette-12 .mini-preview .muted { color: #8c7b6b; }
+        .palette-12 .mini-preview .btn-primary { background: #9c6644; }
+        .palette-12 .mini-preview .btn-outline { border-color: #e7ddd1; color: #362d26; }
+        .palette-12 .mini-preview .entry { border-color: #e7ddd1; }
+
+        /* Miami Sunset Palettes */
+        .palette-coral .mini-preview {
+            background: #fefaf6;
+            color: #2d2d2d;
+        }
+        .palette-coral .mini-preview .secondary { color: #5c5c5c; }
+        .palette-coral .mini-preview .muted { color: #8a8a8a; }
+        .palette-coral .mini-preview .btn-primary { background: #e07a5f; }
+        .palette-coral .mini-preview .btn-outline { border-color: #e8e0d5; color: #2d2d2d; }
+        .palette-coral .mini-preview .entry { border-color: #e8e0d5; }
+
+        .palette-flamingo .mini-preview {
+            background: #fdf8f6;
+            color: #2b2424;
+        }
+        .palette-flamingo .mini-preview .secondary { color: #5a4d4d; }
+        .palette-flamingo .mini-preview .muted { color: #8a7a7a; }
+        .palette-flamingo .mini-preview .btn-primary { background: #d4726a; }
+        .palette-flamingo .mini-preview .btn-outline { border-color: #e8dcd8; color: #2b2424; }
+        .palette-flamingo .mini-preview .entry { border-color: #e8dcd8; }
+
+        .palette-terracotta .mini-preview {
+            background: #faf7f4;
+            color: #2e2522;
+        }
+        .palette-terracotta .mini-preview .secondary { color: #5c4f48; }
+        .palette-terracotta .mini-preview .muted { color: #8a7b72; }
+        .palette-terracotta .mini-preview .btn-primary { background: #c4654a; }
+        .palette-terracotta .mini-preview .btn-outline { border-color: #e5dbd4; color: #2e2522; }
+        .palette-terracotta .mini-preview .entry { border-color: #e5dbd4; }
+
+        .palette-peach .mini-preview {
+            background: #fffaf7;
+            color: #332d2a;
+        }
+        .palette-peach .mini-preview .secondary { color: #605650; }
+        .palette-peach .mini-preview .muted { color: #908378; }
+        .palette-peach .mini-preview .btn-primary { background: #e8967a; }
+        .palette-peach .mini-preview .btn-outline { border-color: #ede4dd; color: #332d2a; }
+        .palette-peach .mini-preview .entry { border-color: #ede4dd; }
+
+        .palette-sienna .mini-preview {
+            background: #faf6f3;
+            color: #2a2220;
+        }
+        .palette-sienna .mini-preview .secondary { color: #554946; }
+        .palette-sienna .mini-preview .muted { color: #857570; }
+        .palette-sienna .mini-preview .btn-primary { background: #a0522d; }
+        .palette-sienna .mini-preview .btn-outline { border-color: #e2d8d2; color: #2a2220; }
+        .palette-sienna .mini-preview .entry { border-color: #e2d8d2; }
+
+        .palette-apricot .mini-preview {
+            background: #fefbf8;
+            color: #302926;
+        }
+        .palette-apricot .mini-preview .secondary { color: #5d524c; }
+        .palette-apricot .mini-preview .muted { color: #8d7f76; }
+        .palette-apricot .mini-preview .btn-primary { background: #ed8a63; }
+        .palette-apricot .mini-preview .btn-outline { border-color: #eae2db; color: #302926; }
+        .palette-apricot .mini-preview .entry { border-color: #eae2db; }
+
+        .palette-dusk .mini-preview {
+            background: #f9f6f5;
+            color: #282428;
+        }
+        .palette-dusk .mini-preview .secondary { color: #544f54; }
+        .palette-dusk .mini-preview .muted { color: #847d84; }
+        .palette-dusk .mini-preview .btn-primary { background: #b56576; }
+        .palette-dusk .mini-preview .btn-outline { border-color: #e0d8d8; color: #282428; }
+        .palette-dusk .mini-preview .entry { border-color: #e0d8d8; }
+
+        .palette-sunrise .mini-preview {
+            background: #fffcf7;
+            color: #2e2a25;
+        }
+        .palette-sunrise .mini-preview .secondary { color: #5c554c; }
+        .palette-sunrise .mini-preview .muted { color: #8c8275; }
+        .palette-sunrise .mini-preview .btn-primary { background: #e6735c; }
+        .palette-sunrise .mini-preview .btn-outline { border-color: #ebe4da; color: #2e2a25; }
+        .palette-sunrise .mini-preview .entry { border-color: #ebe4da; }
+    </style>
+</head>
+<body>
+    <h1>Color Palette Collections</h1>
+    <p class="subtitle">Browns, Beiges & Miami Sunset options</p>
+
+    <h2 style="margin: 40px 0 24px; font-size: 24px; color: #e07a5f;">Miami Sunset Collection</h2>
+    <div class="palettes" style="margin-bottom: 60px;">
+        <!-- Coral -->
+        <div class="palette-card palette-coral">
+            <div class="palette-header">
+                <h2>Coral</h2>
+                <p>Classic Miami coral warmth</p>
+            </div>
+            <div class="palette-preview">
+                <div class="color-swatches">
+                    <div class="swatch" style="background: #fefaf6; color: #2d2d2d;">
+                        <span class="swatch-label">Background</span>
+                        <span class="swatch-hex">#fefaf6</span>
+                    </div>
+                    <div class="swatch" style="background: #2d2d2d;">
+                        <span class="swatch-label">Text</span>
+                        <span class="swatch-hex">#2d2d2d</span>
+                    </div>
+                    <div class="swatch" style="background: #e07a5f;">
+                        <span class="swatch-label">Accent</span>
+                        <span class="swatch-hex">#e07a5f</span>
+                    </div>
+                    <div class="swatch" style="background: #e8e0d5; color: #2d2d2d;">
+                        <span class="swatch-label">Border</span>
+                        <span class="swatch-hex">#e8e0d5</span>
+                    </div>
+                </div>
+                <div class="mini-preview">
+                    <h3>Hey, I'm William!</h3>
+                    <p class="secondary">Finance student at the University of Miami who loves tackling complex problems.</p>
+                    <a href="#" class="btn btn-primary">About Me</a>
+                    <a href="#" class="btn btn-outline">Get in Touch</a>
+                    <div class="entry">
+                        <h4>Ernst & Young</h4>
+                        <span class="muted">June - August 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flamingo -->
+        <div class="palette-card palette-flamingo">
+            <div class="palette-header">
+                <h2>Flamingo</h2>
+                <p>Soft pink-coral blend</p>
+            </div>
+            <div class="palette-preview">
+                <div class="color-swatches">
+                    <div class="swatch" style="background: #fdf8f6; color: #2b2424;">
+                        <span class="swatch-label">Background</span>
+                        <span class="swatch-hex">#fdf8f6</span>
+                    </div>
+                    <div class="swatch" style="background: #2b2424;">
+                        <span class="swatch-label">Text</span>
+                        <span class="swatch-hex">#2b2424</span>
+                    </div>
+                    <div class="swatch" style="background: #d4726a;">
+                        <span class="swatch-label">Accent</span>
+                        <span class="swatch-hex">#d4726a</span>
+                    </div>
+                    <div class="swatch" style="background: #e8dcd8; color: #2b2424;">
+                        <span class="swatch-label">Border</span>
+                        <span class="swatch-hex">#e8dcd8</span>
+                    </div>
+                </div>
+                <div class="mini-preview">
+                    <h3>Hey, I'm William!</h3>
+                    <p class="secondary">Finance student at the University of Miami who loves tackling complex problems.</p>
+                    <a href="#" class="btn btn-primary">About Me</a>
+                    <a href="#" class="btn btn-outline">Get in Touch</a>
+                    <div class="entry">
+                        <h4>Ernst & Young</h4>
+                        <span class="muted">June - August 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Terracotta -->
+        <div class="palette-card palette-terracotta">
+            <div class="palette-header">
+                <h2>Terracotta</h2>
+                <p>Earthy burnt orange</p>
+            </div>
+            <div class="palette-preview">
+                <div class="color-swatches">
+                    <div class="swatch" style="background: #faf7f4; color: #2e2522;">
+                        <span class="swatch-label">Background</span>
+                        <span class="swatch-hex">#faf7f4</span>
+                    </div>
+                    <div class="swatch" style="background: #2e2522;">
+                        <span class="swatch-label">Text</span>
+                        <span class="swatch-hex">#2e2522</span>
+                    </div>
+                    <div class="swatch" style="background: #c4654a;">
+                        <span class="swatch-label">Accent</span>
+                        <span class="swatch-hex">#c4654a</span>
+                    </div>
+                    <div class="swatch" style="background: #e5dbd4; color: #2e2522;">
+                        <span class="swatch-label">Border</span>
+                        <span class="swatch-hex">#e5dbd4</span>
+                    </div>
+                </div>
+                <div class="mini-preview">
+                    <h3>Hey, I'm William!</h3>
+                    <p class="secondary">Finance student at the University of Miami who loves tackling complex problems.</p>
+                    <a href="#" class="btn btn-primary">About Me</a>
+                    <a href="#" class="btn btn-outline">Get in Touch</a>
+                    <div class="entry">
+                        <h4>Ernst & Young</h4>
+                        <span class="muted">June - August 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Peach -->
+        <div class="palette-card palette-peach">
+            <div class="palette-header">
+                <h2>Peach</h2>
+                <p>Soft, gentle warmth</p>
+            </div>
+            <div class="palette-preview">
+                <div class="color-swatches">
+                    <div class="swatch" style="background: #fffaf7; color: #332d2a;">
+                        <span class="swatch-label">Background</span>
+                        <span class="swatch-hex">#fffaf7</span>
+                    </div>
+                    <div class="swatch" style="background: #332d2a;">
+                        <span class="swatch-label">Text</span>
+                        <span class="swatch-hex">#332d2a</span>
+                    </div>
+                    <div class="swatch" style="background: #e8967a;">
+                        <span class="swatch-label">Accent</span>
+                        <span class="swatch-hex">#e8967a</span>
+                    </div>
+                    <div class="swatch" style="background: #ede4dd; color: #332d2a;">
+                        <span class="swatch-label">Border</span>
+                        <span class="swatch-hex">#ede4dd</span>
+                    </div>
+                </div>
+                <div class="mini-preview">
+                    <h3>Hey, I'm William!</h3>
+                    <p class="secondary">Finance student at the University of Miami who loves tackling complex problems.</p>
+                    <a href="#" class="btn btn-primary">About Me</a>
+                    <a href="#" class="btn btn-outline">Get in Touch</a>
+                    <div class="entry">
+                        <h4>Ernst & Young</h4>
+                        <span class="muted">June - August 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sienna -->
+        <div class="palette-card palette-sienna">
+            <div class="palette-header">
+                <h2>Sienna</h2>
+                <p>Deep rustic sunset</p>
+            </div>
+            <div class="palette-preview">
+                <div class="color-swatches">
+                    <div class="swatch" style="background: #faf6f3; color: #2a2220;">
+                        <span class="swatch-label">Background</span>
+                        <span class="swatch-hex">#faf6f3</span>
+                    </div>
+                    <div class="swatch" style="background: #2a2220;">
+                        <span class="swatch-label">Text</span>
+                        <span class="swatch-hex">#2a2220</span>
+                    </div>
+                    <div class="swatch" style="background: #a0522d;">
+                        <span class="swatch-label">Accent</span>
+                        <span class="swatch-hex">#a0522d</span>
+                    </div>
+                    <div class="swatch" style="background: #e2d8d2; color: #2a2220;">
+                        <span class="swatch-label">Border</span>
+                        <span class="swatch-hex">#e2d8d2</span>
+                    </div>
+                </div>
+                <div class="mini-preview">
+                    <h3>Hey, I'm William!</h3>
+                    <p class="secondary">Finance student at the University of Miami who loves tackling complex problems.</p>
+                    <a href="#" class="btn btn-primary">About Me</a>
+                    <a href="#" class="btn btn-outline">Get in Touch</a>
+                    <div class="entry">
+                        <h4>Ernst & Young</h4>
+                        <span class="muted">June - August 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Apricot -->
+        <div class="palette-card palette-apricot">
+            <div class="palette-header">
+                <h2>Apricot</h2>
+                <p>Bright, cheerful orange</p>
+            </div>
+            <div class="palette-preview">
+                <div class="color-swatches">
+                    <div class="swatch" style="background: #fefbf8; color: #302926;">
+                        <span class="swatch-label">Background</span>
+                        <span class="swatch-hex">#fefbf8</span>
+                    </div>
+                    <div class="swatch" style="background: #302926;">
+                        <span class="swatch-label">Text</span>
+                        <span class="swatch-hex">#302926</span>
+                    </div>
+                    <div class="swatch" style="background: #ed8a63;">
+                        <span class="swatch-label">Accent</span>
+                        <span class="swatch-hex">#ed8a63</span>
+                    </div>
+                    <div class="swatch" style="background: #eae2db; color: #302926;">
+                        <span class="swatch-label">Border</span>
+                        <span class="swatch-hex">#eae2db</span>
+                    </div>
+                </div>
+                <div class="mini-preview">
+                    <h3>Hey, I'm William!</h3>
+                    <p class="secondary">Finance student at the University of Miami who loves tackling complex problems.</p>
+                    <a href="#" class="btn btn-primary">About Me</a>
+                    <a href="#" class="btn btn-outline">Get in Touch</a>
+                    <div class="entry">
+                        <h4>Ernst & Young</h4>
+                        <span class="muted">June - August 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dusk -->
+        <div class="palette-card palette-dusk">
+            <div class="palette-header">
+                <h2>Dusk</h2>
+                <p>Rose-mauve twilight</p>
+            </div>
+            <div class="palette-preview">
+                <div class="color-swatches">
+                    <div class="swatch" style="background: #f9f6f5; color: #282428;">
+                        <span class="swatch-label">Background</span>
+                        <span class="swatch-hex">#f9f6f5</span>
+                    </div>
+                    <div class="swatch" style="background: #282428;">
+                        <span class="swatch-label">Text</span>
+                        <span class="swatch-hex">#282428</span>
+                    </div>
+                    <div class="swatch" style="background: #b56576;">
+                        <span class="swatch-label">Accent</span>
+                        <span class="swatch-hex">#b56576</span>
+                    </div>
+                    <div class="swatch" style="background: #e0d8d8; color: #282428;">
+                        <span class="swatch-label">Border</span>
+                        <span class="swatch-hex">#e0d8d8</span>
+                    </div>
+                </div>
+                <div class="mini-preview">
+                    <h3>Hey, I'm William!</h3>
+                    <p class="secondary">Finance student at the University of Miami who loves tackling complex problems.</p>
+                    <a href="#" class="btn btn-primary">About Me</a>
+                    <a href="#" class="btn btn-outline">Get in Touch</a>
+                    <div class="entry">
+                        <h4>Ernst & Young</h4>
+                        <span class="muted">June - August 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sunrise -->
+        <div class="palette-card palette-sunrise">
+            <div class="palette-header">
+                <h2>Sunrise</h2>
+                <p>Vibrant morning glow</p>
+            </div>
+            <div class="palette-preview">
+                <div class="color-swatches">
+                    <div class="swatch" style="background: #fffcf7; color: #2e2a25;">
+                        <span class="swatch-label">Background</span>
+                        <span class="swatch-hex">#fffcf7</span>
+                    </div>
+                    <div class="swatch" style="background: #2e2a25;">
+                        <span class="swatch-label">Text</span>
+                        <span class="swatch-hex">#2e2a25</span>
+                    </div>
+                    <div class="swatch" style="background: #e6735c;">
+                        <span class="swatch-label">Accent</span>
+                        <span class="swatch-hex">#e6735c</span>
+                    </div>
+                    <div class="swatch" style="background: #ebe4da; color: #2e2a25;">
+                        <span class="swatch-label">Border</span>
+                        <span class="swatch-hex">#ebe4da</span>
+                    </div>
+                </div>
+                <div class="mini-preview">
+                    <h3>Hey, I'm William!</h3>
+                    <p class="secondary">Finance student at the University of Miami who loves tackling complex problems.</p>
+                    <a href="#" class="btn btn-primary">About Me</a>
+                    <a href="#" class="btn btn-outline">Get in Touch</a>
+                    <div class="entry">
+                        <h4>Ernst & Young</h4>
+                        <span class="muted">June - August 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 style="margin: 40px 0 24px; font-size: 24px; color: #8b7355;">Browns & Beiges Collection</h2>
+    <div class="palettes">
+        <!-- Palette 1 - Espresso -->
+        <div class="palette-card palette-1">
+            <div class="palette-header">
+                <h2>Espresso</h2>
+                <p>Deep, rich coffee tones</p>
+            </div>
+            <div class="palette-preview">
+                <div class="color-swatches">
+                    <div class="swatch" style="background: #faf8f6; color: #2c2420;">
+                        <span class="swatch-label">Background</span>
+                        <span class="swatch-hex">#faf8f6</span>
+                    </div>
+                    <div class="swatch" style="background: #2c2420;">
+                        <span class="swatch-label">Text</span>
+                        <span class="swatch-hex">#2c2420</span>
+                    </div>
+                    <div class="swatch" style="background: #4a3728;">
+                        <span class="swatch-label">Accent</span>
+                        <span class="swatch-hex">#4a3728</span>
+                    </div>
+                    <div class="swatch" style="background: #e0d6cc; color: #2c2420;">
+                        <span class="swatch-label">Border</span>
+                        <span class="swatch-hex">#e0d6cc</span>
+                    </div>
+                </div>
+                <div class="mini-preview">
+                    <h3>Hey, I'm William!</h3>
+                    <p class="secondary">Finance student at the University of Miami who loves tackling complex problems.</p>
+                    <a href="#" class="btn btn-primary">About Me</a>
+                    <a href="#" class="btn btn-outline">Get in Touch</a>
+                    <div class="entry">
+                        <h4>Ernst & Young</h4>
+                        <span class="muted">June - August 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Palette 2 - Latte -->
+        <div class="palette-card palette-2">
+            <div class="palette-header">
+                <h2>Latte</h2>
+                <p>Soft, creamy warmth</p>
+            </div>
+            <div class="palette-preview">
+                <div class="color-swatches">
+                    <div class="swatch" style="background: #f9f6f2; color: #3d3530;">
+                        <span class="swatch-label">Background</span>
+                        <span class="swatch-hex">#f9f6f2</span>
+                    </div>
+                    <div class="swatch" style="background: #3d3530;">
+                        <span class="swatch-label">Text</span>
+                        <span class="swatch-hex">#3d3530</span>
+                    </div>
+                    <div class="swatch" style="background: #8b7355;">
+                        <span class="swatch-label">Accent</span>
+                        <span class="swatch-hex">#8b7355</span>
+                    </div>
+                    <div class="swatch" style="background: #e5ddd3; color: #3d3530;">
+                        <span class="swatch-label">Border</span>
+                        <span class="swatch-hex">#e5ddd3</span>
+                    </div>
+                </div>
+                <div class="mini-preview">
+                    <h3>Hey, I'm William!</h3>
+                    <p class="secondary">Finance student at the University of Miami who loves tackling complex problems.</p>
+                    <a href="#" class="btn btn-primary">About Me</a>
+                    <a href="#" class="btn btn-outline">Get in Touch</a>
+                    <div class="entry">
+                        <h4>Ernst & Young</h4>
+                        <span class="muted">June - August 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Palette 3 - Taupe -->
+        <div class="palette-card palette-3">
+            <div class="palette-header">
+                <h2>Taupe</h2>
+                <p>Neutral gray-brown elegance</p>
+            </div>
+            <div class="palette-preview">
+                <div class="color-swatches">
+                    <div class="swatch" style="background: #f7f5f3; color: #2e2b28;">
+                        <span class="swatch-label">Background</span>
+                        <span class="swatch-hex">#f7f5f3</span>
+                    </div>
+                    <div class="swatch" style="background: #2e2b28;">
+                        <span class="swatch-label">Text</span>
+                        <span class="swatch-hex">#2e2b28</span>
+                    </div>
+                    <div class="swatch" style="background: #6b6560;">
+                        <span class="swatch-label">Accent</span>
+                        <span class="swatch-hex">#6b6560</span>
+                    </div>
+                    <div class="swatch" style="background: #ddd9d5; color: #2e2b28;">
+                        <span class="swatch-label">Border</span>
+                        <span class="swatch-hex">#ddd9d5</span>
+                    </div>
+                </div>
+                <div class="mini-preview">
+                    <h3>Hey, I'm William!</h3>
+                    <p class="secondary">Finance student at the University of Miami who loves tackling complex problems.</p>
+                    <a href="#" class="btn btn-primary">About Me</a>
+                    <a href="#" class="btn btn-outline">Get in Touch</a>
+                    <div class="entry">
+                        <h4>Ernst & Young</h4>
+                        <span class="muted">June - August 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Palette 4 - Mocha -->
+        <div class="palette-card palette-4">
+            <div class="palette-header">
+                <h2>Mocha</h2>
+                <p>Warm chocolate undertones</p>
+            </div>
+            <div class="palette-preview">
+                <div class="color-swatches">
+                    <div class="swatch" style="background: #faf7f4; color: #352a24;">
+                        <span class="swatch-label">Background</span>
+                        <span class="swatch-hex">#faf7f4</span>
+                    </div>
+                    <div class="swatch" style="background: #352a24;">
+                        <span class="swatch-label">Text</span>
+                        <span class="swatch-hex">#352a24</span>
+                    </div>
+                    <div class="swatch" style="background: #6f4e37;">
+                        <span class="swatch-label">Accent</span>
+                        <span class="swatch-hex">#6f4e37</span>
+                    </div>
+                    <div class="swatch" style="background: #e3d9cf; color: #352a24;">
+                        <span class="swatch-label">Border</span>
+                        <span class="swatch-hex">#e3d9cf</span>
+                    </div>
+                </div>
+                <div class="mini-preview">
+                    <h3>Hey, I'm William!</h3>
+                    <p class="secondary">Finance student at the University of Miami who loves tackling complex problems.</p>
+                    <a href="#" class="btn btn-primary">About Me</a>
+                    <a href="#" class="btn btn-outline">Get in Touch</a>
+                    <div class="entry">
+                        <h4>Ernst & Young</h4>
+                        <span class="muted">June - August 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Palette 5 - Sand -->
+        <div class="palette-card palette-5">
+            <div class="palette-header">
+                <h2>Sand</h2>
+                <p>Light, airy beach tones</p>
+            </div>
+            <div class="palette-preview">
+                <div class="color-swatches">
+                    <div class="swatch" style="background: #fdfbf7; color: #33302b;">
+                        <span class="swatch-label">Background</span>
+                        <span class="swatch-hex">#fdfbf7</span>
+                    </div>
+                    <div class="swatch" style="background: #33302b;">
+                        <span class="swatch-label">Text</span>
+                        <span class="swatch-hex">#33302b</span>
+                    </div>
+                    <div class="swatch" style="background: #a69685;">
+                        <span class="swatch-label">Accent</span>
+                        <span class="swatch-hex">#a69685</span>
+                    </div>
+                    <div class="swatch" style="background: #e8e2d9; color: #33302b;">
+                        <span class="swatch-label">Border</span>
+                        <span class="swatch-hex">#e8e2d9</span>
+                    </div>
+                </div>
+                <div class="mini-preview">
+                    <h3>Hey, I'm William!</h3>
+                    <p class="secondary">Finance student at the University of Miami who loves tackling complex problems.</p>
+                    <a href="#" class="btn btn-primary">About Me</a>
+                    <a href="#" class="btn btn-outline">Get in Touch</a>
+                    <div class="entry">
+                        <h4>Ernst & Young</h4>
+                        <span class="muted">June - August 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Palette 6 - Cocoa -->
+        <div class="palette-card palette-6">
+            <div class="palette-header">
+                <h2>Cocoa</h2>
+                <p>Deep, cozy chocolate</p>
+            </div>
+            <div class="palette-preview">
+                <div class="color-swatches">
+                    <div class="swatch" style="background: #f8f5f2; color: #2a2118;">
+                        <span class="swatch-label">Background</span>
+                        <span class="swatch-hex">#f8f5f2</span>
+                    </div>
+                    <div class="swatch" style="background: #2a2118;">
+                        <span class="swatch-label">Text</span>
+                        <span class="swatch-hex">#2a2118</span>
+                    </div>
+                    <div class="swatch" style="background: #5c4033;">
+                        <span class="swatch-label">Accent</span>
+                        <span class="swatch-hex">#5c4033</span>
+                    </div>
+                    <div class="swatch" style="background: #dfd6cb; color: #2a2118;">
+                        <span class="swatch-label">Border</span>
+                        <span class="swatch-hex">#dfd6cb</span>
+                    </div>
+                </div>
+                <div class="mini-preview">
+                    <h3>Hey, I'm William!</h3>
+                    <p class="secondary">Finance student at the University of Miami who loves tackling complex problems.</p>
+                    <a href="#" class="btn btn-primary">About Me</a>
+                    <a href="#" class="btn btn-outline">Get in Touch</a>
+                    <div class="entry">
+                        <h4>Ernst & Young</h4>
+                        <span class="muted">June - August 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Palette 7 - Stone -->
+        <div class="palette-card palette-7">
+            <div class="palette-header">
+                <h2>Stone</h2>
+                <p>Cool gray with warm hints</p>
+            </div>
+            <div class="palette-preview">
+                <div class="color-swatches">
+                    <div class="swatch" style="background: #f5f4f2; color: #2d2d2a;">
+                        <span class="swatch-label">Background</span>
+                        <span class="swatch-hex">#f5f4f2</span>
+                    </div>
+                    <div class="swatch" style="background: #2d2d2a;">
+                        <span class="swatch-label">Text</span>
+                        <span class="swatch-hex">#2d2d2a</span>
+                    </div>
+                    <div class="swatch" style="background: #78756d;">
+                        <span class="swatch-label">Accent</span>
+                        <span class="swatch-hex">#78756d</span>
+                    </div>
+                    <div class="swatch" style="background: #d9d7d2; color: #2d2d2a;">
+                        <span class="swatch-label">Border</span>
+                        <span class="swatch-hex">#d9d7d2</span>
+                    </div>
+                </div>
+                <div class="mini-preview">
+                    <h3>Hey, I'm William!</h3>
+                    <p class="secondary">Finance student at the University of Miami who loves tackling complex problems.</p>
+                    <a href="#" class="btn btn-primary">About Me</a>
+                    <a href="#" class="btn btn-outline">Get in Touch</a>
+                    <div class="entry">
+                        <h4>Ernst & Young</h4>
+                        <span class="muted">June - August 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Palette 8 - Walnut -->
+        <div class="palette-card palette-8">
+            <div class="palette-header">
+                <h2>Walnut</h2>
+                <p>Rich wood tones</p>
+            </div>
+            <div class="palette-preview">
+                <div class="color-swatches">
+                    <div class="swatch" style="background: #fcf9f6; color: #3b2f28;">
+                        <span class="swatch-label">Background</span>
+                        <span class="swatch-hex">#fcf9f6</span>
+                    </div>
+                    <div class="swatch" style="background: #3b2f28;">
+                        <span class="swatch-label">Text</span>
+                        <span class="swatch-hex">#3b2f28</span>
+                    </div>
+                    <div class="swatch" style="background: #5d4037;">
+                        <span class="swatch-label">Accent</span>
+                        <span class="swatch-hex">#5d4037</span>
+                    </div>
+                    <div class="swatch" style="background: #e6ddd4; color: #3b2f28;">
+                        <span class="swatch-label">Border</span>
+                        <span class="swatch-hex">#e6ddd4</span>
+                    </div>
+                </div>
+                <div class="mini-preview">
+                    <h3>Hey, I'm William!</h3>
+                    <p class="secondary">Finance student at the University of Miami who loves tackling complex problems.</p>
+                    <a href="#" class="btn btn-primary">About Me</a>
+                    <a href="#" class="btn btn-outline">Get in Touch</a>
+                    <div class="entry">
+                        <h4>Ernst & Young</h4>
+                        <span class="muted">June - August 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Palette 9 - Cream -->
+        <div class="palette-card palette-9">
+            <div class="palette-header">
+                <h2>Cream</h2>
+                <p>Soft, luxurious ivory</p>
+            </div>
+            <div class="palette-preview">
+                <div class="color-swatches">
+                    <div class="swatch" style="background: #fffcf8; color: #3a3632;">
+                        <span class="swatch-label">Background</span>
+                        <span class="swatch-hex">#fffcf8</span>
+                    </div>
+                    <div class="swatch" style="background: #3a3632;">
+                        <span class="swatch-label">Text</span>
+                        <span class="swatch-hex">#3a3632</span>
+                    </div>
+                    <div class="swatch" style="background: #b5a898;">
+                        <span class="swatch-label">Accent</span>
+                        <span class="swatch-hex">#b5a898</span>
+                    </div>
+                    <div class="swatch" style="background: #ebe5dc; color: #3a3632;">
+                        <span class="swatch-label">Border</span>
+                        <span class="swatch-hex">#ebe5dc</span>
+                    </div>
+                </div>
+                <div class="mini-preview">
+                    <h3>Hey, I'm William!</h3>
+                    <p class="secondary">Finance student at the University of Miami who loves tackling complex problems.</p>
+                    <a href="#" class="btn btn-primary">About Me</a>
+                    <a href="#" class="btn btn-outline">Get in Touch</a>
+                    <div class="entry">
+                        <h4>Ernst & Young</h4>
+                        <span class="muted">June - August 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Palette 10 - Chestnut -->
+        <div class="palette-card palette-10">
+            <div class="palette-header">
+                <h2>Chestnut</h2>
+                <p>Warm reddish-brown</p>
+            </div>
+            <div class="palette-preview">
+                <div class="color-swatches">
+                    <div class="swatch" style="background: #faf6f3; color: #31241c;">
+                        <span class="swatch-label">Background</span>
+                        <span class="swatch-hex">#faf6f3</span>
+                    </div>
+                    <div class="swatch" style="background: #31241c;">
+                        <span class="swatch-label">Text</span>
+                        <span class="swatch-hex">#31241c</span>
+                    </div>
+                    <div class="swatch" style="background: #8b4513;">
+                        <span class="swatch-label">Accent</span>
+                        <span class="swatch-hex">#8b4513</span>
+                    </div>
+                    <div class="swatch" style="background: #e2d5ca; color: #31241c;">
+                        <span class="swatch-label">Border</span>
+                        <span class="swatch-hex">#e2d5ca</span>
+                    </div>
+                </div>
+                <div class="mini-preview">
+                    <h3>Hey, I'm William!</h3>
+                    <p class="secondary">Finance student at the University of Miami who loves tackling complex problems.</p>
+                    <a href="#" class="btn btn-primary">About Me</a>
+                    <a href="#" class="btn btn-outline">Get in Touch</a>
+                    <div class="entry">
+                        <h4>Ernst & Young</h4>
+                        <span class="muted">June - August 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Palette 11 - Greige -->
+        <div class="palette-card palette-11">
+            <div class="palette-header">
+                <h2>Greige</h2>
+                <p>Gray meets beige</p>
+            </div>
+            <div class="palette-preview">
+                <div class="color-swatches">
+                    <div class="swatch" style="background: #f6f5f3; color: #2f2e2c;">
+                        <span class="swatch-label">Background</span>
+                        <span class="swatch-hex">#f6f5f3</span>
+                    </div>
+                    <div class="swatch" style="background: #2f2e2c;">
+                        <span class="swatch-label">Text</span>
+                        <span class="swatch-hex">#2f2e2c</span>
+                    </div>
+                    <div class="swatch" style="background: #4a4845;">
+                        <span class="swatch-label">Accent</span>
+                        <span class="swatch-hex">#4a4845</span>
+                    </div>
+                    <div class="swatch" style="background: #d8d6d2; color: #2f2e2c;">
+                        <span class="swatch-label">Border</span>
+                        <span class="swatch-hex">#d8d6d2</span>
+                    </div>
+                </div>
+                <div class="mini-preview">
+                    <h3>Hey, I'm William!</h3>
+                    <p class="secondary">Finance student at the University of Miami who loves tackling complex problems.</p>
+                    <a href="#" class="btn btn-primary">About Me</a>
+                    <a href="#" class="btn btn-outline">Get in Touch</a>
+                    <div class="entry">
+                        <h4>Ernst & Young</h4>
+                        <span class="muted">June - August 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Palette 12 - Caramel -->
+        <div class="palette-card palette-12">
+            <div class="palette-header">
+                <h2>Caramel</h2>
+                <p>Sweet, warm bronze</p>
+            </div>
+            <div class="palette-preview">
+                <div class="color-swatches">
+                    <div class="swatch" style="background: #fdf9f5; color: #362d26;">
+                        <span class="swatch-label">Background</span>
+                        <span class="swatch-hex">#fdf9f5</span>
+                    </div>
+                    <div class="swatch" style="background: #362d26;">
+                        <span class="swatch-label">Text</span>
+                        <span class="swatch-hex">#362d26</span>
+                    </div>
+                    <div class="swatch" style="background: #9c6644;">
+                        <span class="swatch-label">Accent</span>
+                        <span class="swatch-hex">#9c6644</span>
+                    </div>
+                    <div class="swatch" style="background: #e7ddd1; color: #362d26;">
+                        <span class="swatch-label">Border</span>
+                        <span class="swatch-hex">#e7ddd1</span>
+                    </div>
+                </div>
+                <div class="mini-preview">
+                    <h3>Hey, I'm William!</h3>
+                    <p class="secondary">Finance student at the University of Miami who loves tackling complex problems.</p>
+                    <a href="#" class="btn btn-primary">About Me</a>
+                    <a href="#" class="btn btn-outline">Get in Touch</a>
+                    <div class="entry">
+                        <h4>Ernst & Young</h4>
+                        <span class="muted">June - August 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

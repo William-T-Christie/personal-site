@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LinkSmith</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-wrapper">
+    <div class="container">
+
+      <!-- ==================== HEADER ==================== -->
+      <header class="header">
+        <div class="header-left">
+          <h1 class="logo">LinkSmith</h1>
+          <span class="tagline">Copy links perfectly.</span>
+        </div>
+        <div class="header-right">
+          <button class="btn-icon" id="helpBtn" title="Help">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M6 6.5a2 2 0 114 0c0 1-1.5 1.25-1.5 2.5M8 11.5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <button class="btn-icon" id="exportBtn" title="Export current view to Markdown">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 2v8M8 10l3-3M8 10l-3-3M3 12v1a1 1 0 001 1h8a1 1 0 001-1v-1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- ==================== CAPTURE CARD ==================== -->
+      <section class="card capture-card">
+        <div class="card-header">
+          <span class="card-title">Capture Current Page</span>
+        </div>
+
+        <!-- Page Info -->
+        <div class="page-info">
+          <img class="favicon" id="favicon" src="" alt="" />
+          <div class="page-details">
+            <input type="text" class="title-input" id="titleInput" placeholder="Page title" />
+            <span class="domain" id="domain"></span>
+          </div>
+        </div>
+
+        <!-- Format Selection -->
+        <div class="format-section">
+          <label class="section-label">Format</label>
+          <div class="segmented-control" id="formatControl">
+            <button class="segment active" data-format="md" title="Press 1">
+              <span class="segment-label">Markdown</span>
+              <span class="segment-hint">1</span>
+            </button>
+            <button class="segment" data-format="pretty" title="Press 2">
+              <span class="segment-label">Title — URL</span>
+              <span class="segment-hint">2</span>
+            </button>
+            <button class="segment" data-format="url" title="Press 3">
+              <span class="segment-label">URL</span>
+              <span class="segment-hint">3</span>
+            </button>
+            <button class="segment" data-format="cite" title="Press 4">
+              <span class="segment-label">Citation</span>
+              <span class="segment-hint">4</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Destination Selection -->
+        <div class="save-section">
+          <label class="section-label">Save to</label>
+          <div class="select-wrapper">
+            <select id="destinationSelect" class="destination-select">
+              <option value="total">Total History</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Note Input -->
+        <div class="note-section">
+          <input type="text" class="note-input" id="noteInput" placeholder="Add a note (optional)..." />
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button class="btn btn-primary" id="copySaveBtn">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+            Copy + Save
+          </button>
+          <button class="btn btn-secondary" id="saveOnlyBtn">Save</button>
+        </div>
+      </section>
+
+      <!-- ==================== LIBRARY CARD ==================== -->
+      <section class="card library-card">
+        <div class="card-header">
+          <span class="card-title">Library</span>
+        </div>
+
+        <!-- Search -->
+        <div class="search-section">
+          <div class="search-wrapper">
+            <svg class="search-icon" width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M11 11l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <input type="text" class="search-input" id="searchInput" placeholder="Search links..." />
+          </div>
+        </div>
+
+        <!-- View Tabs -->
+        <div class="view-section">
+          <div class="segmented-control view-control" id="viewControl">
+            <button class="segment active" data-view="total">Total</button>
+            <button class="segment" data-view="folder">Folder</button>
+            <button class="segment" data-view="pinned">Pinned</button>
+          </div>
+        </div>
+
+        <!-- Folder Selection (shown when Folder view active) -->
+        <div class="folder-select-section" id="folderSelectSection" style="display: none;">
+          <div class="folder-select-row">
+            <select id="folderViewSelect" class="destination-select">
+              <option value="">Select a folder...</option>
+            </select>
+            <button class="btn-icon btn-delete-folder" id="deleteFolderBtn" title="Delete folder" style="display: none;">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <path d="M3 4h10M6 4V3a1 1 0 011-1h2a1 1 0 011 1v1M5 4v9a1 1 0 001 1h4a1 1 0 001-1V4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Library Items List -->
+        <div class="library-list" id="libraryList">
+          <!-- Items rendered dynamically by JavaScript -->
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="emptyState" style="display: none;">
+          <div class="empty-icon">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <rect x="4" y="8" width="24" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M4 12h24" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="7" cy="10" r="1" fill="currentColor"/>
+              <circle cx="10" cy="10" r="1" fill="currentColor"/>
+              <circle cx="13" cy="10" r="1" fill="currentColor"/>
+            </svg>
+          </div>
+          <p class="empty-text" id="emptyText">No links yet. Save a page to start.</p>
+        </div>
+      </section>
+
+    </div><!-- /.container -->
+
+    <!-- ==================== TOAST NOTIFICATION ==================== -->
+    <div class="toast" id="toast">
+      <span class="toast-text" id="toastText"></span>
+    </div>
+
+    <!-- ==================== MODALS ==================== -->
+
+    <!-- New Folder Modal -->
+    <div class="modal-overlay" id="modalOverlay" style="display: none;">
+      <div class="modal" id="folderModal">
+        <div class="modal-header">
+          <h3 class="modal-title">New Folder</h3>
+          <button class="btn-icon modal-close" id="modalClose">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Folder Name</label>
+            <input type="text" class="form-input" id="folderNameInput" placeholder="e.g., Research Papers" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Emoji (optional)</label>
+            <input type="text" class="form-input emoji-input" id="folderEmojiInput" placeholder="📁" maxlength="2" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" id="modalCancel">Cancel</button>
+          <button class="btn btn-primary" id="modalCreate">Create</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Folder Confirmation Modal -->
+    <div class="modal-overlay" id="deleteOverlay" style="display: none;">
+      <div class="modal delete-modal">
+        <div class="modal-header">
+          <h3 class="modal-title">Delete Folder</h3>
+          <button class="btn-icon modal-close" id="deleteClose">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p class="delete-message" id="deleteMessage">Are you sure you want to delete this folder?</p>
+          <p class="delete-note">Items will be preserved in Total History.</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" id="deleteCancel">Cancel</button>
+          <button class="btn btn-danger" id="deleteConfirm">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div class="modal-overlay" id="helpOverlay" style="display: none;">
+      <div class="modal help-modal">
+        <div class="modal-header">
+          <h3 class="modal-title">How to use LinkSmith</h3>
+          <button class="btn-icon modal-close" id="helpClose">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body help-body">
+
+          <!-- Capture Links -->
+          <div class="help-section">
+            <h4 class="help-heading">Capture Links</h4>
+            <p class="help-text">Save the current page with a cleaned title, optional note, and your preferred format. Choose to save to Total History or a custom folder.</p>
+          </div>
+
+          <!-- Format Options -->
+          <div class="help-section">
+            <h4 class="help-heading">Format Options</h4>
+            <div class="help-format-item">
+              <div class="help-format-header">
+                <span class="help-format-key">1</span>
+                <strong>Markdown</strong>
+              </div>
+              <code class="help-format-example">[Title](url)</code>
+              <p class="help-format-desc">Creates a clickable hyperlink. The URL is hidden behind the title text. Use for Notion, Obsidian, GitHub, Reddit, Slack, and other Markdown apps.</p>
+            </div>
+            <div class="help-format-item">
+              <div class="help-format-header">
+                <span class="help-format-key">2</span>
+                <strong>Title — URL</strong>
+              </div>
+              <code class="help-format-example">Title — https://...</code>
+              <p class="help-format-desc">Plain text with both title and full URL visible. Good for emails, documents, or when you want recipients to see the actual link.</p>
+            </div>
+            <div class="help-format-item">
+              <div class="help-format-header">
+                <span class="help-format-key">3</span>
+                <strong>URL Only</strong>
+              </div>
+              <code class="help-format-example">https://...</code>
+              <p class="help-format-desc">Just the raw URL with no title. Minimal and direct.</p>
+            </div>
+            <div class="help-format-item">
+              <div class="help-format-header">
+                <span class="help-format-key">4</span>
+                <strong>Citation</strong>
+              </div>
+              <code class="help-format-example">"Title." site.com, accessed date. url</code>
+              <p class="help-format-desc">Academic reference format with quoted title, domain, access date, and URL. Use for research papers, bibliographies, and formal references.</p>
+            </div>
+          </div>
+
+          <!-- Library Views -->
+          <div class="help-section">
+            <h4 class="help-heading">Library Views</h4>
+            <p class="help-text"><strong>Total</strong> — All saved links from everywhere, most recent first</p>
+            <p class="help-text"><strong>Folder</strong> — Browse links in a specific folder</p>
+            <p class="help-text"><strong>Pinned</strong> — Your starred favorites</p>
+          </div>
+
+          <!-- Keyboard Shortcuts -->
+          <div class="help-section">
+            <h4 class="help-heading">Keyboard Shortcuts</h4>
+            <div class="help-shortcuts">
+              <div class="help-shortcut"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd> <span>Format + Copy + Save</span></div>
+              <div class="help-shortcut"><kbd>/</kbd> <span>Focus search</span></div>
+              <div class="help-shortcut"><kbd>Enter</kbd> <span>Save (in note field)</span></div>
+              <div class="help-shortcut"><kbd>Esc</kbd> <span>Close modal</span></div>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="help-section">
+            <h4 class="help-heading">Actions</h4>
+            <p class="help-text"><strong>Export</strong> — Copies current view as Markdown list</p>
+            <p class="help-text"><strong>Pin</strong> — Star links for quick access</p>
+            <p class="help-text"><strong>Copy</strong> — Copy any saved link in current format</p>
+          </div>
+
+          <p class="help-footer">All data stored locally. No accounts, no cloud.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.popup-wrapper -->
+
+  <script src="popup.js"></script>
+</body>
+</html>

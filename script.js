@@ -10,65 +10,75 @@ const projectContent = {
     boomer: [
         {
             title: 'Daily Affirmations with Billy Joel',
-            description: "Every morning the Piano Man tells you you're an innocent man",
-            tech: 'AI · Existential Comfort'
+            description: "the Piano Man tells you you're an innocent man",
+            tech: 'JavaScript · CSS Animations'
         },
         {
             title: 'Buzzword Bingo',
-            description: 'AI that listens to your meetings and scores them for corporate speak',
-            tech: 'JavaScript · Whisper AI'
+            description: 'AI that scores your meetings for corporate speak',
+            tech: 'JavaScript · Whisper AI · FFmpeg'
+        },
+        {
+            title: 'LinkSmith',
+            description: 'keeps links and citations organized, so future-you doesn\'t panic',
+            tech: 'Chrome Extension · Manifest V3'
+        },
+        {
+            title: 'This Website',
+            description: "you're looking at it",
+            tech: 'HTML · CSS · Indecision'
         },
         {
             title: 'Miami Food Roulette',
-            description: "Can't decide where to eat? Spin the wheel, get a restaurant",
+            description: 'spin a wheel, get a restaurant',
             tech: 'React · Google Places API'
         },
         {
             title: 'Doom Scroller Anonymous',
-            description: 'Tracks your screen time, roasts your choices',
-            tech: 'Swift · Screen Time API'
+            description: 'the Villain judges your screen time',
+            tech: 'JavaScript · Tesseract.js · Web Speech API'
         },
         {
             title: 'Super Secret Pending Project',
             description: 'I bet you wish you knew what this was',
             tech: '??? · ??? · ???'
-        },
-        {
-            title: 'This Website',
-            description: "You're looking at it. Seven color palettes because I couldn't pick one",
-            tech: 'HTML · CSS'
         }
     ],
     hacker: [
         {
             title: 'Daily Affirmations with Billy Joel',
-            description: "Every morning the Piano Man tells you you're an innocent man",
-            tech: 'AI · Existential Comfort'
+            description: "the Piano Man tells you you're an innocent man",
+            tech: 'JavaScript · CSS Animations'
         },
         {
             title: 'Buzzword Bingo',
-            description: 'AI that listens to your meetings and scores them for corporate speak',
-            tech: 'JavaScript · Whisper AI'
+            description: 'AI that scores your meetings for corporate speak',
+            tech: 'JavaScript · Whisper AI · FFmpeg'
+        },
+        {
+            title: 'LinkSmith',
+            description: 'keeps links and citations organized, so future-you doesn\'t panic',
+            tech: 'Chrome Extension · Manifest V3'
+        },
+        {
+            title: 'This Website',
+            description: "you're looking at it",
+            tech: 'HTML · CSS · Indecision'
         },
         {
             title: 'Miami Food Roulette',
-            description: "Can't decide where to eat? Spin the wheel, get a restaurant",
+            description: 'spin a wheel, get a restaurant',
             tech: 'React · Google Places API'
         },
         {
             title: 'Doom Scroller Anonymous',
-            description: 'Tracks your screen time, roasts your choices',
-            tech: 'Swift · Screen Time API'
+            description: 'the Villain judges your screen time',
+            tech: 'JavaScript · Tesseract.js · Web Speech API'
         },
         {
             title: 'Super Secret Pending Project',
             description: 'I bet you wish you knew what this was',
             tech: '??? · ??? · ???'
-        },
-        {
-            title: 'This Website',
-            description: "You're looking at it. Seven color palettes because I couldn't pick one",
-            tech: 'HTML · CSS'
         }
     ]
 };
@@ -162,11 +172,6 @@ function handleViewToggle(mode) {
 }
 
 function startStaticDissolve(originElement, targetMode) {
-    // Play fart sound when entering hacker mode
-    if (targetMode === 'hacker') {
-        playFartSound();
-    }
-
     const layout = document.querySelector('.layout');
     if (!layout) {
         completeTransition(targetMode);

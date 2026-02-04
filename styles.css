@@ -1,9 +1,38 @@
 /* ============================================
    William T. Christie - Personal Website
-   Clean Sidebar Layout
+   styles.css - Main Stylesheet
+   ============================================
+
+   TABLE OF CONTENTS
+   -----------------
+   1. CSS VARIABLES ............. Color palettes, fonts, sizing
+   2. RESET & BASE .............. Box model, html/body defaults
+   3. LAYOUT .................... Flex container, sidebar/main split
+   4. SCROLLBAR ................. Custom scrollbar styling
+   5. SIDEBAR ................... Fixed sidebar, profile, nav
+   6. VIEW TOGGLE ............... Boomer/Hacker mode checkboxes
+   7. CONTACT ................... Contact links section
+   8. MAIN CONTENT .............. Main scrollable area
+   9. WELCOME SECTION ........... Hero/welcome box
+   10. BUTTONS .................. Primary/outline button styles
+   11. SECTIONS ................. Content sections layout
+   12. PROJECT CARDS ............ Project grid and cards
+   13. ENTRY CARDS .............. Experience/education entries
+   14. LISTS .................... ul/li styling
+   15. FOOTER ................... Footer styles
+   16. LINKS .................... Global link styles
+   17. RESPONSIVE ............... Mobile breakpoints (900px, 600px)
+   18. PRINT .................... Print media queries
+   19. FOCUS & SELECTION ........ Accessibility states
+   20. HACKER MODE .............. walzr.com-inspired alternate layout
+   21. STATIC DISSOLVE .......... CRT transition effect
+   22. HACKER FOOTER ............ Hacker mode footer links
+
    ============================================ */
 
-/* CSS Variables */
+/* ==========================================================================
+   1. CSS VARIABLES
+   ========================================================================== */
 :root {
     --color-bg: #fdfbf7;
     --color-text: #33302b;
@@ -18,7 +47,7 @@
     --sidebar-width: 300px;
 }
 
-/* Hacker Mode Variables - Clean minimal light theme like walzr.com */
+/* Hacker Mode Variables */
 body.hacker-mode {
     --color-bg: #ffffff;
     --color-text: #333333;
@@ -29,7 +58,9 @@ body.hacker-mode {
     --font-mono: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* Reset */
+/* ==========================================================================
+   2. RESET & BASE
+   ========================================================================== */
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
@@ -50,7 +81,9 @@ body {
     padding: 10px 10px 0 10px;
 }
 
-/* Layout */
+/* ==========================================================================
+   3. LAYOUT
+   ========================================================================== */
 .layout {
     display: flex;
     min-height: calc(100vh - 10px);
@@ -58,7 +91,9 @@ body {
     border-radius: 4px 4px 0 0;
 }
 
-/* Custom Scrollbar */
+/* ==========================================================================
+   4. SCROLLBAR
+   ========================================================================== */
 .main::-webkit-scrollbar {
     width: 6px;
 }
@@ -76,7 +111,9 @@ body {
     background: rgba(0, 0, 0, 0.2);
 }
 
-/* Sidebar */
+/* ==========================================================================
+   5. SIDEBAR
+   ========================================================================== */
 .sidebar {
     position: fixed;
     top: 10px;
@@ -158,7 +195,7 @@ body {
     line-height: 1.5;
 }
 
-/* Navigation */
+/* --- Navigation --- */
 .nav {
     display: flex;
     flex-direction: column;
@@ -186,7 +223,9 @@ body {
     font-weight: 600;
 }
 
-/* View Toggle - Boomer Mode (Sidebar) */
+/* ==========================================================================
+   6. VIEW TOGGLE
+   ========================================================================== */
 .boomer-view-toggle {
     display: flex;
     flex-direction: column;
@@ -278,7 +317,9 @@ body.hacker-mode .boomer-view-toggle {
     color: var(--color-accent);
 }
 
-/* Contact */
+/* ==========================================================================
+   7. CONTACT
+   ========================================================================== */
 .contact {
     display: flex;
     flex-direction: column;
@@ -330,7 +371,9 @@ body.hacker-mode .boomer-view-toggle {
     font-size: 11px;
 }
 
-/* Main Content */
+/* ==========================================================================
+   8. MAIN CONTENT
+   ========================================================================== */
 .main {
     margin-left: var(--sidebar-width);
     padding: 32px 48px;
@@ -348,7 +391,9 @@ body.hacker-mode .boomer-view-toggle {
     padding-top: 48px;
 }
 
-/* Welcome Section */
+/* ==========================================================================
+   9. WELCOME SECTION
+   ========================================================================== */
 .welcome {
     margin-bottom: 48px;
     padding: 32px;
@@ -385,6 +430,10 @@ body.hacker-mode .boomer-view-toggle {
     display: flex;
     gap: 12px;
 }
+
+/* ==========================================================================
+   10. BUTTONS
+   ========================================================================== */
 
 .btn {
     display: inline-flex;
@@ -441,7 +490,9 @@ body.hacker-mode .boomer-view-toggle {
     color: var(--color-bg);
 }
 
-/* Sections */
+/* ==========================================================================
+   11. SECTIONS
+   ========================================================================== */
 .section {
     margin-bottom: 56px;
     padding-bottom: 48px;
@@ -464,7 +515,9 @@ h2 {
     margin-bottom: 24px;
 }
 
-/* Project Cards */
+/* ==========================================================================
+   12. PROJECT CARDS
+   ========================================================================== */
 .project-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -519,7 +572,9 @@ h2 {
     cursor: pointer;
 }
 
-/* Entry (Experience, Education, etc.) */
+/* ==========================================================================
+   13. ENTRY CARDS
+   ========================================================================== */
 .entry {
     margin-bottom: 32px;
     padding-bottom: 32px;
@@ -572,7 +627,9 @@ h2 {
     color: var(--color-text);
 }
 
-/* Lists */
+/* ==========================================================================
+   14. LISTS
+   ========================================================================== */
 ul {
     list-style: disc;
     padding-left: 20px;
@@ -590,7 +647,9 @@ li:last-child {
     margin-bottom: 0;
 }
 
-/* Footer */
+/* ==========================================================================
+   15. FOOTER
+   ========================================================================== */
 .footer {
     margin-top: 48px;
     padding-top: 24px;
@@ -602,13 +661,17 @@ li:last-child {
     color: var(--color-text-muted);
 }
 
-/* Links */
+/* ==========================================================================
+   16. LINKS
+   ========================================================================== */
 a {
     color: inherit;
     text-decoration: none;
 }
 
-/* Responsive */
+/* ==========================================================================
+   17. RESPONSIVE
+   ========================================================================== */
 @media (max-width: 900px) {
     .layout {
         flex-direction: column;
@@ -683,7 +746,9 @@ a {
     }
 }
 
-/* Print */
+/* ==========================================================================
+   18. PRINT
+   ========================================================================== */
 @media print {
     .layout {
         display: block;
@@ -703,20 +768,22 @@ a {
     }
 }
 
-/* Focus States */
+/* ==========================================================================
+   19. FOCUS & SELECTION
+   ========================================================================== */
 a:focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 2px;
 }
 
-/* Selection */
+/* --- Selection --- */
 ::selection {
     background-color: rgba(99, 102, 241, 0.2);
 }
 
-/* ============================================
-   HACKER MODE STYLES - Clean Minimal (walzr.com style)
-   ============================================ */
+/* ==========================================================================
+   20. HACKER MODE
+   ========================================================================== */
 
 /* Clean white background */
 body.hacker-mode {
@@ -801,10 +868,7 @@ body.hacker-mode .mode-toggle .mode-label.hacker {
     display: inline-flex;
 }
 
-/* ============================================
-   HACKER MODE - NEW LAYOUT (walzr.com inspired)
-   Bold header stripe, projects only
-   ============================================ */
+/* --- Hacker Mode Layout --- */
 
 /* Hide hacker header in normal mode */
 .hacker-header {
@@ -1125,9 +1189,9 @@ body.hacker-mode .mode-toggle:hover {
     }
 }
 
-/* ============================================
-   VIEW TRANSITION - STATIC DISSOLVE EFFECT
-   ============================================ */
+/* ==========================================================================
+   21. STATIC DISSOLVE
+   ========================================================================== */
 
 /* Static noise overlay */
 .static-overlay {
@@ -1228,9 +1292,9 @@ body.transitioning.reveal .layout {
     opacity: 1;
 }
 
-/* ============================================
-   HACKER MODE FOOTER
-   ============================================ */
+/* ==========================================================================
+   22. HACKER FOOTER
+   ========================================================================== */
 
 /* Hide hacker footer in boomer mode */
 .hacker-footer {
