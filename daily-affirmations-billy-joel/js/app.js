@@ -7,6 +7,7 @@ class App {
     constructor() {
         this.currentSong = null;
         this.isPlaying = false;
+        this.typewriterAnimationId = 0; // Track animation to cancel on new quote
 
         // DOM elements
         this.songSelector = document.getElementById('song-selector');
@@ -204,6 +205,10 @@ class App {
      * Animate affirmation text appearing with typewriter effect
      */
     animateAffirmationText(affirmation) {
+        // Cancel any previous animation by incrementing the ID
+        this.typewriterAnimationId++;
+        const currentAnimationId = this.typewriterAnimationId;
+
         const displayText = `"${affirmation}"`;
         this.lyricDisplay.textContent = '';
         this.lyricDisplay.classList.add('typing');
@@ -212,6 +217,10 @@ class App {
         const speed = 25; // ms per character
 
         const typeWriter = () => {
+            // Stop if a newer animation has started
+            if (currentAnimationId !== this.typewriterAnimationId) {
+                return;
+            }
             if (i < displayText.length) {
                 this.lyricDisplay.textContent += displayText.charAt(i);
                 i++;
