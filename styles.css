@@ -536,6 +536,19 @@ h2 {
     border-color: var(--color-accent);
 }
 
+/* View-specific descriptions */
+.project-card .desc-hacker {
+    display: none !important;
+}
+
+body.hacker-mode .project-card .desc-boomer {
+    display: none !important;
+}
+
+body.hacker-mode .project-card .desc-hacker {
+    display: inline !important;
+}
+
 /* Revamping state - greyed out, not clickable */
 .project-card--revamping {
     position: relative;

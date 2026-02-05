@@ -10,37 +10,37 @@ const projectContent = {
     boomer: [
         {
             title: 'Daily Affirmations with Billy Joel',
-            description: "the Piano Man tells you you're an innocent man",
+            description: 'Daily motivational quotes powered by Billy Joel lyrics',
             tech: 'JavaScript · CSS Animations'
         },
         {
             title: 'Buzzword Bingo',
-            description: 'AI that scores your meetings for corporate speak',
+            description: 'AI-powered meeting analyzer that detects corporate jargon',
             tech: 'JavaScript · Whisper AI · FFmpeg'
         },
         {
             title: 'LinkSmith',
-            description: 'keeps links and citations organized, so future-you doesn\'t panic',
+            description: 'Chrome extension for capturing, formatting, and organizing links',
             tech: 'Chrome Extension · Manifest V3'
         },
         {
             title: 'This Website',
-            description: "you're looking at it",
+            description: 'Personal portfolio with dual-mode design and multiple themes',
             tech: 'HTML · CSS · Indecision'
         },
         {
             title: 'Miami Food Roulette',
-            description: 'spin a wheel, get a restaurant (revamping)',
+            description: 'Restaurant discovery tool using Google Places API (revamping)',
             tech: 'React · Google Places API'
         },
         {
             title: 'Doom Scroller Anonymous',
-            description: 'the Villain judges your screen time (revamping)',
+            description: 'Screen time analyzer with OCR and text-to-speech (revamping)',
             tech: 'JavaScript · Tesseract.js · Web Speech API'
         },
         {
             title: 'Super Secret Pending Project',
-            description: 'I bet you wish you knew what this was',
+            description: 'Coming soon',
             tech: '??? · ??? · ???'
         }
     ],
