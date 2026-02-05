@@ -1099,6 +1099,7 @@ body.hacker-mode .project-card:hover {
 }
 
 body.hacker-mode .project-card--revamping {
+    position: relative;
     opacity: 0.5;
     filter: grayscale(50%);
 }
