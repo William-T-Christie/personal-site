@@ -1,0 +1,19 @@
+.vercel
+.DS_Store
+
+# Secrets and credentials
+.env
+.env.*
+*.pem
+*.key
+*_rsa
+*_dsa
+*_ecdsa
+*_ed25519
+*.secret
+secrets.json
+credentials.json
+
+# API keys
+config.local.js
+.api_keys

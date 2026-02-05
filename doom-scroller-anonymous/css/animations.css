@@ -1,0 +1,294 @@
+/* ============================================
+   DOOM SCROLLER ANONYMOUS - Animations
+   Operation Doomsday / Madvillainy Style
+   ============================================ */
+
+/* ----- Glitch Text Effect ----- */
+.glitch-text {
+    position: relative;
+    animation: glitch-skew 4s infinite linear alternate-reverse;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch-text::before {
+    color: var(--color-copper-mid, #d4a088);
+    animation: glitch-left 3s infinite linear alternate-reverse;
+    clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+    transform: translateX(-3px);
+    opacity: 0.8;
+}
+
+.glitch-text::after {
+    color: var(--color-doom-purple, #9080b0);
+    animation: glitch-right 2s infinite linear alternate-reverse;
+    clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+    transform: translateX(3px);
+    opacity: 0.8;
+}
+
+@keyframes glitch-skew {
+    0%, 80%, 100% { transform: skew(0deg); }
+    85% { transform: skew(0.8deg); }
+    90% { transform: skew(-0.8deg); }
+    95% { transform: skew(0.4deg); }
+}
+
+@keyframes glitch-left {
+    0%, 90%, 100% { transform: translateX(-3px); }
+    92% { transform: translateX(3px); }
+    94% { transform: translateX(-2px); }
+    96% { transform: translateX(2px); }
+}
+
+@keyframes glitch-right {
+    0%, 88%, 100% { transform: translateX(3px); }
+    90% { transform: translateX(-3px); }
+    93% { transform: translateX(2px); }
+    97% { transform: translateX(-2px); }
+}
+
+/* ----- Texture Overlay Drift ----- */
+@keyframes texture-drift {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(5px, 5px); }
+}
+
+.texture-overlay {
+    animation: texture-drift 20s linear infinite alternate;
+}
+
+/* ----- Screen Flicker ----- */
+@keyframes screen-flicker {
+    0%, 97%, 100% { opacity: 1; }
+    98% { opacity: 0.95; }
+    99% { opacity: 0.98; }
+}
+
+.screen.active {
+    animation: screen-flicker 6s infinite;
+}
+
+/* ----- Mask Glow Pulse - Copper DOOM glow ----- */
+@keyframes glow-pulse {
+    0%, 100% {
+        filter: drop-shadow(0 0 20px rgba(196, 136, 112, 0.3));
+    }
+    50% {
+        filter: drop-shadow(0 0 40px rgba(196, 136, 112, 0.5))
+               drop-shadow(0 0 60px rgba(196, 136, 112, 0.2));
+    }
+}
+
+.doom-mask {
+    /* No animation - keep stable */
+}
+
+/* ----- Thinking Mask ----- */
+@keyframes mask-thinking {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+.doom-mask--thinking {
+    animation:
+        glow-pulse 2s ease-in-out infinite,
+        mask-thinking 4s ease-in-out infinite;
+}
+
+/* ----- Speaking Mask ----- */
+.doom-mask--speaking {
+    /* No animation - keep stable */
+}
+
+/* ----- Caption Typewriter ----- */
+@keyframes typewriter-blink {
+    0%, 50% { border-right-color: var(--color-copper-light, #f4d4c4); }
+    51%, 100% { border-right-color: transparent; }
+}
+
+.caption-text.typing {
+    border-right: 3px solid var(--color-copper-light, #f4d4c4);
+    animation: typewriter-blink 0.7s infinite;
+}
+
+/* ----- Caption Word Flash ----- */
+@keyframes word-flash {
+    0% { color: var(--color-copper-light, #f4d4c4); }
+    100% { color: var(--color-white, #ffffff); }
+}
+
+.caption-text .word-highlight {
+    animation: word-flash 0.3s ease-out forwards;
+}
+
+/* ----- Button Glow Pulse ----- */
+@keyframes button-glow {
+    0%, 100% {
+        box-shadow: 0 0 30px rgba(196, 136, 112, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 50px rgba(196, 136, 112, 0.7);
+    }
+}
+
+.btn--villain:hover {
+    animation: button-glow 1.5s infinite ease-in-out;
+}
+
+/* ----- Progress Bar Glow ----- */
+@keyframes progress-glow {
+    0% { box-shadow: 0 0 10px var(--color-copper-mid, #d4a088); }
+    100% { box-shadow: 0 0 25px var(--color-copper-mid, #d4a088); }
+}
+
+.progress-fill {
+    animation: progress-glow 1s ease-in-out infinite alternate;
+}
+
+/* ----- Upload Zone Pulse ----- */
+@keyframes upload-pulse {
+    0%, 100% { border-color: var(--color-gray, #6a5a8a); }
+    50% { border-color: var(--color-copper-mid, #d4a088); }
+}
+
+.upload-zone:not(:hover) {
+    animation: upload-pulse 3s ease-in-out infinite;
+}
+
+/* ----- Drag Over Glow ----- */
+@keyframes dragover-glow {
+    0%, 100% {
+        box-shadow: inset 0 0 30px rgba(196, 136, 112, 0.1), 0 0 30px rgba(196, 136, 112, 0.5);
+    }
+    50% {
+        box-shadow: inset 0 0 50px rgba(196, 136, 112, 0.2), 0 0 50px rgba(196, 136, 112, 0.7);
+    }
+}
+
+.upload-zone.dragover {
+    animation: dragover-glow 1s ease-in-out infinite;
+}
+
+/* ----- Screen Transitions ----- */
+@keyframes screen-in {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes screen-out {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.05);
+    }
+}
+
+.screen.entering {
+    animation: screen-in 0.4s ease-out forwards;
+}
+
+.screen.leaving {
+    animation: screen-out 0.3s ease-in forwards;
+}
+
+/* ----- Static Noise ----- */
+@keyframes static-noise {
+    0%, 100% { background-position: 0 0; }
+    10% { background-position: -5% -10%; }
+    20% { background-position: -15% 5%; }
+    30% { background-position: 7% -25%; }
+    40% { background-position: 20% 25%; }
+    50% { background-position: -25% 10%; }
+    60% { background-position: 15% -5%; }
+    70% { background-position: 0% 15%; }
+    80% { background-position: 25% 35%; }
+    90% { background-position: -10% 10%; }
+}
+
+/* ----- Eye Glow Animation ----- */
+@keyframes eye-glow {
+    0%, 100% {
+        opacity: 0.6;
+        filter: blur(2px);
+    }
+    50% {
+        opacity: 1;
+        filter: blur(4px);
+    }
+}
+
+/* ----- Mask Entrance ----- */
+@keyframes doom-entrance {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+        filter: blur(10px);
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+        filter: blur(0);
+    }
+    70% {
+        transform: scale(0.98);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.mask-container.entering {
+    animation: doom-entrance 0.6s ease-out;
+}
+
+/* ----- Recording Indicator ----- */
+@keyframes recording-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* ----- Record Spin Animation ----- */
+@keyframes record-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(720deg); }
+}
+
+.mask-hero.spinning {
+    animation: record-spin 2s ease-in-out forwards !important;
+    transform-origin: center center !important;
+    outline: 10px solid red !important; /* DEBUG - remove later */
+}
+
+.mask-hero.spinning::before,
+.mask-hero.spinning::after {
+    animation: none !important;
+}
+
+/* ----- Reduce Motion ----- */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

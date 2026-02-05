@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doom Scroller Anonymous | MF DOOM Reviews Your Screen Time</title>
+    <meta name="description" content="Upload your screen time. Get roasted by DOOM. ALL CAPS when you spell the man name.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=VT323&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body class="villain-theme">
+    <!-- Texture Overlay (subtle grain + scanlines) -->
+    <div class="texture-overlay"></div>
+    <div class="scanlines"></div>
+
+    <!-- ========== SCREEN 1: LANDING ========== -->
+    <section class="screen screen--landing active" id="screenLanding">
+
+        <div class="landing-content">
+            <div class="mask-hero">
+                <div class="mask-hero-spinner">
+                    <canvas class="doom-mask" id="maskPreview" width="400" height="400"></canvas>
+                </div>
+            </div>
+
+            <div class="landing-text">
+                <h1 class="title-main">DOOM SCROLLER</h1>
+                <h2 class="title-sub">ANONYMOUS</h2>
+            </div>
+
+            <!-- Speech bubble style -->
+            <div class="speech-bubble">
+                <p>YOUR SCREEN TIME IS CRIMINAL...</p>
+            </div>
+
+            <button class="btn btn--villain btn--large" id="btnStart">
+                <span class="btn-text">RAP SNITCHES</span>
+            </button>
+
+            <p class="footer-tagline">ALL CAPS WHEN YOU SPELL THE MAN NAME - MF DOOM</p>
+        </div>
+    </section>
+
+    <!-- ========== SCREEN 2: UPLOAD ========== -->
+    <section class="screen screen--upload" id="screenUpload">
+        <div class="upload-content">
+            <h2 class="screen-title">Submit Your Evidence</h2>
+            <p class="screen-subtitle">DOOM sees all. Drop your Screen Time screenshot.</p>
+
+            <div class="upload-zone" id="uploadZone">
+                <input type="file" id="fileInput" accept="image/*" class="file-input">
+                <div class="upload-visual">
+                    <div class="upload-icon">
+                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="8" y="16" width="48" height="36" rx="2" stroke="currentColor" stroke-width="2"/>
+                            <path d="M20 40L28 32L34 38L44 28" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="24" cy="26" r="4" stroke="currentColor" stroke-width="2"/>
+                            <path d="M32 8V16M28 12H36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <p class="upload-text">Drag & drop your screenshot here</p>
+                    <p class="upload-text-alt">or click to browse</p>
+                </div>
+            </div>
+
+            <div class="upload-instructions">
+                <h4>How to get your Screen Time screenshot:</h4>
+                <ol>
+                    <li>Open <strong>Settings</strong> on your iPhone</li>
+                    <li>Tap <strong>Screen Time</strong></li>
+                    <li>Tap <strong>See All Activity</strong></li>
+                    <li>Screenshot the app list</li>
+                </ol>
+            </div>
+
+            <button class="btn btn--secondary" id="btnBackToLanding">
+                <span class="btn-icon">&#9664;</span>
+                <span class="btn-text">Back</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- ========== SCREEN 3: PROCESSING ========== -->
+    <section class="screen screen--processing" id="screenProcessing">
+        <div class="processing-content">
+            <div class="mask-container mask-container--processing">
+                <canvas class="doom-mask doom-mask--thinking" id="maskProcessing" width="256" height="256"></canvas>
+            </div>
+
+            <h2 class="screen-title processing-title">DOOM Analyzes Your Crimes...</h2>
+
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text" id="progressText">Initializing OCR engine...</p>
+            </div>
+
+            <div class="processing-messages">
+                <p class="processing-message" id="processingMessage">Preparing judgment...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SCREEN 4: PLAYBACK (VINYL STYLE) ========== -->
+    <section class="screen screen--playback" id="screenPlayback">
+        <div class="playback-content">
+            <!-- Vinyl Record with DOOM mask -->
+            <div class="vinyl-player">
+                <div class="vinyl-spinner">
+                    <canvas class="doom-mask doom-mask--speaking" id="maskMain" width="384" height="384"></canvas>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="playback-controls">
+                <button class="btn btn--vinyl" id="btnBackToUpload" title="Back">
+                    <span>◀ BACK</span>
+                </button>
+                <button class="btn btn--vinyl" id="btnPause" title="Pause" onclick="if(speechSynthesis.paused){speechSynthesis.resume()}else{speechSynthesis.pause()} setTimeout(()=>{this.querySelector('.icon-pause').style.display=speechSynthesis.paused?'none':'block'; this.querySelector('.icon-play').style.display=speechSynthesis.paused?'block':'none'},50)">
+                    <span class="icon-pause">⏸ PAUSE</span>
+                    <span class="icon-play" style="display:none">▶ PLAY</span>
+                </button>
+                <button class="btn btn--vinyl" id="btnReplay" title="Replay">
+                    <span>↺ REPLAY</span>
+                </button>
+                <button class="btn btn--vinyl btn--primary" id="btnExport" title="Export">
+                    <span>EXPORT ⬇</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SCREEN 5: SHARE ========== -->
+    <section class="screen screen--share" id="screenShare">
+        <div class="share-content">
+            <h2 class="screen-title">Your Judgment Has Been Rendered</h2>
+            <p class="screen-subtitle">Download and share your public humiliation.</p>
+
+            <div class="video-preview-container">
+                <video id="videoPreview" class="video-preview" controls></video>
+            </div>
+
+            <div class="share-actions">
+                <button class="btn btn--villain" id="btnDownload">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                    <span class="btn-text">Download Video</span>
+                </button>
+
+                <button class="btn btn--secondary" id="btnNewRoast">
+                    <span class="btn-text">Get Roasted Again</span>
+                    <span class="btn-icon">&#8635;</span>
+                </button>
+            </div>
+
+            <div class="share-footer">
+                <p>DOOM has spoken. ALL CAPS.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== EXPORT CANVAS (hidden) ========== -->
+    <canvas id="exportCanvas" width="720" height="720" style="display: none;"></canvas>
+
+    <!-- ========== SCRIPTS ========== -->
+    <!-- Tesseract.js for OCR -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
+    <!-- App modules (order matters) -->
+    <script src="js/config.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/ocr.js"></script>
+    <script src="js/parser.js"></script>
+    <script src="js/roast-generator.js"></script>
+    <script src="js/speech.js"></script>
+    <script src="js/doom-voice.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/mask-renderer.js"></script>
+    <script src="js/caption.js"></script>
+    <script src="js/video-export.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/bouncing-bubbles.js"></script>
+    <!-- Rap Snitches intro audio -->
+    <audio id="rapSnitchesAudio" preload="auto">
+        <source src="assets/sounds/rap-snitches-intro.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+    // Record spin on button click with Rap Snitches beat
+    // Store interval globally so it can be cleared from app.js
+    window.rapSnitchesFadeInterval = null;
+
+    (function() {
+        function setupSpin() {
+            var btn = document.getElementById('btnStart');
+            var spinner = document.querySelector('.mask-hero-spinner');
+            var audio = document.getElementById('rapSnitchesAudio');
+
+            if (!btn || !spinner) {
+                setTimeout(setupSpin, 100);
+                return;
+            }
+
+            // Remove all existing click handlers
+            var newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+
+            newBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Clear any existing fade interval
+                if (window.rapSnitchesFadeInterval) {
+                    clearInterval(window.rapSnitchesFadeInterval);
+                    window.rapSnitchesFadeInterval = null;
+                }
+
+                // Play Rap Snitches intro beat at moderate volume
+                if (audio) {
+                    audio.currentTime = 0;
+                    audio.volume = 0.4; // Start at 40% volume to not startle
+                    audio.play().catch(function(err) {
+                        console.log('Audio play failed:', err);
+                    });
+                }
+
+                // Apply spin to inner wrapper only - slow record spin
+                spinner.style.transition = 'transform 3s cubic-bezier(0.4, 0, 0.2, 1)';
+                spinner.style.transform = 'rotate(360deg)';
+                newBtn.disabled = true;
+
+                setTimeout(function() {
+                    spinner.style.transition = '';
+                    spinner.style.transform = '';
+                    newBtn.disabled = false;
+                    document.body.classList.add('screen-not-landing');
+
+                    // Slowly fade audio to low background level, then let it play out
+                    if (audio) {
+                        var targetVolume = 0.25; // Quiet background
+                        window.rapSnitchesFadeInterval = setInterval(function() {
+                            if (audio.volume > targetVolume + 0.01) {
+                                audio.volume -= 0.01; // Very slow fade
+                            } else {
+                                audio.volume = targetVolume;
+                                clearInterval(window.rapSnitchesFadeInterval);
+                                window.rapSnitchesFadeInterval = null;
+                                // Let the song play to the end at 25% volume
+                            }
+                        }, 200);
+                    }
+
+                    window.DoomScrollerUI.showScreen('upload');
+                }, 3000);
+            });
+        }
+
+        if (document.readyState === 'complete') {
+            setTimeout(setupSpin, 100);
+        } else {
+            window.addEventListener('load', function() {
+                setTimeout(setupSpin, 100);
+            });
+        }
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1109 @@
+/* ============================================
+   DOOM SCROLLER ANONYMOUS - Main Styles
+
+   Visual DNA: The iconic MF DOOM mask illustration
+   - Deep purple/indigo background
+   - Copper/bronze/rose gold mask tones
+   - Purple/pink metallic highlights
+   - Red gem accents
+   - Green subtle accents
+   ============================================ */
+
+/* ----- CSS Variables ----- */
+:root {
+    /* Primary dark palette - deep purple */
+    --color-black: #1a1440;
+    --color-charcoal: #2a2057;
+    --color-slate: #3a306a;
+    --color-gray: #6a5a8a;
+
+    /* Copper/bronze mask colors */
+    --color-copper-light: #f4d4c4;
+    --color-copper-mid: #d4a088;
+    --color-copper-base: #c48870;
+    --color-copper-dark: #8b5a4a;
+
+    /* Accent colors */
+    --color-doom-red: #c41030;         /* Gem red */
+    --color-doom-pink: #c090a0;        /* Metallic highlights */
+    --color-doom-purple: #9080b0;      /* Edge highlights */
+    --color-doom-green: #70a060;       /* Subtle accent */
+    --color-doom-gold: #f4d4c4;        /* Light copper */
+
+    /* Text colors */
+    --color-white: #ffffff;
+    --color-offwhite: #f4e8e0;
+    --color-cream: #f8f0e8;
+
+    /* Metal mask palette */
+    --mask-light: #f4d4c4;
+    --mask-mid: #c48870;
+    --mask-dark: #8b5a4a;
+    --mask-shadow: #5a3a32;
+
+    /* Typography */
+    --font-display: 'VT323', monospace;
+    --font-body: 'Space Mono', monospace;
+
+    /* Effects */
+    --grain-opacity: 0.12;
+    --glow-copper: 0 0 30px rgba(196, 136, 112, 0.5);
+    --glow-red: 0 0 30px rgba(196, 16, 48, 0.5);
+    --glow-purple: 0 0 30px rgba(144, 128, 176, 0.4);
+}
+
+/* ----- Reset & Base ----- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-body);
+    background: var(--color-black);
+    color: var(--color-white);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.5;
+}
+
+/* ----- Gritty Texture Overlay - UNDERGROUND COMIX ----- */
+.texture-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 1000;
+    /* Heavy grain noise */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.25;
+    mix-blend-mode: soft-light;
+}
+
+/* Scanline effect - old print/zine feel */
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 999;
+    /* Visible halftone dots for newsprint grit */
+    background:
+        radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px),
+        radial-gradient(circle, rgba(0,0,0,0.08) 1px, transparent 1px);
+    background-size: 6px 6px, 8px 8px;
+    background-position: 0 0, 3px 3px;
+}
+
+/* Extra grit layer */
+.screen--landing {
+    background:
+        /* Speckle noise */
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='speckle'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23speckle)' opacity='0.08'/%3E%3C/svg%3E"),
+        #0f0f0f;
+}
+
+/* ----- Screen System - ZAP COMIX STYLE ----- */
+.screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+    /* Deep dark background */
+    background: #0f0f0f;
+}
+
+.screen.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Bouncing DVD-style bubbles - behind main content, only on landing */
+.bouncing-bubble {
+    position: fixed;
+    border-radius: 50%;
+    border: 5px solid #000;
+    box-shadow: 4px 4px 0 #000;
+    z-index: 1;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: opacity 0.3s ease;
+}
+
+/* Hide bubbles when body has non-landing class */
+body.screen-not-landing .bouncing-bubble {
+    opacity: 0;
+}
+
+.bouncing-bubble span {
+    font-family: 'Bangers', cursive;
+    color: #000;
+    text-align: center;
+    line-height: 0.9;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+}
+
+.bubble-1 {
+    width: 70px;
+    height: 70px;
+    background: #ff0080;
+}
+
+.bubble-1 span { font-size: 18px; }
+
+.bubble-2 {
+    width: 55px;
+    height: 55px;
+    background: #00ffcc;
+}
+
+.bubble-2 span { font-size: 14px; }
+
+.bubble-3 {
+    width: 45px;
+    height: 45px;
+    background: #ffdd00;
+}
+
+.bubble-3 span { font-size: 12px; }
+
+.bubble-4 {
+    width: 60px;
+    height: 60px;
+    background: #ff6600;
+}
+
+.bubble-4 span { font-size: 16px; }
+
+.bubble-5 {
+    width: 50px;
+    height: 50px;
+    background: #9933ff;
+}
+
+.bubble-5 span { font-size: 13px; }
+
+.bubble-6 {
+    width: 65px;
+    height: 65px;
+    background: #33ff66;
+}
+
+.bubble-6 span { font-size: 17px; }
+
+/* ----- Typography - DOOM Mask Style ----- */
+.title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 12vw, 5rem);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--color-copper-light);
+    text-align: center;
+    margin-bottom: 0.5rem;
+    line-height: 1;
+
+    /* Copper metallic shadow effect */
+    text-shadow:
+        4px 4px 0 var(--color-copper-dark),
+        8px 8px 0 var(--color-doom-purple),
+        0 0 40px rgba(196, 136, 112, 0.4);
+}
+
+.tagline {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 4vw, 1.5rem);
+    color: var(--color-copper-mid);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 20px rgba(196, 136, 112, 0.5);
+}
+
+.subtitle {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--color-gray);
+    text-align: center;
+    margin-bottom: 2.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.screen-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+    color: var(--color-copper-light);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    text-shadow:
+        3px 3px 0 var(--color-doom-purple),
+        0 0 30px rgba(144, 128, 176, 0.4);
+}
+
+.screen-subtitle {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--color-gray);
+    text-align: center;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* ----- Buttons - Bold/Urban Style ----- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.15s ease;
+    text-decoration: none;
+}
+
+.btn--villain {
+    background: linear-gradient(180deg, #ff3366 0%, #ff0044 100%);
+    color: #ffdd00;
+    border: 6px solid #000;
+    border-radius: 50px;
+    box-shadow:
+        6px 6px 0 #000,
+        inset 0 -4px 0 rgba(0,0,0,0.3);
+    font-weight: 700;
+    -webkit-text-stroke: 1px #000;
+    text-shadow: 2px 2px 0 #000;
+    position: relative;
+    z-index: 20;
+}
+
+.btn--villain:hover {
+    background: linear-gradient(180deg, #ff5588 0%, #ff2266 100%);
+    transform: translate(-3px, -3px);
+    box-shadow:
+        9px 9px 0 #000,
+        inset 0 -4px 0 rgba(0,0,0,0.3);
+}
+
+.btn--villain:active {
+    transform: translate(2px, 2px);
+    box-shadow:
+        3px 3px 0 #000,
+        inset 0 -4px 0 rgba(0,0,0,0.3);
+}
+
+.btn--secondary {
+    background: transparent;
+    color: var(--color-offwhite);
+    border: 2px solid var(--color-doom-purple);
+}
+
+.btn--secondary:hover {
+    border-color: var(--color-copper-mid);
+    color: var(--color-copper-light);
+    box-shadow: var(--glow-copper);
+}
+
+.btn--control {
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    background: var(--color-slate);
+    color: var(--color-offwhite);
+    border: 2px solid var(--color-doom-purple);
+    clip-path: none;
+    box-shadow: none;
+}
+
+.btn--control:hover {
+    background: var(--color-copper-base);
+    color: var(--color-black);
+    border-color: var(--color-copper-mid);
+}
+
+.btn--control svg {
+    width: 24px;
+    height: 24px;
+}
+
+.btn--export {
+    background: linear-gradient(135deg, var(--color-doom-red), #a00828);
+    box-shadow: var(--glow-red);
+    border: 2px solid #ff4060;
+}
+
+.btn--export:hover {
+    background: linear-gradient(135deg, #ff4060, var(--color-doom-red));
+    box-shadow: 0 0 50px rgba(196, 16, 48, 0.7);
+}
+
+/* ----- Landing Screen - ZAP COMIX BUBBLY STYLE ----- */
+.landing-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    max-width: 800px;
+    padding: 1rem;
+    min-height: 100vh;
+}
+
+/* Hero mask - centered with rounded bubble background */
+.mask-hero {
+    width: min(55vw, 320px);
+    height: min(55vw, 320px);
+    position: relative;
+    z-index: 100;
+    order: 2; /* Place mask in middle */
+    margin: 2rem 0 2.5rem 0;
+}
+
+/* Hot pink rounded bubble - STATIONARY outer ring */
+.mask-hero::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 115%;
+    height: 115%;
+    transform: translate(-50%, -50%);
+    background: #ff0080;
+    border-radius: 50%;
+    border: 8px solid #000;
+    z-index: -2;
+    box-shadow:
+        8px 8px 0 #000,
+        inset 0 -20px 40px rgba(0,0,0,0.3);
+}
+
+/* Inner spinner wrapper - this rotates */
+.mask-hero-spinner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+/* Yellow inner bubble - vinyl record style - SPINS */
+.mask-hero-spinner::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 102%;
+    height: 102%;
+    transform: translate(-50%, -50%);
+    background:
+        /* Record grooves */
+        repeating-radial-gradient(
+            circle at center,
+            transparent 0px,
+            transparent 8px,
+            rgba(0,0,0,0.15) 8px,
+            rgba(0,0,0,0.15) 10px,
+            transparent 10px,
+            transparent 18px,
+            rgba(0,0,0,0.12) 18px,
+            rgba(0,0,0,0.12) 20px
+        ),
+        #ffdd00;
+    border-radius: 50%;
+    border: 6px solid #000;
+    z-index: -1;
+}
+
+.mask-hero .doom-mask {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(4px 4px 0 #000);
+    position: relative;
+    z-index: 2;
+}
+
+/* Record spin animation */
+@keyframes record-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(720deg); }
+}
+
+.mask-hero.spinning {
+    animation: record-spin 2s ease-in-out forwards;
+    transform-origin: center center;
+}
+
+/* Title above mask */
+.landing-text {
+    position: relative;
+    z-index: 20;
+    order: 1; /* Title first */
+}
+
+/* Bubbly rounded title - ZAP COMIX STYLE */
+.title-main {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 12vw, 5.5rem);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+    color: #ffdd00;
+    /* Thick black outline for bubbly effect */
+    -webkit-text-stroke: 6px #000;
+    paint-order: stroke fill;
+    /* Layered shadow for depth */
+    text-shadow:
+        8px 8px 0 #ff0080,
+        12px 12px 0 #000;
+    position: relative;
+}
+
+.title-sub {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #00ffcc;
+    /* Thick black outline */
+    -webkit-text-stroke: 4px #000;
+    paint-order: stroke fill;
+    text-shadow:
+        5px 5px 0 #ff0080,
+        8px 8px 0 #000;
+}
+
+/* Large CTA button */
+.btn--large {
+    padding: 1.25rem 3rem;
+    font-size: 1.5rem;
+    order: 4; /* Button after speech bubble */
+}
+
+.footer-tagline {
+    margin-top: 1.5rem;
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: #00ffcc;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    -webkit-text-stroke: 2px #000;
+    paint-order: stroke fill;
+    text-shadow: 3px 3px 0 #ff0080;
+    order: 5; /* Tagline last */
+}
+
+/* Speech bubble - ZAP COMIX STYLE */
+.speech-bubble {
+    background: #fff;
+    color: #000;
+    padding: 1rem 2.5rem;
+    border-radius: 30px;
+    border: 6px solid #000;
+    position: relative;
+    margin-bottom: 1.5rem;
+    box-shadow: 6px 6px 0 #000;
+    max-width: 420px;
+    z-index: 20;
+    order: 3; /* Speech bubble after mask */
+}
+
+/* No tail - cleaner look */
+.speech-bubble::after,
+.speech-bubble::before {
+    display: none;
+}
+
+.speech-bubble p {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin: 0;
+}
+
+/* Legacy support */
+.footer-note {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-slate);
+}
+
+.footer-note p {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    color: var(--color-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+}
+
+/* ----- Mask Container ----- */
+.mask-container {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.mask-container--preview {
+    width: 200px;
+    height: 200px;
+}
+
+.mask-container--processing {
+    width: 180px;
+    height: 180px;
+}
+
+.mask-container--main {
+    width: 320px;
+    height: 320px;
+}
+
+.doom-mask {
+    width: 100%;
+    height: 100%;
+    display: block;
+    filter: drop-shadow(0 0 30px rgba(196, 136, 112, 0.5));
+}
+
+/* ----- Upload Screen ----- */
+.upload-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 500px;
+    width: 100%;
+}
+
+.upload-zone {
+    position: relative;
+    width: 100%;
+    min-height: 260px;
+    border: 3px dashed var(--color-gray);
+    background: rgba(45, 45, 45, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 1.5rem;
+    clip-path: polygon(
+        0 5%, 5% 0, 95% 0, 100% 5%,
+        100% 95%, 95% 100%, 5% 100%, 0 95%
+    );
+}
+
+.upload-zone:hover,
+.upload-zone.dragover {
+    border-color: var(--color-copper-mid);
+    background: rgba(196, 136, 112, 0.1);
+    box-shadow: inset 0 0 50px rgba(196, 136, 112, 0.1), var(--glow-copper);
+}
+
+.file-input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.upload-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem;
+}
+
+.upload-icon {
+    width: 80px;
+    height: 80px;
+    color: var(--color-copper-mid);
+    opacity: 0.8;
+}
+
+.upload-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.upload-text {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    color: var(--color-offwhite);
+    text-transform: uppercase;
+}
+
+.upload-text-alt {
+    font-size: 0.85rem;
+    color: var(--color-gray);
+    text-transform: uppercase;
+}
+
+.upload-instructions {
+    background: var(--color-charcoal);
+    border-left: 4px solid var(--color-copper-mid);
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.upload-instructions h4 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--color-copper-mid);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+}
+
+.upload-instructions ol {
+    padding-left: 1.25rem;
+    color: var(--color-gray);
+    font-size: 0.85rem;
+}
+
+.upload-instructions li {
+    margin-bottom: 0.25rem;
+}
+
+.upload-instructions strong {
+    color: var(--color-offwhite);
+}
+
+/* ----- Processing Screen ----- */
+.processing-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 420px;
+}
+
+.processing-title {
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        text-shadow: 3px 3px 0 var(--color-doom-purple), 0 0 30px rgba(144, 128, 176, 0.4);
+    }
+    50% {
+        text-shadow: 3px 3px 0 var(--color-doom-purple), 0 0 60px rgba(144, 128, 176, 0.7);
+    }
+}
+
+.progress-container {
+    width: 100%;
+    margin: 2rem 0;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--color-slate);
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--color-copper-dark), var(--color-copper-light));
+    box-shadow: 0 0 20px var(--color-copper-mid);
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--color-offwhite);
+    margin-top: 1rem;
+    text-transform: uppercase;
+}
+
+.processing-messages {
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.processing-message {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: var(--color-gray);
+    font-style: italic;
+}
+
+/* ----- Playback Screen (VINYL STYLE) ----- */
+.screen--playback .playback-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 600px;
+    padding: 2rem 1rem;
+}
+
+/* Vinyl Player - matches landing page style */
+.vinyl-player {
+    width: min(70vw, 340px);
+    height: min(70vw, 340px);
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+/* Hot pink outer ring - STATIONARY */
+.vinyl-player::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 115%;
+    height: 115%;
+    transform: translate(-50%, -50%);
+    background: #ff0080;
+    border-radius: 50%;
+    border: 8px solid #000;
+    z-index: -2;
+    box-shadow:
+        8px 8px 0 #000,
+        inset 0 -20px 40px rgba(0,0,0,0.3);
+}
+
+/* Inner spinner wrapper - this rotates */
+.vinyl-spinner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+    animation: vinyl-spin 4s linear infinite;
+}
+
+/* Yellow vinyl record with grooves - SPINS */
+.vinyl-spinner::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 102%;
+    height: 102%;
+    transform: translate(-50%, -50%);
+    background:
+        /* Record grooves */
+        repeating-radial-gradient(
+            circle at center,
+            transparent 0px,
+            transparent 8px,
+            rgba(0,0,0,0.15) 8px,
+            rgba(0,0,0,0.15) 10px,
+            transparent 10px,
+            transparent 18px,
+            rgba(0,0,0,0.12) 18px,
+            rgba(0,0,0,0.12) 20px
+        ),
+        #ffdd00;
+    border-radius: 50%;
+    border: 6px solid #000;
+    z-index: -1;
+}
+
+@keyframes vinyl-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.vinyl-spinner .doom-mask {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(4px 4px 0 #000);
+    position: relative;
+    z-index: 2;
+}
+
+/* Roast Bubble - speech bubble style */
+.roast-bubble {
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 2rem;
+}
+
+.roast-bubble .caption-box {
+    background: #fff;
+    border: 5px solid #000;
+    border-radius: 30px;
+    padding: 1.25rem 1.75rem;
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 6px 6px 0 #000;
+}
+
+/* Speech bubble pointer */
+.roast-bubble .caption-box::before {
+    content: '';
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 18px solid transparent;
+    border-bottom: 22px solid #000;
+}
+
+.roast-bubble .caption-box::after {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 14px solid transparent;
+    border-bottom: 18px solid #fff;
+    z-index: 1;
+}
+
+.roast-bubble .caption-text {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 4vw, 1.4rem);
+    color: #000;
+    text-align: center;
+    line-height: 1.3;
+    text-transform: uppercase;
+}
+
+.roast-bubble .caption-text .highlight {
+    color: #ff0080;
+}
+
+/* Vinyl Style Buttons */
+.playback-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 3rem;
+}
+
+.btn--vinyl {
+    background: #ffdd00;
+    border: 4px solid #000;
+    color: #000;
+    padding: 12px 18px;
+    font-family: var(--font-display);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 #000;
+    transition: all 0.1s ease;
+}
+
+.btn--vinyl:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 #000;
+}
+
+.btn--vinyl:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 #000;
+}
+
+.btn--vinyl.btn--primary {
+    background: #ff0080;
+    color: #fff;
+}
+
+/* ----- Share Screen ----- */
+.share-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 550px;
+    width: 100%;
+}
+
+.video-preview-container {
+    width: 100%;
+    max-width: 380px;
+    aspect-ratio: 1;
+    background: var(--color-charcoal);
+    border: 3px solid var(--color-copper-mid);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--glow-copper);
+}
+
+.video-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: var(--color-black);
+}
+
+.share-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.share-footer {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-slate);
+}
+
+.share-footer p {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    color: var(--color-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+}
+
+/* ----- Toast Notification ----- */
+.toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-copper-mid);
+    color: var(--color-black);
+    padding: 1rem 2rem;
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    z-index: 9999;
+    animation: toast-in 0.3s ease;
+    box-shadow: var(--glow-copper);
+}
+
+.toast.hiding {
+    animation: toast-out 0.3s ease forwards;
+}
+
+@keyframes toast-in {
+    from {
+        transform: translateX(-50%) translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes toast-out {
+    from {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-50%) translateY(100%);
+        opacity: 0;
+    }
+}
+
+/* ----- Recording Indicator ----- */
+.recording-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--color-doom-red);
+    color: var(--color-white);
+    padding: 0.5rem 1rem;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 9999;
+    animation: rec-pulse 1s ease infinite;
+    text-transform: uppercase;
+}
+
+.recording-indicator::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: var(--color-white);
+    border-radius: 50%;
+}
+
+@keyframes rec-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* ----- Utilities ----- */
+.hidden {
+    display: none !important;
+}
+
+/* ----- Responsive ----- */
+@media (max-width: 600px) {
+    .screen {
+        padding: 1rem;
+    }
+
+    .mask-container--main {
+        width: 260px;
+        height: 260px;
+    }
+
+    .playback-controls {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .btn {
+        font-size: 1.1rem;
+        padding: 0.875rem 1.5rem;
+    }
+
+    .btn--export {
+        width: 100%;
+    }
+
+    .title {
+        text-shadow:
+            3px 3px 0 var(--color-copper-dark),
+            6px 6px 0 var(--color-doom-purple);
+    }
+}

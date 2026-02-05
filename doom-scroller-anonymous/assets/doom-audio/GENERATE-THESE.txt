@@ -1,0 +1,434 @@
+============================================================
+MF DOOM VOICE GENERATION LIST
+============================================================
+Go to: https://fakeyou.com/tts/TM:aj02fqmw5mzq
+
+Generate each line below, download as MP3, and save with
+the filename shown. Keep voice consistent across all files.
+
+============================================================
+FOLDER: times/
+============================================================
+
+FILENAME: 1-minute.mp3
+TEXT: one minute
+
+FILENAME: 2-minutes.mp3
+TEXT: two minutes
+
+FILENAME: 3-minutes.mp3
+TEXT: three minutes
+
+FILENAME: 5-minutes.mp3
+TEXT: five minutes
+
+FILENAME: 10-minutes.mp3
+TEXT: ten minutes
+
+FILENAME: 15-minutes.mp3
+TEXT: fifteen minutes
+
+FILENAME: 20-minutes.mp3
+TEXT: twenty minutes
+
+FILENAME: 25-minutes.mp3
+TEXT: twenty-five minutes
+
+FILENAME: 30-minutes.mp3
+TEXT: thirty minutes
+
+FILENAME: 35-minutes.mp3
+TEXT: thirty-five minutes
+
+FILENAME: 40-minutes.mp3
+TEXT: forty minutes
+
+FILENAME: 45-minutes.mp3
+TEXT: forty-five minutes
+
+FILENAME: 50-minutes.mp3
+TEXT: fifty minutes
+
+FILENAME: 55-minutes.mp3
+TEXT: fifty-five minutes
+
+FILENAME: 1-hour.mp3
+TEXT: one hour
+
+FILENAME: 2-hours.mp3
+TEXT: two hours
+
+FILENAME: 3-hours.mp3
+TEXT: three hours
+
+FILENAME: 4-hours.mp3
+TEXT: four hours
+
+FILENAME: 5-hours.mp3
+TEXT: five hours
+
+FILENAME: 6-hours.mp3
+TEXT: six hours
+
+FILENAME: 7-hours.mp3
+TEXT: seven hours
+
+FILENAME: 8-hours.mp3
+TEXT: eight hours
+
+FILENAME: 9-hours.mp3
+TEXT: nine hours
+
+FILENAME: 10-hours.mp3
+TEXT: ten hours
+
+FILENAME: 1-hour-15-minutes.mp3
+TEXT: one hour fifteen minutes
+
+FILENAME: 1-hour-30-minutes.mp3
+TEXT: one hour thirty minutes
+
+FILENAME: 1-hour-45-minutes.mp3
+TEXT: one hour forty-five minutes
+
+FILENAME: 2-hours-15-minutes.mp3
+TEXT: two hours fifteen minutes
+
+FILENAME: 2-hours-30-minutes.mp3
+TEXT: two hours thirty minutes
+
+FILENAME: 2-hours-45-minutes.mp3
+TEXT: two hours forty-five minutes
+
+FILENAME: 3-hours-15-minutes.mp3
+TEXT: three hours fifteen minutes
+
+FILENAME: 3-hours-30-minutes.mp3
+TEXT: three hours thirty minutes
+
+FILENAME: 3-hours-45-minutes.mp3
+TEXT: three hours forty-five minutes
+
+FILENAME: 4-hours-30-minutes.mp3
+TEXT: four hours thirty minutes
+
+FILENAME: 5-hours-30-minutes.mp3
+TEXT: five hours thirty minutes
+
+============================================================
+FOLDER: apps/
+============================================================
+
+FILENAME: tiktok.mp3
+TEXT: TikTok
+
+FILENAME: instagram.mp3
+TEXT: Instagram
+
+FILENAME: twitter.mp3
+TEXT: Twitter
+
+FILENAME: facebook.mp3
+TEXT: Facebook
+
+FILENAME: reddit.mp3
+TEXT: Reddit
+
+FILENAME: snapchat.mp3
+TEXT: Snapchat
+
+FILENAME: youtube.mp3
+TEXT: YouTube
+
+FILENAME: netflix.mp3
+TEXT: Netflix
+
+FILENAME: twitch.mp3
+TEXT: Twitch
+
+FILENAME: spotify.mp3
+TEXT: Spotify
+
+FILENAME: tinder.mp3
+TEXT: Tinder
+
+FILENAME: bumble.mp3
+TEXT: Bumble
+
+FILENAME: hinge.mp3
+TEXT: Hinge
+
+FILENAME: messages.mp3
+TEXT: Messages
+
+FILENAME: discord.mp3
+TEXT: Discord
+
+FILENAME: safari.mp3
+TEXT: Safari
+
+FILENAME: chrome.mp3
+TEXT: Chrome
+
+FILENAME: mail.mp3
+TEXT: Mail
+
+FILENAME: photos.mp3
+TEXT: Photos
+
+FILENAME: amazon.mp3
+TEXT: Amazon
+
+FILENAME: uber.mp3
+TEXT: Uber
+
+FILENAME: doordash.mp3
+TEXT: DoorDash
+
+============================================================
+FOLDER: openings/
+============================================================
+
+FILENAME: opening-1a.mp3
+TEXT: Ahem. DOOM here to crack the code on your scroll.
+
+FILENAME: opening-1b.mp3
+TEXT: deep in that phone, lost your soul in the hole.
+
+FILENAME: opening-2a.mp3
+TEXT: Peek the metal face, catch a case of the facts.
+
+FILENAME: opening-2b.mp3
+TEXT: of your life spent staring at apps. Relax, it's only wax.
+
+FILENAME: opening-3a.mp3
+TEXT: Yo, check the stats. DOOM sees it all from the mask.
+
+FILENAME: opening-3b.mp3
+TEXT: on that glass? Son, you been had. That's mad.
+
+FILENAME: opening-4a.mp3
+TEXT: The supervillain emerged from the digital fog.
+
+FILENAME: opening-4b.mp3
+TEXT: logged like a hog in a blog. That's your job?
+
+FILENAME: opening-5a.mp3
+TEXT: DOOM back from the dead to read you your wrongs.
+
+FILENAME: opening-5b.mp3
+TEXT: gone? That's a villain's worth of songs.
+
+FILENAME: opening-6a.mp3
+TEXT: Step to the mic, spike the data like Doom spiked the punch.
+
+FILENAME: opening-6b.mp3
+TEXT: today. More hours than a business lunch.
+
+FILENAME: opening-7a.mp3
+TEXT: Hmmm. Peep the read. Proceed to bleed out the feed.
+
+FILENAME: opening-7b.mp3
+TEXT: of screen fiend. That's quite the deed indeed.
+
+FILENAME: opening-8a.mp3
+TEXT: The mask don't lie. Fry your alibi. Why try to hide?
+
+FILENAME: opening-8b.mp3
+TEXT: on that ride. Your thumbs certified fried.
+
+============================================================
+FOLDER: roasts/
+============================================================
+
+--- TIKTOK ---
+
+FILENAME: tiktok-1a.mp3
+TEXT: (silence or very short pause)
+
+FILENAME: tiktok-1b.mp3
+TEXT: on the clock for the Tok, doc. Brain on the rocks. Forty-five seconds got you locked in a box like a paradox.
+
+FILENAME: tiktok-2a.mp3
+TEXT: TikTok fiend.
+
+FILENAME: tiktok-2b.mp3
+TEXT: of the dream cream, so it seem. Swipe up on the scheme. Your attention chopped up like cuisine.
+
+--- INSTAGRAM ---
+
+FILENAME: instagram-1a.mp3
+TEXT: The Gram scam.
+
+FILENAME: instagram-1b.mp3
+TEXT: of the grand sham, fam. Double-tap trap. Your self-esteem in the spam can like ham.
+
+FILENAME: instagram-2a.mp3
+TEXT: (silence or very short pause)
+
+FILENAME: instagram-2b.mp3
+TEXT: grammin' and slammin' through stories. What's the glory? Peepin' lives through a lens while yours stay allegory.
+
+--- YOUTUBE ---
+
+FILENAME: youtube-1a.mp3
+TEXT: (silence or very short pause)
+
+FILENAME: youtube-1b.mp3
+TEXT: in the Tube, rube. Lost in the cube. One more video turns to fifty. Your schedule's in a mood.
+
+FILENAME: youtube-2a.mp3
+TEXT: YouTube rabbit stew.
+
+FILENAME: youtube-2b.mp3
+TEXT: of the view-through, true blue. Algorithm's got you hooked like Krusty's Crew. Boo hoo.
+
+--- NETFLIX ---
+
+FILENAME: netflix-1a.mp3
+TEXT: Netflix flex.
+
+FILENAME: netflix-1b.mp3
+TEXT: of the complex perplex. Binge the whole season while your goals become your ex.
+
+--- TWITTER ---
+
+FILENAME: twitter-1a.mp3
+TEXT: (silence or very short pause)
+
+FILENAME: twitter-1b.mp3
+TEXT: on the bird app. Absurd rap. Heard that? Arguin' with eggs and bots. Your brain's a curd trap.
+
+--- REDDIT ---
+
+FILENAME: reddit-1a.mp3
+TEXT: (silence or very short pause)
+
+FILENAME: reddit-1b.mp3
+TEXT: on the Reddit spread. Better fed your head. Subreddit rabbit holes got your productivity dead. Misled.
+
+--- SNAPCHAT ---
+
+FILENAME: snapchat-1a.mp3
+TEXT: (silence or very short pause)
+
+FILENAME: snapchat-1b.mp3
+TEXT: on the Snap app. Cap after cap. A trap. Ghost mode on your goals while you chase that streak like a sap.
+
+--- FACEBOOK ---
+
+FILENAME: facebook-1a.mp3
+TEXT: (silence or very short pause)
+
+FILENAME: facebook-1b.mp3
+TEXT: on the book of face. A disgrace to the space race. Minion memes and your aunt's schemes. Boomer base case.
+
+--- DISCORD ---
+
+FILENAME: discord-1a.mp3
+TEXT: (silence or very short pause)
+
+FILENAME: discord-1b.mp3
+TEXT: on the Discord cord. Bored, floored, and ignored. Server hopping while your real relationships get stored.
+
+--- SPOTIFY ---
+
+FILENAME: spotify-1a.mp3
+TEXT: (silence or very short pause)
+
+FILENAME: spotify-1b.mp3
+TEXT: on the Spot. Hot. That's all you got? Not. At least you got taste. DOOM will give you that prop. Don't stop.
+
+--- GENERIC (for unknown apps) ---
+
+FILENAME: generic-1a.mp3
+TEXT: (silence or very short pause)
+
+FILENAME: generic-1b.mp3
+TEXT: on
+
+FILENAME: generic-1c.mp3
+TEXT: The trap that saps your cap. Doom sees the data. Now take that and put it in your lap.
+
+============================================================
+FOLDER: outros/
+============================================================
+
+--- LIGHT (under 2 hours) ---
+
+FILENAME: light-1a.mp3
+TEXT: Only
+
+FILENAME: light-1b.mp3
+TEXT: That's the appetizer plate. DOOM expected more from you. Rookie mistake. But wait.
+
+FILENAME: light-2a.mp3
+TEXT: (silence or very short pause)
+
+FILENAME: light-2b.mp3
+TEXT: is light. You fight the good fight. Alright. But tomorrow the algorithm strikes back in the night.
+
+--- MODERATE (2-4 hours) ---
+
+FILENAME: moderate-1a.mp3
+TEXT: (silence or very short pause)
+
+FILENAME: moderate-1b.mp3
+TEXT: today. Decay on display. Cliché. Halfway to hooked. Your focus got cooked. Okay?
+
+--- HEAVY (4-6 hours) ---
+
+FILENAME: heavy-1a.mp3
+TEXT: (silence or very short pause)
+
+FILENAME: heavy-1b.mp3
+TEXT: Now we're cooking with gas. Crass and brass. Your thumb's got a rash from scrolling so fast. First class.
+
+--- EXTREME (over 6 hours) ---
+
+FILENAME: extreme-1a.mp3
+TEXT: (silence or very short pause)
+
+FILENAME: extreme-1b.mp3
+TEXT: Son, you broke the machine. Obscene. Even DOOM thinks you need a dopamine detox vaccine.
+
+============================================================
+FOLDER: closings/
+============================================================
+
+FILENAME: closing-1.mp3
+TEXT: DOOM has spoken. The token's been broken and soaked in. Put the phone down and focus. Or stay forever smokin'.
+
+FILENAME: closing-2.mp3
+TEXT: The mask fades back to black. No slack. No take-backs. Your screen time's on wax. Now go touch grass. Relax.
+
+FILENAME: closing-3.mp3
+TEXT: This been DOOM, from the room of doom and gloom. Your phone's a tomb. Let your real life resume. Make room.
+
+FILENAME: closing-4.mp3
+TEXT: ALL CAPS when you spell it, compel it, and tell it. The verdict's in. You've been scrolling. Now shelve it or sell it.
+
+FILENAME: closing-5.mp3
+TEXT: The supervillain vanish like magic cabbage and lavish. Remember these bars when your thumb starts its average ravage.
+
+FILENAME: closing-6.mp3
+TEXT: DOOM out. Shout it loud. Crowd around the cloud. Your data's been read. Now go outside. Be proud or be cowed.
+
+FILENAME: closing-7.mp3
+TEXT: Hmmm. That's a wrap like a gift. Swift. No rift. The metal face gave you the lift. Now get the gist and shift.
+
+FILENAME: closing-8.mp3
+TEXT: The case closed. Prose exposed. Nose knows where it goes. DOOM froze your scroll game cold. Now compose and decompose.
+
+============================================================
+TOTAL FILES TO GENERATE: ~95
+============================================================
+
+TIPS FOR BEST RESULTS:
+1. Generate in batches (all times, then all apps, etc.)
+2. Keep energy/delivery consistent
+3. For "(silence)" entries, generate a very short "uh" or just skip
+4. Download as highest quality available
+5. Test a few stitched together before doing all
+
+============================================================
