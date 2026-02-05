@@ -30,12 +30,12 @@ const projectContent = {
         },
         {
             title: 'Miami Food Roulette',
-            description: 'spin a wheel, get a restaurant',
+            description: 'spin a wheel, get a restaurant (revamping)',
             tech: 'React · Google Places API'
         },
         {
             title: 'Doom Scroller Anonymous',
-            description: 'the Villain judges your screen time',
+            description: 'the Villain judges your screen time (revamping)',
             tech: 'JavaScript · Tesseract.js · Web Speech API'
         },
         {
@@ -67,12 +67,12 @@ const projectContent = {
         },
         {
             title: 'Miami Food Roulette',
-            description: 'spin a wheel, get a restaurant',
+            description: 'spin a wheel, get a restaurant (revamping)',
             tech: 'React · Google Places API'
         },
         {
             title: 'Doom Scroller Anonymous',
-            description: 'the Villain judges your screen time',
+            description: 'the Villain judges your screen time (revamping)',
             tech: 'JavaScript · Tesseract.js · Web Speech API'
         },
         {
