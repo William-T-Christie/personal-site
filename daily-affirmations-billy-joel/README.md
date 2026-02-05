@@ -8,10 +8,8 @@ Start your day with wisdom from the Piano Man. Random Billy Joel lyrics served a
 
 - **Reel-to-reel player UI** — Realistic TASCAM-inspired tape deck design
 - **Song selector** — Choose affirmations from specific albums/songs
-- **Archive page** — Browse past affirmations
-- **Favorites** — Save your favorite quotes
-- **Sharing** — Share affirmations on social media
-- **Spotify integration** — Link to songs on Spotify
+- **Typewriter effect** — Lyrics appear character by character
+- **Keyboard shortcuts** — Space for play/pause, N for new quote
 
 ---
 
@@ -20,19 +18,13 @@ Start your day with wisdom from the Piano Man. Random Billy Joel lyrics served a
 ```
 daily-affirmations-billy-joel/
 ├── index.html          # Main player page
-├── archive.html        # Past affirmations archive
 ├── css/
-│   ├── styles.css      # Main styles (tape deck design)
-│   └── archive.css     # Archive page styles
+│   └── styles.css      # Main styles (tape deck design)
 ├── js/
 │   ├── app.js          # Main controller
-│   ├── affirmations.js # Lyrics database (~28KB)
-│   ├── player.js       # Reel-to-reel controls
-│   ├── archive.js      # Archive functionality
-│   ├── favorites.js    # Favorites management
-│   ├── share.js        # Social sharing
-│   └── spotify.js      # Spotify API integration
-└── assets/             # Album art, sounds
+│   ├── affirmations.js # Lyrics database
+│   └── player.js       # Reel-to-reel controls
+└── assets/             # Album art
 ```
 
 ---
@@ -41,8 +33,7 @@ daily-affirmations-billy-joel/
 
 - Vanilla JavaScript (no frameworks)
 - CSS animations for tape reels
-- LocalStorage for favorites/history
-- Spotify Web API
+- URL parameters for sharing specific songs
 
 ---
 

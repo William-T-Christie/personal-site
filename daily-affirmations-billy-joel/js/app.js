@@ -17,20 +17,13 @@ class App {
         this.trackInfo = document.getElementById('track-info');
         this.playBtn = document.getElementById('btn-play');
         this.playIcon = document.getElementById('play-icon');
-        this.favoriteBtn = document.getElementById('btn-favorite');
-        this.favoriteIcon = document.getElementById('favorite-icon');
 
         this.init();
     }
 
-    async init() {
+    init() {
         // Populate the dropdown
         this.populateDropdown();
-
-        // Initialize Spotify if available
-        if (window.SpotifyPlayer) {
-            await window.SpotifyPlayer.init();
-        }
 
         // Check URL for specific song
         const urlParams = new URLSearchParams(window.location.search);
@@ -94,20 +87,6 @@ class App {
         document.getElementById('btn-record')?.addEventListener('click', () => {
             this.loadRandomSong();
         });
-
-        // Action buttons
-        document.getElementById('btn-favorite')?.addEventListener('click', () => {
-            this.toggleFavorite();
-        });
-
-        document.getElementById('btn-share')?.addEventListener('click', () => {
-            this.share();
-        });
-
-        // Listen for favorites changes
-        window.addEventListener('favoritesChanged', () => {
-            this.updateFavoriteButton();
-        });
     }
 
     setupKeyboardShortcuts() {
@@ -122,21 +101,10 @@ class App {
                     e.preventDefault();
                     this.togglePlay();
                     break;
-                case 'f':
-                    e.preventDefault();
-                    this.toggleFavorite();
-                    break;
-                case 's':
-                    e.preventDefault();
-                    this.share();
-                    break;
                 case 'n':
                 case 'arrowright':
                     e.preventDefault();
                     this.loadRandomSong();
-                    break;
-                case 'arrowleft':
-                    e.preventDefault();
                     break;
             }
         });
@@ -173,14 +141,6 @@ class App {
         window.CassettePlayer.setPlaying(true);
         this.playIcon.textContent = '⏸';
         this.playBtn.setAttribute('aria-pressed', 'true');
-
-        // Load Spotify track if available
-        if (window.SpotifyPlayer && song.spotifyTrackId) {
-            await window.SpotifyPlayer.loadTrack(song.spotifyTrackId, 0);
-        }
-
-        // Update favorite button
-        this.updateFavoriteButton();
     }
 
     /**
@@ -193,12 +153,6 @@ class App {
         // Song info
         this.songTitle.textContent = song.song.toUpperCase();
         this.albumInfo.textContent = `${song.album} (${song.year})`;
-
-        // Track info bar
-        const songNameEl = this.trackInfo?.querySelector('.song-name');
-        const albumYearEl = this.trackInfo?.querySelector('.album-year');
-        if (songNameEl) songNameEl.textContent = song.song;
-        if (albumYearEl) albumYearEl.textContent = `${song.album} · ${song.year}`;
     }
 
     /**
@@ -242,14 +196,6 @@ class App {
             return;
         }
 
-        // Scroll to Spotify player and highlight it
-        const spotifyContainer = document.getElementById('spotify-container');
-        if (spotifyContainer) {
-            spotifyContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            spotifyContainer.classList.add('highlight');
-            setTimeout(() => spotifyContainer.classList.remove('highlight'), 2000);
-        }
-
         // Toggle reel animation
         this.isPlaying = !this.isPlaying;
         if (this.isPlaying) {
@@ -271,59 +217,6 @@ class App {
         window.CassettePlayer.stop();
         this.playIcon.textContent = '▶';
         this.playBtn.setAttribute('aria-pressed', 'false');
-    }
-
-    /**
-     * Toggle favorite status
-     */
-    toggleFavorite() {
-        if (!this.currentSong || !window.Favorites) return;
-
-        window.Favorites.toggle(this.currentSong.song);
-        this.updateFavoriteButton();
-
-        // Visual feedback
-        this.favoriteBtn.classList.add('pulse');
-        setTimeout(() => {
-            this.favoriteBtn.classList.remove('pulse');
-        }, 300);
-    }
-
-    /**
-     * Update favorite button state
-     */
-    updateFavoriteButton() {
-        if (!this.currentSong || !window.Favorites) return;
-
-        const isFavorited = window.Favorites.isFavorite(this.currentSong.song);
-
-        this.favoriteIcon.textContent = isFavorited ? '♥' : '♡';
-        this.favoriteBtn.setAttribute('aria-pressed', isFavorited.toString());
-
-        if (isFavorited) {
-            this.favoriteBtn.classList.add('active');
-        } else {
-            this.favoriteBtn.classList.remove('active');
-        }
-    }
-
-    /**
-     * Share current affirmation
-     */
-    share() {
-        if (!this.currentSong) return;
-
-        if (window.ShareModule) {
-            // Create compatible object for share module
-            const shareData = {
-                id: this.currentSong.song,
-                lyric: this.currentSong.affirmation,
-                song: this.currentSong.song,
-                album: this.currentSong.album,
-                year: this.currentSong.year
-            };
-            window.ShareModule.share(shareData);
-        }
     }
 }
 
