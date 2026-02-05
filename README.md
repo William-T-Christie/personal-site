@@ -2,7 +2,7 @@
 
 A portfolio website with dual-mode design (Boomer/Hacker views), multiple color palettes, and interactive sub-projects.
 
-**Live:** https://william-t-christie.vercel.app
+**Live:** https://william-t-christie.github.io/personal-site/
 
 ---
 
