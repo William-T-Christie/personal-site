@@ -20,12 +20,7 @@ personal-site/
 ├── daily-affirmations-billy-joel/  # Billy Joel lyrics app
 ├── doom-scroller-anonymous/        # Screen time roaster
 ├── miami-food-roulette/    # Restaurant slot machine
-├── LinkSmith/              # Chrome extension
-│
-└── _dev/                   # Development/preview files
-    ├── color-palettes-preview.html
-    ├── font-preview.html
-    └── welcome-box-comparison.html
+└── LinkSmith/              # Chrome extension
 ```
 
 ---
