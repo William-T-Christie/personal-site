@@ -605,11 +605,14 @@ body.hacker-mode .project-card .desc-hacker {
 .project-link {
     text-decoration: none;
     color: inherit;
-    display: block;
+    display: flex;
+    flex-direction: column;
 }
 
 .project-link .project-card {
     cursor: pointer;
+    width: 100%;
+    flex: 1 1 auto;
 }
 
 /* ==========================================================================
