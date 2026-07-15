@@ -84,16 +84,6 @@ const projectContent = {
 };
 
 // ============================================
-// FART SOUND
-// ============================================
-
-function playFartSound() {
-    const fart = new Audio('fart.mp3');
-    fart.volume = 1.0;
-    fart.play();
-}
-
-// ============================================
 // MODE TOGGLE
 // ============================================
 
@@ -385,12 +375,12 @@ function updateWelcomeContent() {
     if (isHackerMode) {
         heading.textContent = 'WELCOME_USER';
         heading.setAttribute('data-text', 'WELCOME_USER');
-        text.textContent = 'William Christie // Finance & Code // Miami. I build tools that solve problems and break down complexity. Currently studying at University of Miami, interning at Ernst & Young. Side projects always in progress.';
+        text.textContent = 'William Christie // Finance & Code // Miami. I build tools that solve problems and break down complexity. University of Miami grad, now doing go-to-market at an AI startup. Side projects always in progress.';
         subtext.textContent = '> status: online // open to connect';
     } else {
         heading.textContent = "Hey, I'm William!";
         heading.setAttribute('data-text', "Hey, I'm William!");
-        text.textContent = "I'm a finance student at the University of Miami who loves tackling complex problems and building things that help businesses run smarter. When I'm not crunching numbers, writing code, or building pitch decks, you'll find me volunteering in my community or exploring Miami's food scene.";
+        text.textContent = "I'm a University of Miami finance graduate, now working in go-to-market at an AI startup, who loves tackling complex problems and building things that help businesses run smarter. When I'm not crunching numbers, writing code, or building pitch decks, you'll find me volunteering in my community or exploring Miami's food scene.";
         subtext.textContent = 'Always learning. Always building. Always happy to connect!';
     }
 }

@@ -4,8 +4,6 @@ A satirical web app that analyzes meeting recordings for corporate buzzwords and
 
 **100% Privacy-Focused** - All processing happens in your browser. Your files never leave your device.
 
-![Arcade Cabinet Screenshot](assets/screenshot.png)
-
 ## Features
 
 - **Browser-Based AI Transcription** - Uses OpenAI's Whisper model running entirely in your browser via [Transformers.js](https://github.com/xenova/transformers.js)
