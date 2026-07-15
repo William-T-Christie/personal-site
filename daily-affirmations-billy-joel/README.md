@@ -6,10 +6,10 @@ Start your day with wisdom from the Piano Man. Random Billy Joel lyrics served a
 
 ## Features
 
-- **Reel-to-reel player UI** — Realistic TASCAM-inspired tape deck design
-- **Song selector** — Choose affirmations from specific albums/songs
-- **Typewriter effect** — Lyrics appear character by character
-- **Keyboard shortcuts** — Space for play/pause, N for new quote
+- **Reel-to-reel player UI**: Realistic TASCAM-inspired tape deck design
+- **Song selector**: Choose affirmations from specific albums/songs
+- **Typewriter effect**: Lyrics appear character by character
+- **Keyboard shortcuts**: Space for play/pause, N for new quote
 
 ---
 

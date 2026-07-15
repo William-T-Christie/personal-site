@@ -180,7 +180,7 @@ function formatItem(item, format) {
     case 'md':
       return `[${title}](${url})`;
     case 'pretty':
-      return `${title} — ${url}`;
+      return `${title} - ${url}`;
     case 'url':
       return url;
     case 'cite':
@@ -779,7 +779,7 @@ async function exportView() {
 
   const exportDate = formatDate(Date.now());
 
-  let markdown = `# LinkSmith Export — ${viewName}\nExported: ${exportDate}\n\n`;
+  let markdown = `# LinkSmith Export - ${viewName}\nExported: ${exportDate}\n\n`;
 
   items.forEach(item => {
     markdown += `- [${item.title || 'Untitled'}](${item.url})\n`;

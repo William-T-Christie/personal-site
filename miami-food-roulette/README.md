@@ -6,12 +6,12 @@ Can't decide where to eat? Spin the slot machine to discover amazing Miami resta
 
 ## Features
 
-- **3-reel slot machine** — Cuisine, Neighborhood, Price
-- **Google Places API** — Real restaurant data
-- **Reel locking** — Lock any reel to filter results
-- **Favorites** — Save restaurants for later
-- **Sound effects** — Spinning and selection sounds
-- **Tropical theme** — Palm trees and wave patterns
+- **3-reel slot machine**: Cuisine, Neighborhood, Price
+- **Google Places API**: Real restaurant data
+- **Reel locking**: Lock any reel to filter results
+- **Favorites**: Save restaurants for later
+- **Sound effects**: Spinning and selection sounds
+- **Tropical theme**: Palm trees and wave patterns
 
 ---
 

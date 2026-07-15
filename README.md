@@ -39,7 +39,7 @@ personal-site/
 - Checkbox toggle with animated checkmarks
 
 ### 7 Color Palettes
-Sand, Sienna, Coral, Dusk, Mocha, Terracotta, Stone — all accessible via palette toggle button.
+Sand, Sienna, Coral, Dusk, Mocha, Terracotta, Stone, all accessible via the palette toggle button.
 
 ### Keyboard/URL Shortcuts
 - `?view=hacker` or `?view=boomer` URL parameter
@@ -61,7 +61,7 @@ Sand, Sienna, Coral, Dusk, Mocha, Terracotta, Stone — all accessible via palet
 
 ## Development
 
-No build tools required — vanilla HTML, CSS, JavaScript.
+No build tools required, just vanilla HTML, CSS, and JavaScript.
 
 1. Clone the repo
 2. Open `index.html` in a browser, or run a local server:

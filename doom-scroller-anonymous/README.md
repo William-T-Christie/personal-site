@@ -6,12 +6,12 @@ Upload your screen time screenshot. Get roasted by MF DOOM. ALL CAPS when you sp
 
 ## Features
 
-- **OCR extraction** — Reads screen time data from iOS screenshots using Tesseract.js
-- **AI roast generation** — Generates villain-themed roasts based on your usage
-- **DOOM voice synthesis** — Text-to-speech with villain character
-- **Video export** — Save your roast as a shareable video
-- **MF DOOM mask animation** — Canvas-rendered animated mask
-- **Multi-screen flow** — Landing → Upload → Results
+- **OCR extraction**: Reads screen time data from iOS screenshots using Tesseract.js
+- **AI roast generation**: Generates villain-themed roasts based on your usage
+- **DOOM voice synthesis**: Text-to-speech with villain character
+- **Video export**: Save your roast as a shareable video
+- **MF DOOM mask animation**: Canvas-rendered animated mask
+- **Multi-screen flow**: Landing to Upload to Results
 
 ---
 

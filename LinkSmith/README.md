@@ -9,7 +9,7 @@
 LinkSmith makes copying and saving links fast and intentional. Click the extension icon to capture the current page, format it how you want, and save it to your personal library.
 
 **Key Principles:**
-- 100% local — no accounts, no cloud, no tracking
+- 100% local, no accounts, no cloud, no tracking
 - Clean, Mac-native UI with light/dark mode support
 - Fast keyboard shortcuts for power users
 
@@ -27,16 +27,16 @@ LinkSmith makes copying and saving links fast and intentional. Click the extensi
 | Key | Format | Output | Best For |
 |-----|--------|--------|----------|
 | `1` | Markdown | `[Title](URL)` | Notion, Obsidian, GitHub |
-| `2` | Title — URL | `Title — URL` | Emails, plain text |
+| `2` | Title - URL | `Title - URL` | Emails, plain text |
 | `3` | URL Only | `URL` | Quick sharing |
 | `4` | Citation | `"Title." domain, accessed date. URL` | Research, papers |
 
 ### Library Management
-- **Total History** — All saved links from everywhere, most recent first (keeps last 50)
-- **Folders** — Create custom folders with emoji labels
-- **Pinned** — Star your favorites for quick access
-- **Search** — Filter by title, domain, URL, or note
-- **Export** — Copy any view as formatted Markdown
+- **Total History**: All saved links from everywhere, most recent first (keeps last 50)
+- **Folders**: Create custom folders with emoji labels
+- **Pinned**: Star your favorites for quick access
+- **Search**: Filter by title, domain, URL, or note
+- **Export**: Copy any view as formatted Markdown
 
 ### Keyboard Shortcuts
 | Key | Action |
@@ -64,7 +64,7 @@ LinkSmith makes copying and saving links fast and intentional. Click the extensi
 ```
 LinkSmith/
 ├── manifest.json      # Chrome extension config (Manifest V3)
-├── background.js      # Service worker — initializes default state
+├── background.js      # Service worker, initializes default state
 ├── popup.html         # Main UI structure
 ├── popup.css          # Styles (light/dark mode, animations)
 ├── popup.js           # Application logic
@@ -146,4 +146,4 @@ To modify:
 
 ## License
 
-MIT License — free for personal and commercial use.
+MIT License. Free for personal and commercial use.
