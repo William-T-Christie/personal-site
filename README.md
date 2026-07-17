@@ -14,7 +14,7 @@ personal-site/
 ├── styles.css              # Main styles (7 color palettes, dual-mode)
 ├── script.js               # Mode toggle, transitions, palettes
 ├── headshot.jpg            # Profile photo
-├── William_Christie_Resume.docx
+├── William_Christie_CV.docx
 │
 ├── buzzword-bingo/         # AI meeting analyzer
 ├── daily-affirmations-billy-joel/  # Billy Joel lyrics app
