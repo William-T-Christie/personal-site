@@ -56,8 +56,8 @@ Work history lives on a 3D Rolodex built from plain HTML and CSS 3D transforms (
 
 | Project | Description | Tech |
 |---------|-------------|------|
-| **Buzzword Bingo** | AI that scores meetings for corporate speak | Whisper AI, FFmpeg.wasm |
-| **Daily Affirmations** | Billy Joel lyrics as daily wisdom | Vanilla JS, CSS animations |
+| **Buzzword Bingo** | Scores meetings, resumes and messages for corporate speak on a printed bingo card | Whisper AI (Transformers.js), WebGPU |
+| **Daily Affirmations** | Billy Joel lyrics as daily wisdom, on a working reel-to-reel that plays each song | Vanilla JS, SVG, iTunes Search API |
 | **Doom Scroller Anonymous** | MF DOOM roasts your screen time | Tesseract.js, Web Speech API |
 | **Miami Food Roulette** | Slot machine for Miami restaurants | Google Places API |
 | **LinkSmith** | Chrome extension for link formatting | Manifest V3 |

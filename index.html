@@ -15,7 +15,7 @@
     <meta name="twitter:card" content="summary">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23222'/%3E%3Ctext x='16' y='22' font-size='18' font-family='Georgia,serif' fill='%23f0ead6' text-anchor='middle'%3EW%3C/text%3E%3C/svg%3E">
     <title>William T. Christie</title>
-    <link rel="stylesheet" href="styles.css?v=20261105">
+    <link rel="stylesheet" href="styles.css?v=20261105b">
     <link rel="stylesheet" href="boomer.css?v=20261105">
     <script>
         // Pick the view before anything renders, so there is no flash of the wrong one.
@@ -232,6 +232,12 @@ Oct 2026 to present</div>
                         <article class="project-card" data-project="billy">
                             <div class="project-thumb">
                                 <svg viewBox="0 0 180 120" xmlns="http://www.w3.org/2000/svg">
+                                    <defs>
+                                        <linearGradient id="bj-alu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eceef0"/><stop offset="1" stop-color="#bfc3c8"/></linearGradient>
+                                        <linearGradient id="bj-wood" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3a2213"/><stop offset="0.5" stop-color="#7b4e2f"/><stop offset="1" stop-color="#3a2213"/></linearGradient>
+                                        <radialGradient id="bj-reel"><stop offset="0" stop-color="#f3f4f5"/><stop offset="0.85" stop-color="#c3c7cc"/><stop offset="1" stop-color="#8e9399"/></radialGradient>
+                                        <radialGradient id="bj-vu" cx="0.5" cy="0.9" r="0.9"><stop offset="0" stop-color="#fff1c9"/><stop offset="1" stop-color="#e0a64a"/></radialGradient>
+                                    </defs>
                                     <rect x="0" y="0" width="45" height="40" fill="#87a889"/>
                                     <rect x="45" y="0" width="45" height="40" fill="#8b6914"/>
                                     <rect x="90" y="0" width="45" height="40" fill="#d4a534"/>
@@ -244,21 +250,52 @@ Oct 2026 to present</div>
                                     <rect x="45" y="80" width="45" height="40" fill="#4a7a9a"/>
                                     <rect x="90" y="80" width="45" height="40" fill="#2a3a4a"/>
                                     <rect x="135" y="80" width="45" height="40" fill="#6a4a8a"/>
-                                    <rect width="180" height="120" fill="rgba(0,0,0,0.6)"/>
-                                    <rect x="25" y="20" width="130" height="70" rx="4" fill="#c8c4bc"/>
-                                    <rect x="25" y="20" width="130" height="70" rx="4" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="15"/>
-                                    <circle cx="60" cy="45" r="18" fill="#d4c896"/>
-                                    <circle cx="60" cy="45" r="6" fill="#2a2a2a"/>
-                                    <rect x="56" y="27" width="8" height="11" rx="2" fill="#1a1a1a"/>
-                                    <circle cx="120" cy="45" r="18" fill="#d4c896"/>
-                                    <circle cx="120" cy="45" r="6" fill="#2a2a2a"/>
-                                    <rect x="116" y="27" width="8" height="11" rx="2" fill="#1a1a1a"/>
-                                    <rect x="78" y="60" width="12" height="8" fill="#f5f0e0" rx="1"/>
-                                    <rect x="92" y="60" width="12" height="8" fill="#f5f0e0" rx="1"/>
-                                    <rect x="75" y="35" width="30" height="10" fill="#e0e0e0" rx="1"/>
-                                    <text x="90" y="43" text-anchor="middle" fill="#1a1a1a" font-family="sans-serif" font-size="5" font-weight="bold">PIANO MAN</text>
-                                    <rect x="35" y="100" width="110" height="14" fill="#1a2810" rx="2"/>
-                                    <text x="90" y="110" text-anchor="middle" fill="#33ff66" font-family="monospace" font-size="6">"slow down, you crazy child"</text>
+                                    <rect width="180" height="120" fill="rgba(13,10,8,0.78)"/>
+                                    <!-- deck: walnut cheeks and aluminum face -->
+                                    <rect x="26" y="8" width="128" height="80" rx="3" fill="url(#bj-wood)"/>
+                                    <rect x="31" y="8" width="118" height="80" fill="url(#bj-alu)"/>
+                                    <!-- tape path -->
+                                    <path d="M58 52 L78 58 L102 58 L122 52" fill="none" stroke="#3a281c" stroke-width="1"/>
+                                    <!-- left reel, nearly full -->
+                                    <g class="thumb-reel">
+                                        <circle cx="62" cy="33" r="20" fill="url(#bj-reel)" stroke="#7f848a" stroke-width="0.8"/>
+                                        <path d="M62 33 L62 15 A18 18 0 0 1 77.6 24 Z M62 33 L77.6 42 A18 18 0 0 1 62 51 Z M62 33 L46.4 42 A18 18 0 0 1 46.4 24 Z" fill="#3b281b"/>
+                                        <circle cx="62" cy="33" r="6.5" fill="#2c2e31"/>
+                                        <circle cx="62" cy="33" r="2.5" fill="#d0d3d7"/>
+                                    </g>
+                                    <!-- right reel, nearly empty -->
+                                    <g class="thumb-reel">
+                                        <circle cx="118" cy="33" r="20" fill="url(#bj-reel)" stroke="#7f848a" stroke-width="0.8"/>
+                                        <path d="M118 33 L118 15 A18 18 0 0 1 133.6 24 Z M118 33 L133.6 42 A18 18 0 0 1 118 51 Z M118 33 L102.4 42 A18 18 0 0 1 102.4 24 Z" fill="#dfe2e5"/>
+                                        <circle cx="118" cy="33" r="9" fill="#3b281b"/>
+                                        <circle cx="118" cy="33" r="6.5" fill="#2c2e31"/>
+                                        <circle cx="118" cy="33" r="2.5" fill="#d0d3d7"/>
+                                    </g>
+                                    <!-- head block -->
+                                    <rect x="83" y="46" width="14" height="12" rx="2" fill="#3a3c40"/>
+                                    <!-- meter bridge -->
+                                    <rect x="36" y="63" width="108" height="15" rx="2" fill="#151618"/>
+                                    <rect x="62" y="65" width="24" height="11" rx="1.5" fill="url(#bj-vu)"/>
+                                    <rect x="90" y="65" width="24" height="11" rx="1.5" fill="url(#bj-vu)"/>
+                                    <line x1="74" y1="76" x2="78" y2="67.5" stroke="#1c1712" stroke-width="0.8"/>
+                                    <line x1="102" y1="76" x2="105" y2="67.5" stroke="#1c1712" stroke-width="0.8"/>
+                                    <rect x="41" y="67" width="16" height="7" rx="1" fill="#050505"/>
+                                    <circle cx="136" cy="70.5" r="1.6" fill="#ffbf5a"/>
+                                    <!-- transport keys -->
+                                    <rect x="64" y="81" width="9" height="5" rx="1" fill="#dfe2e5" stroke="#7f848a" stroke-width="0.5"/>
+                                    <rect x="75" y="81" width="9" height="5" rx="1" fill="#dfe2e5" stroke="#7f848a" stroke-width="0.5"/>
+                                    <rect x="86" y="81" width="9" height="5" rx="1" fill="#dfe2e5" stroke="#7f848a" stroke-width="0.5"/>
+                                    <rect x="97" y="82" width="9" height="5" rx="1" fill="#c9cdd1" stroke="#7f848a" stroke-width="0.5"/>
+                                    <rect x="108" y="81" width="9" height="5" rx="1" fill="#dfe2e5" stroke="#7f848a" stroke-width="0.5"/>
+                                    <circle cx="101.5" cy="79.3" r="0.9" fill="#6dff9b"/>
+                                    <!-- typed tape box card -->
+                                    <g transform="rotate(-1.2 90 104)">
+                                        <rect x="42" y="93" width="96" height="22" rx="1" fill="#fbf6e8"/>
+                                        <text x="47" y="101" fill="#b3332a" font-family="'Courier New', monospace" font-size="6" font-weight="bold">Piano Man</text>
+                                        <line x1="47" y1="103" x2="133" y2="103" stroke="#b3332a" stroke-opacity="0.5" stroke-width="0.6"/>
+                                        <line x1="47" y1="108" x2="126" y2="108" stroke="#26221d" stroke-width="1.4" stroke-dasharray="6 1.5 4 1.5 9 1.5 5 1.5"/>
+                                        <line x1="47" y1="112" x2="104" y2="112" stroke="#26221d" stroke-width="1.4" stroke-dasharray="5 1.5 7 1.5 4 1.5"/>
+                                    </g>
                                 </svg>
                             </div>
                             <div class="project-text">
@@ -266,7 +303,7 @@ Oct 2026 to present</div>
                                 <p class="desc-boomer">Daily motivational quotes powered by Billy Joel lyrics</p>
                                 <p class="desc-hacker">the Piano Man tells you you're an innocent man</p>
                             </div>
-                            <span class="tech">JavaScript · CSS Animations</span>
+                            <span class="tech">JavaScript · SVG · Apple Music previews</span>
                         </article>
                     </a>
 
@@ -275,11 +312,29 @@ Oct 2026 to present</div>
                         <article class="project-card" data-project="buzzword">
                             <div class="project-thumb">
                                 <svg viewBox="0 0 180 120" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="180" height="120" fill="#1a1a2e"/>
-                                    <text x="90" y="35" text-anchor="middle" fill="#00ff88" font-family="monospace" font-size="12">SYNERGY</text>
-                                    <text x="90" y="55" text-anchor="middle" fill="#ff6b6b" font-family="monospace" font-size="12">LEVERAGE</text>
-                                    <text x="90" y="75" text-anchor="middle" fill="#4ecdc4" font-family="monospace" font-size="12">CIRCLE BACK</text>
-                                    <text x="90" y="95" text-anchor="middle" fill="#ffe66d" font-family="monospace" font-size="12">BINGO!</text>
+                                    <defs><radialGradient id="bb-felt" cx="0.5" cy="0.4" r="0.8"><stop offset="0" stop-color="#1a4a33"/><stop offset="1" stop-color="#0b2619"/></radialGradient></defs>
+                                    <rect width="180" height="120" fill="url(#bb-felt)"/>
+                                    <g transform="rotate(-4 90 60)">
+                                        <rect x="53" y="12" width="76" height="100" rx="2" fill="#000" opacity="0.35"/>
+                                        <rect x="50" y="8" width="80" height="100" rx="2" fill="#ffe35a"/>
+                                        <text x="61.2" y="27" text-anchor="middle" fill="#d7263d" font-family="'Arial Black', Impact, sans-serif" font-size="12" font-weight="900">B</text>
+                                        <text x="75.6" y="27" text-anchor="middle" fill="#d7263d" font-family="'Arial Black', Impact, sans-serif" font-size="12" font-weight="900">I</text>
+                                        <text x="90.0" y="27" text-anchor="middle" fill="#d7263d" font-family="'Arial Black', Impact, sans-serif" font-size="12" font-weight="900">N</text>
+                                        <text x="104.4" y="27" text-anchor="middle" fill="#d7263d" font-family="'Arial Black', Impact, sans-serif" font-size="12" font-weight="900">G</text>
+                                        <text x="118.8" y="27" text-anchor="middle" fill="#d7263d" font-family="'Arial Black', Impact, sans-serif" font-size="12" font-weight="900">O</text>
+                                        <path d="M54.0 32.0H126.0M54.0 32.0V104.0M54.0 46.4H126.0M68.4 32.0V104.0M54.0 60.8H126.0M82.8 32.0V104.0M54.0 75.2H126.0M97.2 32.0V104.0M54.0 89.6H126.0M111.6 32.0V104.0M54.0 104.0H126.0M126.0 32.0V104.0" stroke="#1b1b1b" stroke-width="0.8" fill="none"/>
+                                        <circle cx="61.2" cy="96.8" r="5.6" fill="#e0187a" fill-opacity="0.72"/>
+                                        <circle cx="75.6" cy="82.4" r="5.6" fill="#e0187a" fill-opacity="0.72"/>
+                                        <circle cx="90.0" cy="68.0" r="5.6" fill="#e0187a" fill-opacity="0.72"/>
+                                        <circle cx="104.4" cy="53.6" r="5.6" fill="#e0187a" fill-opacity="0.72"/>
+                                        <circle cx="118.8" cy="39.2" r="5.6" fill="#e0187a" fill-opacity="0.72"/>
+                                        <circle cx="61.2" cy="53.6" r="5.6" fill="#e0187a" fill-opacity="0.72"/>
+                                        <circle cx="104.4" cy="82.4" r="5.6" fill="#e0187a" fill-opacity="0.72"/>
+                                        <circle cx="118.8" cy="68.0" r="5.6" fill="#e0187a" fill-opacity="0.72"/>
+                                        <circle cx="75.6" cy="39.2" r="5.6" fill="#e0187a" fill-opacity="0.72"/>
+                                        <text x="90" y="69.6" text-anchor="middle" fill="#d7263d" font-family="'Arial Black', Impact, sans-serif" font-size="4.6" font-weight="900">FREE</text>
+                                        <line x1="59.2" y1="98.8" x2="120.8" y2="37.2" stroke="#d7263d" stroke-width="3" stroke-linecap="round" opacity="0.85"/>
+                                    </g>
                                 </svg>
                             </div>
                             <div class="project-text">
@@ -287,7 +342,7 @@ Oct 2026 to present</div>
                                 <p class="desc-boomer">AI-powered meeting analyzer that detects corporate jargon</p>
                                 <p class="desc-hacker">AI that scores your meetings for corporate speak</p>
                             </div>
-                            <span class="tech">JavaScript · Whisper AI · FFmpeg</span>
+                            <span class="tech">JavaScript · Whisper AI · WebGPU</span>
                         </article>
                     </a>
 
@@ -405,7 +460,7 @@ Oct 2026 to present</div>
             </filter>
         </defs>
     </svg>
-    <script src="script.js?v=20261105"></script>
+    <script src="script.js?v=20261105b"></script>
     <script src="rolodex.js?v=20261105"></script>
 </body>
 </html>

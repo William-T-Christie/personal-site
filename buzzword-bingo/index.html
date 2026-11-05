@@ -1,346 +1,212 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buzzword Bingo</title>
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23222'/%3E%3Ctext x='16' y='22' font-size='18' font-family='Georgia,serif' fill='%23f0ead6' text-anchor='middle'%3EW%3C/text%3E%3C/svg%3E">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Buzzword Bingo</title>
+<meta name="description" content="Score meetings, resumes and emails for corporate jargon on a real bingo card. Everything runs in your browser.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23ffe35a'/%3E%3Ccircle cx='16' cy='16' r='9' fill='%23e0187a' fill-opacity='.75'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Cabin+Sketch:wght@700&family=Patrick+Hand&display=swap">
+<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <!-- CRT Screen Effect Overlay -->
-    <div class="crt-overlay"></div>
+<div class="page">
+  <header class="top">
+    <a class="brand" href="#" id="logo">Buzzword Bingo</a>
+    <nav class="nav" aria-label="Games">
+      <a href="#meeting" data-nav="meeting">Meeting</a>
+      <a href="#live" data-nav="live">Live</a>
+      <a href="#resume" data-nav="resume">Resume</a>
+      <a href="#text" data-nav="text">Text</a>
+      <a href="#scores" data-nav="scores">High scores</a>
+      <button type="button" id="nav-sound" class="navbtn" aria-pressed="false">Sound on</button>
+    </nav>
+  </header>
 
-    <!-- Arcade Floor / Room -->
-    <div class="arcade-room">
-        <!-- Background Cabinet Left - Space Wars -->
-        <div class="bg-cabinet left">
-            <div class="bg-cabinet-top"></div>
-            <div class="bg-marquee">
-                <span class="bg-title">SPACE<br>WARS</span>
-            </div>
-            <div class="bg-screen">
-                <div class="bg-screen-glow"></div>
-                <div class="fake-game spacewars">
-                    <!-- Starfield -->
-                    <div class="stars">
-                        <span></span><span></span><span></span><span></span><span></span>
-                        <span></span><span></span><span></span><span></span><span></span>
-                        <span></span><span></span><span></span><span></span><span></span>
-                    </div>
-                    <!-- Drifting Asteroids -->
-                    <div class="asteroids">
-                        <span class="asteroid large a1">⬡</span>
-                        <span class="asteroid medium a2">⬢</span>
-                        <span class="asteroid small a3">⬡</span>
-                        <span class="asteroid large a4">⬢</span>
-                        <span class="asteroid medium a5">⬡</span>
-                    </div>
-                    <!-- Spaceship -->
-                    <div class="spaceship">▲</div>
-                    <!-- Laser shots -->
-                    <div class="lasers">
-                        <span class="laser l1"></span>
-                        <span class="laser l2"></span>
-                    </div>
-                    <!-- Game UI -->
-                    <div class="fake-game-ui">
-                        <div class="fake-score">HI 99999</div>
-                        <div class="fake-title">SPACE WARS</div>
-                        <div class="fake-prompt">INSERT COIN</div>
-                        <div class="fake-credit">CREDIT 0</div>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-controls">
-                <div class="bg-control-surface">
-                    <div class="bg-coin-slot">INSERT COIN</div>
-                    <div class="bg-joystick">
-                        <div class="joystick-handle">
-                            <div class="joystick-shaft"></div>
-                            <div class="joystick-ball"></div>
-                        </div>
-                    </div>
-                    <div class="bg-buttons">
-                        <span class="bg-btn red"></span>
-                        <span class="bg-btn yellow"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-base"></div>
+  <main id="screen">
+
+    <!-- HOME -->
+    <section class="view home" id="v-home" aria-labelledby="home-h">
+      <h1 class="hero" id="home-h">Buzzword<br>Bingo</h1>
+      <p class="lede">Pick a card. Every buzzword gets daubed.</p>
+      <div class="hand" role="list">
+        <a class="pick p-meeting" role="listitem" href="#meeting"><b>Meeting</b><span>Upload a recording and score every buzzword in it.</span><i class="mini" aria-hidden="true"></i><em>Play this card</em></a>
+        <a class="pick p-live" role="listitem" href="#live"><b>Live</b><span>Leave it listening during a call. The card fills itself in.</span><i class="mini" aria-hidden="true"></i><em>Play this card</em></a>
+        <a class="pick p-resume" role="listitem" href="#resume"><b>Resume</b><span>Pass the audit, or HR sends you to detention.</span><i class="mini" aria-hidden="true"></i><em>Play this card</em></a>
+        <a class="pick p-text" role="listitem" href="#text"><b>Text</b><span>Paste an email, a Slack thread or a LinkedIn post.</span><i class="mini" aria-hidden="true"></i><em>Play this card</em></a>
+      </div>
+      <div class="home-foot">
+        <button class="btn" type="button" id="demo-btn">Play the demo meeting</button>
+        <p class="fine">Everything runs in your browser. Recordings, resumes and text never leave this device.</p>
+      </div>
+    </section>
+
+    <!-- MEETING -->
+    <section class="view" id="v-meeting" hidden aria-labelledby="meeting-h">
+      <div class="view-head"><h2 class="sign c-meeting" id="meeting-h">Meeting</h2><p>Upload a recording. It's transcribed on your device, then every buzzword gets scored.</p></div>
+      <div id="meeting-pick">
+        <label class="sheet drop s-meeting" id="m-drop" for="m-file">
+          <span class="drop-in">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 31V9M15 18l9-9 9 9M9 31v8h30v-8" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+            <b>Drop a recording here</b>
+            <span>or click to choose one. MP3, M4A, WAV, WebM, MP4 or MOV.</span>
+          </span>
+        </label>
+        <input id="m-file" type="file" accept="audio/*,video/*,.m4a,.mp3,.wav,.webm,.mp4,.mov" class="sr">
+        <div class="opts">
+          <fieldset class="seg">
+            <legend>Speech model</legend>
+            <label><input type="radio" name="m-size" value="tiny" checked><span>Quick</span></label>
+            <label><input type="radio" name="m-size" value="base"><span>More accurate</span></label>
+          </fieldset>
+          <p class="fine">The first run downloads the speech model and your browser keeps it: about 40MB for Quick. More accurate is 80 to 210MB, and the bigger version runs faster on computers with a capable graphics chip. Your recording is never sent anywhere.</p>
         </div>
+      </div>
+      <div id="meeting-run" class="sheet slip" hidden>
+        <div class="run-head"><b id="m-stage">Getting ready</b><span id="m-pct">0%</span></div>
+        <div class="dots" id="m-dots" aria-hidden="true"></div>
+        <p class="run-detail" id="m-detail"></p>
+        <div class="stream" id="m-stream" aria-live="polite"></div>
+        <div class="run-foot"><span id="m-count">No buzzwords yet</span><button class="btn ghost-ink" type="button" id="m-cancel">Cancel</button></div>
+      </div>
+      <p class="error" id="m-error" role="alert"></p>
+    </section>
 
-        <!-- Main Cabinet - Buzzword Bingo -->
-        <div class="arcade-cabinet">
-        <!-- Cabinet Top -->
-        <div class="cabinet-top"></div>
-
-        <!-- Marquee (Lit-up sign at top) -->
-        <div class="marquee">
-            <div class="marquee-inner">
-                <h1 class="title">BUZZWORD BINGO</h1>
-                <p class="subtitle">Corporate Jargon Detector</p>
-            </div>
-            <div class="marquee-lights">
-                <span></span><span></span><span></span><span></span><span></span>
-                <span></span><span></span><span></span><span></span><span></span>
-            </div>
+    <!-- LIVE -->
+    <section class="view" id="v-live" hidden aria-labelledby="live-h">
+      <div class="view-head"><h2 class="sign c-live" id="live-h">Live</h2><p>Start it before your call. Buzzwords daub themselves a few seconds after someone says them.</p></div>
+      <div class="live">
+        <div class="live-card" id="live-card"></div>
+        <div class="live-side">
+          <dl class="tally">
+            <div><dt>Time</dt><dd id="l-time">0:00</dd></div>
+            <div><dt>Points</dt><dd id="l-points">0</dd></div>
+            <div><dt>Buzzwords</dt><dd id="l-count">0</dd></div>
+          </dl>
+          <div class="level" aria-hidden="true"><i id="l-level"></i></div>
+          <p class="status" id="l-status">Press start and allow the microphone.</p>
+          <div class="sheet slip ticker" id="l-ticker" aria-live="polite"></div>
+          <div class="row">
+            <button class="btn" type="button" id="l-start">Start listening</button>
+            <button class="btn ghost" type="button" id="l-new">Deal a new card</button>
+            <button class="btn ghost" type="button" id="l-end" hidden>End the meeting</button>
+          </div>
+          <fieldset class="seg">
+            <legend>Speech model</legend>
+            <label><input type="radio" name="l-size" value="tiny" checked><span>Quick</span></label>
+            <label><input type="radio" name="l-size" value="base"><span>More accurate</span></label>
+          </fieldset>
+          <p class="fine">Audio is transcribed on this device a few seconds at a time and then thrown away. Headphones help it hear the other people on the call.</p>
+          <p class="error" id="l-error" role="alert"></p>
         </div>
+      </div>
+      <div class="burst" id="l-burst" hidden><b>Bingo!</b><span id="l-burst-sub">Five in a row. Try not to shout it.</span></div>
+    </section>
 
-        <!-- Main Cabinet Body -->
-        <div class="cabinet-body">
-            <!-- Left Side Panel -->
-            <div class="side-panel left">
-                <div class="stripe"></div>
-                <div class="stripe"></div>
-                <div class="stripe"></div>
-            </div>
+    <!-- RESUME -->
+    <section class="view" id="v-resume" hidden aria-labelledby="resume-h">
+      <div class="view-head"><h2 class="sign c-resume" id="resume-h">Resume</h2><p>Paste your resume or drop in a .txt, .md, .docx or .pdf. Fail the audit and you serve detention.</p></div>
+      <div class="sheet paper-in">
+        <div class="paper-bar"><span class="loaded" id="r-loaded" aria-live="polite"></span><label class="link" for="r-file">Choose a file</label><input id="r-file" type="file" accept=".txt,.md,.docx,.pdf,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="sr"></div>
+        <label for="r-text" class="sr">Resume text</label>
+        <textarea id="r-text" class="ruled" spellcheck="false"></textarea>
+      </div>
+      <div class="under">
+        <div class="tags" role="group" aria-label="Sample resumes"><span>Try a sample</span></div>
+        <button class="btn" type="button" id="r-go">Audit my resume</button>
+      </div>
+      <p class="error" id="r-error" role="alert"></p>
+    </section>
 
-            <!-- Screen Bezel -->
-            <div class="screen-bezel">
-                <!-- Speaker Grilles -->
-                <div class="speaker-grille top">
-                    <div class="grille-lines"></div>
-                </div>
+    <!-- TEXT -->
+    <section class="view" id="v-text" hidden aria-labelledby="text-h">
+      <div class="view-head"><h2 class="sign c-text" id="text-h">Text</h2><p>Paste an email, a Slack message, a memo or a LinkedIn post.</p></div>
+      <div class="sheet paper-in">
+        <div class="paper-bar"><span class="loaded" id="t-loaded" aria-live="polite"></span></div>
+        <label for="t-text" class="sr">Text to score</label>
+        <textarea id="t-text" class="ruled" spellcheck="false"></textarea>
+      </div>
+      <div class="under">
+        <div class="tags" role="group" aria-label="Sample texts"><span>Try a sample</span></div>
+        <button class="btn" type="button" id="t-go">Score it</button>
+      </div>
+      <p class="error" id="t-error" role="alert"></p>
+    </section>
 
-                <!-- Main Screen Area -->
-                <main class="screen">
-                    <!-- Landing Screen -->
-                    <section id="landing-screen" class="game-screen active">
-                        <div class="landing-content">
-                            <div class="coin-slot">
-                                <span>INSERT MEETING</span>
-                            </div>
-                            <p class="instructions">Upload a meeting recording and discover<br>how much corporate speak was used</p>
+    <!-- SCAN -->
+    <section class="view scan" id="v-scan" hidden aria-live="polite">
+      <div class="dots big" id="scan-dots" aria-hidden="true"></div>
+      <p class="scan-msg" id="scan-msg">Checking for synergy</p>
+      <p class="scan-found" id="scan-tick"></p>
+    </section>
 
-                            <div class="upload-zone" id="upload-zone">
-                                <p>DRAG & DROP</p>
-                                <p class="small">or click to select file</p>
-                                <p class="formats">MP4 / WebM / MOV / MP3 / WAV</p>
-                                <input type="file" id="file-input" accept="video/*,audio/*" hidden>
-                            </div>
-
-                            <button class="demo-btn" id="demo-btn">TRY DEMO</button>
-
-                            <div class="privacy-badge" id="privacy-toggle" onclick="this.classList.toggle('active'); document.getElementById('disclaimer').classList.toggle('active');">
-                                <span class="lock-icon">&#128274;</span>
-                                <span>Your video never leaves this device</span>
-                                <span class="expand-icon">&#9660;</span>
-                            </div>
-
-                            <div class="disclaimer" id="disclaimer">
-                                <div class="disclaimer-content">
-                                    <h4>Privacy & Data</h4>
-                                    <ul>
-                                        <li><strong>100% Local Processing</strong> - All video/audio analysis happens entirely in your browser using AI that runs on your device.</li>
-                                        <li><strong>Nothing Uploaded</strong> - Your files are never sent to any server. Zero. Zilch. Nada.</li>
-                                        <li><strong>No Data Collection</strong> - We don't collect, store, or transmit any data about you or your meetings.</li>
-                                        <li><strong>No Cookies or Tracking</strong> - No analytics, no fingerprinting, no third-party scripts watching you.</li>
-                                        <li><strong>Local Storage Only</strong> - High scores (just your 3-letter name + score) are stored in your browser's local storage. That's it.</li>
-                                        <li><strong>Open Processing</strong> - Once you close or refresh the page, your video and transcript are gone from memory.</li>
-                                    </ul>
-                                    <p class="disclaimer-note">This is a satirical tool for entertainment. Have fun responsibly!</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Processing Screen -->
-                    <section id="processing-screen" class="game-screen">
-                        <div class="processing-content">
-                            <h2 class="processing-title">ANALYZING...</h2>
-                            <div class="progress-container">
-                                <div class="progress-bar" id="progress-bar"></div>
-                            </div>
-                            <p class="progress-text" id="progress-text">Initializing...</p>
-                            <p class="fun-message" id="fun-message">Detecting synergies...</p>
-                            <button class="cancel-btn" id="cancel-btn">CANCEL</button>
-                        </div>
-                    </section>
-
-                    <!-- Results Screen -->
-                    <section id="results-screen" class="game-screen">
-                        <div class="results-content">
-                            <h2 class="results-title">FINAL SCORE</h2>
-                            <div class="score-display">
-                                <span class="score-value" id="score-value">0</span>
-                                <span class="score-label">POINTS</span>
-                            </div>
-                            <div class="award-display">
-                                <p class="award-label">RANK:</p>
-                                <h3 class="award-title" id="award-title">REFRESHINGLY HUMAN</h3>
-                            </div>
-                            <div class="buzzword-breakdown" id="buzzword-breakdown">
-                                <!-- Filled dynamically -->
-                            </div>
-                            <div class="results-buttons">
-                                <button class="arcade-btn" id="play-again-btn">PLAY AGAIN</button>
-                                <button class="arcade-btn secondary" id="view-scores-btn">HIGH SCORES</button>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- High Score Entry Screen -->
-                    <section id="highscore-entry-screen" class="game-screen">
-                        <div class="highscore-content">
-                            <h2 class="blink">NEW HIGH SCORE!</h2>
-                            <p class="your-score">YOUR SCORE: <span id="entry-score">0</span></p>
-                            <div class="name-entry">
-                                <p>ENTER YOUR INITIALS</p>
-                                <div class="initial-slots">
-                                    <div class="initial-slot" data-index="0">
-                                        <button class="arrow up" data-dir="up">&#9650;</button>
-                                        <span class="letter">A</span>
-                                        <button class="arrow down" data-dir="down">&#9660;</button>
-                                    </div>
-                                    <div class="initial-slot" data-index="1">
-                                        <button class="arrow up" data-dir="up">&#9650;</button>
-                                        <span class="letter">A</span>
-                                        <button class="arrow down" data-dir="down">&#9660;</button>
-                                    </div>
-                                    <div class="initial-slot" data-index="2">
-                                        <button class="arrow up" data-dir="up">&#9650;</button>
-                                        <span class="letter">A</span>
-                                        <button class="arrow down" data-dir="down">&#9660;</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="arcade-btn" id="submit-score-btn">SUBMIT</button>
-                        </div>
-                    </section>
-
-                    <!-- Leaderboard Screen -->
-                    <section id="leaderboard-screen" class="game-screen">
-                        <div class="leaderboard-content">
-                            <h2>HIGH SCORES</h2>
-                            <div class="leaderboard-table" id="leaderboard-table">
-                                <!-- Filled dynamically -->
-                            </div>
-                            <button class="arcade-btn" id="back-btn">BACK</button>
-                        </div>
-                    </section>
-                </main>
-
-                <!-- Speaker Grille Bottom -->
-                <div class="speaker-grille bottom">
-                    <div class="grille-lines"></div>
-                </div>
-            </div>
-
-            <!-- Right Side Panel -->
-            <div class="side-panel right">
-                <div class="stripe"></div>
-                <div class="stripe"></div>
-                <div class="stripe"></div>
-            </div>
+    <!-- RESULTS -->
+    <section class="view" id="v-results" hidden aria-labelledby="res-h">
+      <div class="results">
+        <div class="res-card">
+          <div id="res-card"></div>
         </div>
-
-        <!-- Control Panel -->
-        <div class="control-panel">
-            <div class="control-panel-surface">
-                <div class="coin-insert">
-                    <div class="coin-slot-visual">
-                        <span>INSERT COIN</span>
-                    </div>
-                </div>
-                <div class="joystick-area">
-                    <div class="joystick">
-                        <div class="joystick-handle">
-                            <div class="joystick-shaft"></div>
-                            <div class="joystick-ball"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="buttons-area">
-                    <div class="arcade-button red"></div>
-                    <div class="arcade-button blue"></div>
-                </div>
-            </div>
+        <div class="res-score">
+          <p class="res-mode" id="res-mode">Meeting</p>
+          <h2 class="points" id="res-h"><span id="res-points">0</span></h2>
+          <p class="points-line" id="res-line"></p>
+          <p class="rank" id="res-rank"></p>
+          <p class="rank-note" id="res-note"></p>
+          <div class="index"><div class="index-head"><span>Corporate speak index</span><b id="res-index">0 of 100</b></div><div class="index-bar"><i id="res-meter"></i></div></div>
+          <div class="stamp" id="res-verdict"></div>
+          <dl class="facts" id="res-stats"></dl>
         </div>
-
-        <!-- Cabinet Base -->
-        <div class="cabinet-base">
-            <a href="../index.html" class="back-link">&larr; Back to Portfolio</a>
-            <p class="footer-text">100% BROWSER-BASED &bull; NO DATA STORED</p>
+      </div>
+      <div id="res-sentence"></div>
+      <div class="res-lower">
+        <div>
+          <h3 class="sub-h">What scored</h3>
+          <ol class="scored" id="res-breakdown"></ol>
         </div>
-    </div>
-
-    <!-- Error Modal -->
-    <div class="error-modal" id="error-modal">
-        <div class="error-modal-content">
-            <h3 class="error-title">ERROR!</h3>
-            <p class="error-message" id="error-message"></p>
-            <button class="arcade-btn" id="error-close-btn">OK</button>
+        <div id="res-annot-panel">
+          <div class="sub-row">
+            <h3 class="sub-h">What was actually said</h3>
+            <div class="toggles" role="group" aria-label="View">
+              <button class="tog" type="button" id="v-annot" aria-pressed="true">Highlighted</button>
+              <button class="tog" type="button" id="v-plain" aria-pressed="false">Plain English</button>
+              <button class="tog" type="button" id="v-copy">Copy</button>
+            </div>
+          </div>
+          <div id="res-annot"></div>
         </div>
-    </div>
-
-        <!-- Background Cabinet Right - Mega Blast -->
-        <div class="bg-cabinet right">
-            <div class="bg-cabinet-top"></div>
-            <div class="bg-marquee">
-                <span class="bg-title">MEGA<br>BLAST</span>
-            </div>
-            <div class="bg-screen">
-                <div class="bg-screen-glow"></div>
-                <div class="fake-game megablast">
-                    <!-- City skyline at bottom -->
-                    <div class="city-skyline">
-                        <div class="building b1"></div>
-                        <div class="building b2"></div>
-                        <div class="building b3"></div>
-                        <div class="building b4"></div>
-                        <div class="building b5"></div>
-                    </div>
-                    <!-- Bomber plane -->
-                    <div class="bomber">✈</div>
-                    <!-- Falling bombs -->
-                    <div class="bomb bomb1">●</div>
-                    <div class="bomb bomb2">●</div>
-                    <div class="bomb bomb3">●</div>
-                    <!-- Explosion effects -->
-                    <div class="explosion exp1"></div>
-                    <div class="explosion exp2"></div>
-                    <div class="explosion exp3"></div>
-                    <!-- Target reticle -->
-                    <div class="reticle">⊕</div>
-                    <!-- Game UI -->
-                    <div class="fake-game-ui">
-                        <div class="fake-score">TOP 50000</div>
-                        <div class="fake-title">MEGA BLAST</div>
-                        <div class="fake-prompt">PRESS START</div>
-                        <div class="fake-credit">1 PLAYER</div>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-controls">
-                <div class="bg-control-surface">
-                    <div class="bg-coin-slot">INSERT COIN</div>
-                    <div class="bg-joystick">
-                        <div class="joystick-handle">
-                            <div class="joystick-shaft"></div>
-                            <div class="joystick-ball"></div>
-                        </div>
-                    </div>
-                    <div class="bg-buttons">
-                        <span class="bg-btn blue"></span>
-                        <span class="bg-btn green"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-base"></div>
+      </div>
+      <div class="res-end">
+        <div class="ticket">
+          <h3 class="sub-h ink">Share your card</h3>
+          <p id="res-share"></p>
+          <button class="btn small" type="button" id="res-copy-share">Copy my score</button>
         </div>
+        <form class="ticket" id="res-form">
+          <h3 class="sub-h ink">Sign the Hall of Shame</h3>
+          <label for="res-initials">Your initials</label>
+          <div class="init"><input id="res-initials" maxlength="3" autocomplete="off" spellcheck="false" placeholder="ABC"><button class="btn small" type="submit">Sign it</button></div>
+          <p class="saved" id="res-saved" aria-live="polite"></p>
+        </form>
+      </div>
+      <div class="res-btns">
+        <button class="btn" type="button" id="res-again">Play again</button>
+        <button class="btn ghost" type="button" id="res-home">Pick another card</button>
+      </div>
+    </section>
 
-    </div> <!-- Close arcade-room -->
+    <!-- HIGH SCORES -->
+    <section class="view" id="v-scores" hidden aria-labelledby="scores-h">
+      <div class="view-head"><h2 class="sign c-scores" id="scores-h">Hall of Shame</h2><p>The most corporate games played in this browser.</p></div>
+      <div class="sheet board-list"><ol class="shame" id="hs-body"></ol></div>
+      <div class="res-btns"><button class="btn ghost" type="button" id="scores-back">Back</button></div>
+    </section>
+  </main>
 
-    <!-- Scripts -->
-    <script src="js/buzzwords.js"></script>
-    <script src="js/leaderboard.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/audio.js"></script>
-    <script src="js/transcribe.js"></script>
-    <script src="js/analyzer.js"></script>
-    <script src="js/controls.js"></script>
-    <script src="js/app.js"></script>
+  <footer class="foot">Nothing is uploaded. Made by <a href="https://william-t-christie.github.io/personal-site/">William T. Christie</a>.</footer>
+</div>
+<div id="overlay-root"></div>
+<script type="module" src="js/main.js"></script>
 </body>
 </html>

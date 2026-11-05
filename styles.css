@@ -771,3 +771,25 @@ body.hacker-mode .hacker-footer-separator {
     font-weight: 400;
     opacity: 0.5;
 }
+
+/* Billy Joel card: the thumbnail reels turn while you hover */
+.project-card[data-project="billy"] .thumb-reel {
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+.project-link:hover .project-card[data-project="billy"] .thumb-reel,
+.project-link:focus-visible .project-card[data-project="billy"] .thumb-reel {
+    animation: thumb-reel-spin 2.4s linear infinite;
+}
+
+@keyframes thumb-reel-spin {
+    to { transform: rotate(-360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .project-link:hover .project-card[data-project="billy"] .thumb-reel,
+    .project-link:focus-visible .project-card[data-project="billy"] .thumb-reel {
+        animation: none;
+    }
+}

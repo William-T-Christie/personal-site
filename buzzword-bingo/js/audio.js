@@ -1,173 +1,197 @@
 /**
- * Buzzword Bingo - Audio Extraction
- * Uses FFmpeg.wasm to extract audio from video files client-side
+ * Buzzword Bingo: audio in.
+ * decodeFile: any audio or video file the browser can play becomes 16 kHz mono samples (what Whisper wants).
+ * Microphone: live capture, resampled to 16 kHz, handed out in chunks cut at quiet moments.
+ * Transcriber: a small promise wrapper around the Whisper worker.
  */
 
-let ffmpeg = null;
-let ffmpegLoaded = false;
+export const RATE = 16000;
 
-/**
- * Load FFmpeg library
- */
-async function loadFFmpeg(onProgress) {
-    if (ffmpegLoaded && ffmpeg) {
-        return ffmpeg;
+export function resample(input, from, to) {
+  if (from === to) return input;
+  const ratio = from / to;
+  const out = new Float32Array(Math.floor(input.length / ratio));
+  for (let i = 0; i < out.length; i++) {
+    const x = i * ratio; const j = Math.floor(x); const f = x - j;
+    out[i] = input[j] * (1 - f) + (input[j + 1] !== undefined ? input[j + 1] : input[j]) * f;
+  }
+  return out;
+}
+
+export function rms(a, start = 0, end = a.length) {
+  let s = 0; const n = Math.max(1, end - start);
+  for (let i = start; i < end; i++) s += a[i] * a[i];
+  return Math.sqrt(s / n);
+}
+
+/** Decode a recording with the browser's own decoder. No 30MB FFmpeg download needed. */
+export async function decodeFile(file) {
+  const buf = await file.arrayBuffer();
+  const Ctx = window.AudioContext || window.webkitAudioContext;
+  if (!Ctx) throw new Error('This browser cannot process audio.');
+  let ctx;
+  try { ctx = new Ctx({ sampleRate: RATE }); } catch (e) { ctx = new Ctx(); }
+  let decoded;
+  try {
+    decoded = await new Promise((res, rej) => { const p = ctx.decodeAudioData(buf, res, rej); if (p && p.then) p.then(res, rej); });
+  } catch (e) {
+    throw new Error("This browser can't read the audio in that file. Try MP3, M4A, WAV, WebM or MP4, or export just the audio.");
+  } finally { if (ctx.close) ctx.close(); }
+  const n = decoded.length; const ch = decoded.numberOfChannels;
+  let mono = new Float32Array(n);
+  for (let c = 0; c < ch; c++) { const d = decoded.getChannelData(c); for (let i = 0; i < n; i++) mono[i] += d[i] / ch; }
+  mono = resample(mono, decoded.sampleRate, RATE);
+  return { audio: mono, duration: decoded.duration };
+}
+
+/** Split long audio into Whisper sized windows (30 seconds), cutting at the quietest moment near each boundary. */
+export function windows(audio, maxSec = 29) {
+  const out = []; const max = maxSec * RATE; const look = 2 * RATE; const step = RATE / 10;
+  let start = 0;
+  while (start < audio.length) {
+    let end = Math.min(audio.length, start + max);
+    if (end < audio.length) {
+      let best = end, bestE = Infinity;
+      for (let p = end - look; p <= end - step; p += step) { const e = rms(audio, p, p + step); if (e < bestE) { bestE = e; best = p + step / 2; } }
+      end = Math.floor(best);
     }
+    out.push({ start, end });
+    start = end;
+  }
+  return out;
+}
 
+/** Whisper sometimes "hears" things in silence. Strip the usual suspects. */
+export function cleanTranscript(t) {
+  return t
+    .replace(/\[[^\]]*\]/g, ' ')
+    .replace(/\((?:music|applause|laughter|laughs|silence|inaudible|background noise|upbeat music)[^)]*\)/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+export class Transcriber {
+  constructor(url = new URL('./whisper.worker.js', import.meta.url)) {
+    this.worker = new Worker(url, { type: 'module' });
+    this.jobs = new Map(); this.seq = 0; this.ready = null; this.device = null;
+    this.onDownload = null;
+    this.worker.onmessage = (e) => {
+      const m = e.data;
+      if (m.type === 'download' && this.onDownload) this.onDownload(m.loaded, m.total);
+      else if (m.type === 'ready') { if (m.size === this.size) { this.device = m.device; if (this._ready) this._ready.res(m); } }
+      else if (m.type === 'text') { const j = this.jobs.get(m.id); if (j) { this.jobs.delete(m.id); j.res(m); } }
+      else if (m.type === 'error') {
+        const err = new Error(friendlyModelError(m.message));
+        if (m.id != null && this.jobs.has(m.id)) { this.jobs.get(m.id).rej(err); this.jobs.delete(m.id); }
+        else if (this._ready) this._ready.rej(err);
+      }
+    };
+    this.worker.onerror = (e) => {
+      const err = new Error(friendlyModelError(e.message || 'The speech model could not start.'));
+      if (this._ready) this._ready.rej(err);
+      this.jobs.forEach((j) => j.rej(err)); this.jobs.clear();
+    };
+  }
+  load(size) {
+    if (this.ready && this.size === size) return this.ready;
+    this.size = size;
+    this.ready = new Promise((res, rej) => { this._ready = { res, rej }; });
+    this.ready.catch(() => { this.ready = null; });
+    this.worker.postMessage({ type: 'load', size });
+    return this.ready;
+  }
+  transcribe(audio) {
+    const id = ++this.seq;
+    return new Promise((res, rej) => { this.jobs.set(id, { res, rej }); this.worker.postMessage({ type: 'transcribe', id, audio }, [audio.buffer]); });
+  }
+  terminate() { this.worker.terminate(); }
+}
+
+function friendlyModelError(msg) {
+  if (/fetch|network|Failed to load|CORS|404/i.test(msg)) return "Couldn't download the speech model. Check your connection and try again. (It's a big download the first time, then your browser keeps it.)";
+  if (/memory|allocation/i.test(msg)) return 'The browser ran out of memory. Try a shorter recording, or close some tabs.';
+  return 'The speech model hit a problem: ' + msg;
+}
+
+/** Live microphone capture. Call take() whenever you're ready for the next chunk. */
+export class Microphone {
+  constructor(onLevel) { this.onLevel = onLevel; this.buf = []; this.len = 0; }
+  async start() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) throw new Error('This browser does not allow microphone access.');
+    this.stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, channelCount: 1 } });
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    this.ctx = new Ctx();
+    const src = this.ctx.createMediaStreamSource(this.stream);
+    const push = (frame) => {
+      const s = resample(frame, this.ctx.sampleRate, RATE);
+      this.buf.push(s); this.len += s.length;
+      if (this.onLevel) this.onLevel(Math.min(1, rms(frame) * 6));
+    };
     try {
-        // Dynamic import of FFmpeg
-        const { FFmpeg } = await import('https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/esm/index.js');
-        const { toBlobURL } = await import('https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/esm/index.js');
-
-        ffmpeg = new FFmpeg();
-
-        // Set up progress logging
-        ffmpeg.on('log', ({ message }) => {
-            console.log('[FFmpeg]', message);
-        });
-
-        ffmpeg.on('progress', ({ progress }) => {
-            if (onProgress) {
-                onProgress(Math.round(progress * 100));
-            }
-        });
-
-        // Load FFmpeg core
-        const baseURL = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/esm';
-
-        await ffmpeg.load({
-            coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
-            wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
-        });
-
-        ffmpegLoaded = true;
-        return ffmpeg;
-
-    } catch (error) {
-        console.error('Error loading FFmpeg:', error);
-        throw new Error('Failed to load audio processing library. Please refresh and try again.');
+      const code = 'class P extends AudioWorkletProcessor{process(i){const c=i[0]&&i[0][0];if(c)this.port.postMessage(c.slice(0));return true}}registerProcessor("bb-tap",P)';
+      const url = URL.createObjectURL(new Blob([code], { type: 'text/javascript' }));
+      await this.ctx.audioWorklet.addModule(url);
+      this.node = new AudioWorkletNode(this.ctx, 'bb-tap');
+      let acc = []; let n = 0;
+      this.node.port.onmessage = (e) => { acc.push(e.data); n += e.data.length; if (n >= 2048) { push(concat(acc, n)); acc = []; n = 0; } };
+      src.connect(this.node);
+    } catch (e) {
+      this.node = this.ctx.createScriptProcessor(4096, 1, 1);
+      this.node.onaudioprocess = (ev) => push(ev.inputBuffer.getChannelData(0).slice(0));
+      src.connect(this.node); this.node.connect(this.ctx.destination);
     }
-}
-
-/**
- * Check if a file is a video or audio file
- */
-function getMediaType(file) {
-    const videoTypes = ['video/mp4', 'video/webm', 'video/quicktime', 'video/x-msvideo', 'video/x-matroska'];
-    const audioTypes = ['audio/mpeg', 'audio/mp3', 'audio/wav', 'audio/m4a', 'audio/aac', 'audio/ogg', 'audio/webm'];
-
-    if (videoTypes.includes(file.type)) return 'video';
-    if (audioTypes.includes(file.type)) return 'audio';
-
-    // Check by extension
-    const ext = file.name.split('.').pop()?.toLowerCase();
-    const videoExts = ['mp4', 'webm', 'mov', 'avi', 'mkv'];
-    const audioExts = ['mp3', 'wav', 'm4a', 'aac', 'ogg'];
-
-    if (videoExts.includes(ext)) return 'video';
-    if (audioExts.includes(ext)) return 'audio';
-
-    return 'unknown';
-}
-
-/**
- * Extract audio from a video/audio file
- * Returns an ArrayBuffer of WAV audio
- */
-async function extractAudio(file, onProgress) {
-    const mediaType = getMediaType(file);
-
-    if (mediaType === 'unknown') {
-        throw new Error('Unsupported file type. Please use MP4, WebM, MOV, MP3, WAV, or M4A.');
+    this.started = performance.now();
+  }
+  seconds() { return this.len / RATE; }
+  /** Take buffered audio once there's at least minSec, cut at a quiet moment. */
+  take(minSec = 5, maxSec = 28, force = false) {
+    if (!force && this.len < minSec * RATE) return null;
+    if (!this.len) return null;
+    const all = concat(this.buf, this.len);
+    let end = Math.min(all.length, maxSec * RATE);
+    if (!force && end === all.length && all.length > 2 * RATE) {
+      const step = RATE / 10; let best = end, bestE = Infinity;
+      for (let p = Math.max(0, end - 1.5 * RATE); p <= end - step; p += step) { const e = rms(all, p, p + step); if (e < bestE) { bestE = e; best = p + step; } }
+      end = Math.floor(best);
     }
+    const chunk = all.slice(0, end); const rest = all.slice(end);
+    this.buf = rest.length ? [rest] : []; this.len = rest.length;
+    return chunk;
+  }
+  stop() {
+    try { if (this.node) this.node.disconnect(); } catch (e) { /* already gone */ }
+    if (this.stream) this.stream.getTracks().forEach((t) => t.stop());
+    if (this.ctx && this.ctx.close) this.ctx.close();
+  }
+}
 
-    // Load FFmpeg if not already loaded
-    if (onProgress) onProgress(0, 'Loading audio processor...');
+function concat(parts, n) { const out = new Float32Array(n); let o = 0; for (const p of parts) { out.set(p, o); o += p.length; } return out; }
 
-    const ff = await loadFFmpeg((p) => {
-        if (onProgress) onProgress(p * 0.3, 'Loading audio processor...');
-    });
-
-    // Read the file
-    if (onProgress) onProgress(30, 'Reading file...');
-
-    const fileData = await file.arrayBuffer();
-    const inputName = 'input' + getExtension(file.name);
-    const outputName = 'output.wav';
-
-    // Write input file to FFmpeg virtual filesystem
-    await ff.writeFile(inputName, new Uint8Array(fileData));
-
-    // Extract/convert audio to WAV
-    // WAV is ideal for Whisper transcription
-    if (onProgress) onProgress(40, 'Extracting audio...');
-
-    try {
-        // Extract audio, convert to mono 16kHz WAV (optimal for Whisper)
-        await ff.exec([
-            '-i', inputName,
-            '-vn',                    // No video
-            '-acodec', 'pcm_s16le',   // PCM 16-bit
-            '-ar', '16000',           // 16kHz sample rate (Whisper optimal)
-            '-ac', '1',               // Mono
-            '-y',                     // Overwrite output
-            outputName
-        ]);
-    } catch (error) {
-        console.error('FFmpeg error:', error);
-        throw new Error('Failed to extract audio from file. The file may be corrupted or in an unsupported format.');
+/** Read text out of .txt, .md, .docx and .pdf files. The two parsers load only when needed. */
+const loaded = {};
+function loadScript(src) { if (loaded[src]) return loaded[src]; loaded[src] = new Promise((res, rej) => { const s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = () => rej(new Error('load')); document.head.appendChild(s); }); return loaded[src]; }
+export async function readTextFile(file) {
+  const name = file.name.toLowerCase();
+  if (name.endsWith('.txt') || name.endsWith('.md') || file.type === 'text/plain') return file.text();
+  if (name.endsWith('.docx')) {
+    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js');
+    return (await window.mammoth.extractRawText({ arrayBuffer: await file.arrayBuffer() })).value;
+  }
+  if (name.endsWith('.pdf') || file.type === 'application/pdf') {
+    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');
+    const lib = window.pdfjsLib;
+    lib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    const pdf = await lib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
+    const pages = [];
+    for (let p = 1; p <= Math.min(pdf.numPages, 10); p++) {
+      const tc = await (await pdf.getPage(p)).getTextContent();
+      let line = ''; const out = [];
+      tc.items.forEach((it) => { line += it.str; if (it.hasEOL) { out.push(line); line = ''; } });
+      if (line) out.push(line);
+      pages.push(out.join('\n'));
     }
-
-    // Read output file
-    if (onProgress) onProgress(80, 'Finalizing audio...');
-
-    const outputData = await ff.readFile(outputName);
-
-    // Clean up
-    await ff.deleteFile(inputName);
-    await ff.deleteFile(outputName);
-
-    if (onProgress) onProgress(100, 'Audio extraction complete!');
-
-    return outputData.buffer;
+    return pages.join('\n\n');
+  }
+  if (name.endsWith('.doc')) throw new Error('Old .doc files are not supported. Save it as .docx or .pdf, or paste the text.');
+  throw new Error('That file type is not supported. Use .txt, .md, .docx or .pdf, or paste the text.');
 }
-
-/**
- * Get file extension from filename
- */
-function getExtension(filename) {
-    const ext = filename.split('.').pop()?.toLowerCase();
-    return ext ? `.${ext}` : '.mp4';
-}
-
-/**
- * Convert ArrayBuffer to Blob
- */
-function arrayBufferToBlob(buffer, type = 'audio/wav') {
-    return new Blob([buffer], { type });
-}
-
-/**
- * Get audio duration from ArrayBuffer
- */
-async function getAudioDuration(audioBuffer) {
-    try {
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const audioBufferDecoded = await audioContext.decodeAudioData(audioBuffer.slice(0));
-        const duration = audioBufferDecoded.duration;
-        audioContext.close();
-        return duration;
-    } catch (error) {
-        console.error('Error getting audio duration:', error);
-        return null;
-    }
-}
-
-// Export for use in other modules
-window.AudioExtractor = {
-    loadFFmpeg,
-    extractAudio,
-    getMediaType,
-    arrayBufferToBlob,
-    getAudioDuration
-};

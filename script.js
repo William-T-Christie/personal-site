@@ -31,12 +31,12 @@ const projectContent = {
         {
             title: 'Daily Affirmations with Billy Joel',
             description: 'Daily motivational quotes powered by Billy Joel lyrics',
-            tech: 'JavaScript · CSS Animations'
+            tech: 'JavaScript · SVG · Apple Music previews'
         },
         {
             title: 'Buzzword Bingo',
             description: 'AI-powered meeting analyzer that detects corporate jargon',
-            tech: 'JavaScript · Whisper AI · FFmpeg'
+            tech: 'JavaScript · Whisper AI · WebGPU'
         },
         {
             title: 'LinkSmith',
@@ -68,12 +68,12 @@ const projectContent = {
         {
             title: 'Daily Affirmations with Billy Joel',
             description: "the Piano Man tells you you're an innocent man",
-            tech: 'JavaScript · CSS Animations'
+            tech: 'JavaScript · SVG · Apple Music previews'
         },
         {
             title: 'Buzzword Bingo',
             description: 'AI that scores your meetings for corporate speak',
-            tech: 'JavaScript · Whisper AI · FFmpeg'
+            tech: 'JavaScript · Whisper AI · WebGPU'
         },
         {
             title: 'LinkSmith',
