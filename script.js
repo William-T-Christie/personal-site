@@ -120,6 +120,146 @@ function toggleMode() {
     handleViewToggle(targetMode);
 }
 
+// ============================================
+// CRT TRANSITION SOUND
+// A synthesized channel change that plays under the static:
+// TV snow sweeping through a filter, a warbling pitch warp,
+// and a degauss thump as the new view appears.
+// Built with Web Audio, so there are no sound files to load.
+// ============================================
+
+let crtAudioContext = null;
+let crtNoiseBuffer = null;
+
+// Runs inside the click or tap, which is when browsers allow sound to start
+function unlockCrtAudio() {
+    try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return null;
+        if (!crtAudioContext) crtAudioContext = new AudioCtx();
+        if (crtAudioContext.state === 'suspended') crtAudioContext.resume();
+        return crtAudioContext;
+    } catch (e) {
+        return null;
+    }
+}
+
+function getCrtNoiseBuffer(ac) {
+    if (crtNoiseBuffer && crtNoiseBuffer.sampleRate === ac.sampleRate) return crtNoiseBuffer;
+    const length = Math.floor(ac.sampleRate * 1.4);
+    const buffer = ac.createBuffer(1, length, ac.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < length; i++) data[i] = Math.random() * 2 - 1;
+    crtNoiseBuffer = buffer;
+    return buffer;
+}
+
+// Plays the warp on an AudioContext (or an OfflineAudioContext, for testing).
+// Timing matches the visual dissolve: 0.35s in, 0.2s hold, 0.4s out.
+function playCrtWarp(ac, delay = 0) {
+    if (!ac) return false;
+    try {
+        const IN = 0.35, HOLD = 0.2, OUT = 0.4;
+        const END = IN + HOLD + OUT;
+        const SWAP = IN + HOLD / 2;               // when the new view appears
+        const t0 = ac.currentTime + delay + 0.01;
+        const quiet = 0.0001;
+
+        const master = ac.createGain();
+        master.gain.value = 0.55;
+        const limiter = ac.createDynamicsCompressor();
+        limiter.threshold.value = -14;
+        limiter.ratio.value = 6;
+        master.connect(limiter);
+        limiter.connect(ac.destination);
+
+        // 1. TV snow: white noise through a band-pass that sweeps up and back down
+        const noise = ac.createBufferSource();
+        noise.buffer = getCrtNoiseBuffer(ac);
+        const band = ac.createBiquadFilter();
+        band.type = 'bandpass';
+        band.Q.value = 0.7;
+        band.frequency.setValueAtTime(500, t0);
+        band.frequency.exponentialRampToValueAtTime(3200, t0 + IN);
+        band.frequency.setValueAtTime(3200, t0 + IN + HOLD);
+        band.frequency.exponentialRampToValueAtTime(700, t0 + END);
+        const snow = ac.createGain();
+        snow.gain.setValueAtTime(quiet, t0);
+        snow.gain.exponentialRampToValueAtTime(0.5, t0 + IN);
+        snow.gain.setValueAtTime(0.5, t0 + IN + HOLD);
+        snow.gain.exponentialRampToValueAtTime(quiet, t0 + END);
+        // The 60 Hz flicker of a picture tube
+        const flicker = ac.createGain();
+        flicker.gain.value = 0.8;
+        const hum = ac.createOscillator();
+        hum.type = 'square';
+        hum.frequency.value = 60;
+        const humDepth = ac.createGain();
+        humDepth.gain.value = 0.2;
+        hum.connect(humDepth);
+        humDepth.connect(flicker.gain);
+        noise.connect(band);
+        band.connect(snow);
+        snow.connect(flicker);
+        flicker.connect(master);
+
+        // 2. Warp: two detuned saws that bend down and back up, with a tape wobble
+        const warpFilter = ac.createBiquadFilter();
+        warpFilter.type = 'lowpass';
+        warpFilter.frequency.value = 1400;
+        warpFilter.Q.value = 4;
+        const warp = ac.createGain();
+        warp.gain.setValueAtTime(quiet, t0);
+        warp.gain.exponentialRampToValueAtTime(0.22, t0 + IN * 0.8);
+        warp.gain.setValueAtTime(0.22, t0 + IN + HOLD);
+        warp.gain.exponentialRampToValueAtTime(quiet, t0 + END);
+        warpFilter.connect(warp);
+        warp.connect(master);
+        const wobble = ac.createOscillator();
+        wobble.frequency.value = 7;
+        const wobbleDepth = ac.createGain();
+        wobbleDepth.gain.value = 14;
+        wobble.connect(wobbleDepth);
+        const saws = [0, 21].map((cents) => {
+            const saw = ac.createOscillator();
+            saw.type = 'sawtooth';
+            saw.detune.value = cents;
+            saw.frequency.setValueAtTime(220, t0);
+            saw.frequency.exponentialRampToValueAtTime(48, t0 + SWAP);
+            saw.frequency.exponentialRampToValueAtTime(160, t0 + END);
+            wobbleDepth.connect(saw.frequency);
+            saw.connect(warpFilter);
+            return saw;
+        });
+
+        // 3. Degauss thump as the new view appears
+        const thump = ac.createOscillator();
+        thump.type = 'sine';
+        thump.frequency.setValueAtTime(70, t0);
+        thump.frequency.setValueAtTime(70, t0 + SWAP);
+        thump.frequency.exponentialRampToValueAtTime(38, t0 + END + 0.2);
+        const thumpGain = ac.createGain();
+        thumpGain.gain.setValueAtTime(quiet, t0);
+        thumpGain.gain.setValueAtTime(quiet, t0 + SWAP);
+        thumpGain.gain.exponentialRampToValueAtTime(0.5, t0 + SWAP + 0.03);
+        thumpGain.gain.exponentialRampToValueAtTime(quiet, t0 + END + 0.25);
+        thump.connect(thumpGain);
+        thumpGain.connect(master);
+
+        const stopAt = t0 + END + 0.3;
+        [noise, hum, wobble, thump, ...saws].forEach((node) => {
+            node.start(t0);
+            node.stop(stopAt);
+        });
+        noise.onended = () => {
+            try { master.disconnect(); limiter.disconnect(); } catch (e) { /* already gone */ }
+        };
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
 function handleViewToggle(mode) {
     // Prevent multiple transitions
     if (isTransitioning) return;
@@ -138,6 +278,9 @@ function handleViewToggle(mode) {
         completeTransition(mode);
         return;
     }
+
+    // Unlock sound now, while we are still inside the click
+    unlockCrtAudio();
 
     // Hacker View header checkboxes animate their checkmark before the static starts
     const currentCheckmark = isHackerMode
@@ -171,6 +314,9 @@ function startStaticDissolve(targetMode) {
         return;
     }
     const setOpacity = (value) => layers.forEach((layer) => { layer.style.opacity = value; });
+
+    // The channel change sound, in step with the static
+    playCrtWarp(crtAudioContext);
 
     // Create static noise overlay
     const staticOverlay = document.createElement('div');
