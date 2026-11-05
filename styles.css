@@ -609,6 +609,19 @@ body.hacker-mode .project-link {
         padding: 40px 20px;
     }
 
+    /* The desktop side padding left phones with a one word wide column next to each thumbnail */
+    body.hacker-mode .main {
+        padding: 32px 16px;
+    }
+
+    body.hacker-mode #projects {
+        padding: 20px 0;
+    }
+
+    body.hacker-mode .project-grid {
+        gap: 32px;
+    }
+
     body.hacker-mode .hacker-header-content {
         flex-direction: column-reverse;
         text-align: center;
