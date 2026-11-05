@@ -5,28 +5,187 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
     <meta name="description" content="William T. Christie, University of Miami finance graduate working across finance, consulting, and AI. I build small, useful tools I actually use.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23222'/%3E%3Ctext x='16' y='22' font-size='18' font-family='Georgia,serif' fill='%23f0ead6' text-anchor='middle'%3EW%3C/text%3E%3C/svg%3E">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="William T. Christie">
+    <meta property="og:description" content="University of Miami finance graduate working across finance, consulting, and AI. I build small, useful tools I actually use.">
+    <meta property="og:url" content="https://william-t-christie.github.io/personal-site/">
+    <meta property="og:image" content="https://william-t-christie.github.io/personal-site/headshot.jpg">
+    <meta name="twitter:card" content="summary">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23222'/%3E%3Ctext x='16' y='22' font-size='18' font-family='Georgia,serif' fill='%23f0ead6' text-anchor='middle'%3EW%3C/text%3E%3C/svg%3E">
     <title>William T. Christie</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="boomer.css">
     <script>
-        // Prevent flash of wrong mode - apply before render
-        if (localStorage.getItem('siteMode') === 'hacker') {
-            document.documentElement.classList.add('hacker-mode-html');
-        }
+        // Pick the view before anything renders, so there is no flash of the wrong one.
+        // ?view=hacker or ?view=boomer wins, then the saved choice, then Boomer View.
+        (function () {
+            var mode = 'boomer';
+            try {
+                var v = new URLSearchParams(window.location.search).get('view');
+                mode = (v === 'hacker' || v === 'boomer') ? v : (localStorage.getItem('siteMode') || 'boomer');
+            } catch (e) { /* storage blocked: use the default */ }
+            window.__siteMode = mode;
+            if (mode === 'hacker') {
+                document.documentElement.classList.add('hacker-mode-html');
+            }
+        })();
     </script>
 </head>
 <body>
     <script>
-        // Apply body class immediately before any content renders
-        if (localStorage.getItem('siteMode') === 'hacker') {
+        if (window.__siteMode === 'hacker') {
             document.body.classList.add('hacker-mode');
         }
     </script>
+
+    <!-- ============ Boomer View (Swiss Minimal + Rolodex) ============ -->
+    <div class="swiss" id="top">
+        <a class="sw-skip" href="#sw-main">Skip to content</a>
+        <div class="sw-wrap">
+            <header class="sw-top" aria-label="Boomer View">
+                <a class="sw-brand" href="#top">William Christie</a>
+                <nav class="sw-nav" aria-label="Primary">
+                    <a href="#work">Work</a>
+                    <a href="#built">Projects</a>
+                    <a href="#contact">Contact</a>
+                    <span class="sw-switch" role="group" aria-label="Site view">
+                        <button type="button" aria-pressed="true">Boomer</button>
+                        <span aria-hidden="true">/</span>
+                        <button type="button" aria-pressed="false" onclick="handleViewToggle('hacker')">Hacker</button>
+                    </span>
+                </nav>
+            </header>
+
+            <main id="sw-main" aria-label="Boomer View">
+                <section class="sw-hero" aria-label="Introduction">
+                    <div class="sw-hero-copy">
+                        <p class="sw-mono sw-kicker">Consultant · New York</p>
+                        <h1>William<br>Christie<span>.</span></h1>
+                        <p class="sw-lede">Finance graduate from the University of Miami, now in consulting at Ernst &amp; Young. I build small, useful tools I actually use.</p>
+                        <p class="sw-actions">
+                            <a class="sw-btn sw-btn--solid" href="mailto:Christie.William@icloud.com">Get in touch</a>
+                            <a class="sw-btn" href="WilliamChristie-CV.docx" download="WilliamChristie-CV.docx">Download CV</a>
+                        </p>
+                    </div>
+                    <figure>
+                        <img src="headshot.jpg" width="886" height="886" alt="Portrait of William Christie">
+                        <figcaption class="sw-mono"><span>Fig. 1</span><span>New York, 2026</span></figcaption>
+                    </figure>
+                </section>
+
+                <dl class="sw-glance">
+                    <div><dt class="sw-mono">Currently</dt><dd>FSO Financial Consulting, EY</dd></div>
+                    <div><dt class="sw-mono">Previously</dt><dd>Go to Market, Shortcut</dd></div>
+                    <div><dt class="sw-mono">Studied</dt><dd>Finance, University of Miami</dd></div>
+                    <div><dt class="sw-mono">Speaks</dt><dd>English, Spanish</dd></div>
+                </dl>
+
+                <section class="sw-row" id="work" aria-labelledby="work-title">
+                    <div class="sw-rail">
+                        <h2 id="work-title">Work</h2>
+                        <div class="sw-controls">
+                            <div aria-live="polite">
+                                <div class="sw-mono sw-now-num" id="sw-now-num">No. 01 / 06</div>
+                                <div class="sw-now-name" id="sw-now-name">Ernst &amp; Young</div>
+                                <div class="sw-now-meta" id="sw-now-meta">FSO Financial Consulting
+Oct 2026 to present</div>
+                            </div>
+                            <div class="sw-jobs" id="sw-jobs" role="group" aria-label="Jump to a job"></div>
+                            <div class="sw-work-actions">
+                                <button type="button" class="sw-btn sw-btn--solid" id="sw-spin">Give it a spin</button>
+                                <button type="button" class="sw-btn sw-btn--small" id="sw-sound" aria-pressed="true">Sound on</button>
+                            </div>
+                            <p class="sw-mono sw-hint"><span class="sw-hint-mouse">Scroll on the Rolodex to flip one job at a time, or drag the cards and let go to spin</span><span class="sw-hint-touch">Swipe the cards sideways to spin, or tap a job</span></p>
+                        </div>
+                    </div>
+                    <div class="sw-body sw-work-body">
+                        <div class="rdx-stage" id="rdx-stage" tabindex="0" role="group" aria-roledescription="Rolodex" aria-label="Rolodex of jobs. Use the arrow keys to flip through it.">
+                            <div class="rdx-inner">
+                                <div class="rdx-scene" aria-hidden="true"></div>
+                                <button type="button" class="rdx-knob rdx-knob--back" aria-label="Turn back one job"></button>
+                                <button type="button" class="rdx-knob rdx-knob--forward" aria-label="Turn forward one job"></button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="sw-row" id="built" aria-labelledby="built-title">
+                    <h2 id="built-title">Projects</h2>
+                    <div class="sw-body">
+                        <ul class="sw-projects">
+                            <li class="sw-project">
+                                <a href="buzzword-bingo/index.html" target="_blank" rel="noopener">
+                                    <span class="sw-project-name">Buzzword Bingo<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+                                    <span class="sw-project-desc">Scores your meetings for corporate speak</span>
+                                </a>
+                            </li>
+                            <li class="sw-project">
+                                <a href="daily-affirmations-billy-joel/index.html" target="_blank" rel="noopener">
+                                    <span class="sw-project-name">Daily Affirmations with Billy Joel<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+                                    <span class="sw-project-desc">Motivation from the Piano Man</span>
+                                </a>
+                            </li>
+                            <li class="sw-project">
+                                <a href="LinkSmith/index.html" target="_blank" rel="noopener">
+                                    <span class="sw-project-name">LinkSmith<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+                                    <span class="sw-project-desc">Chrome extension that keeps links organized</span>
+                                </a>
+                            </li>
+                            <li class="sw-project">
+                                <div>
+                                    <span class="sw-project-name">Doom Scroller Anonymous<span class="sw-tag">Revamping</span></span>
+                                    <span class="sw-project-desc">Reads your screen time and judges it</span>
+                                </div>
+                            </li>
+                            <li class="sw-project">
+                                <div>
+                                    <span class="sw-project-name">Miami Food Roulette<span class="sw-tag">Revamping</span></span>
+                                    <span class="sw-project-desc">Spin a wheel, get a restaurant</span>
+                                </div>
+                            </li>
+                            <li class="sw-project">
+                                <div>
+                                    <span class="sw-project-name">Something new<span class="sw-tag">In progress</span></span>
+                                    <span class="sw-project-desc">Ask me about it</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="sw-row" aria-labelledby="edu-title">
+                    <h2 id="edu-title">Education &amp; Community</h2>
+                    <div class="sw-body">
+                        <ul class="sw-list">
+                            <li class="sw-item"><span class="sw-item-name">University of Miami</span><span class="sw-item-detail">BBA Finance, 3.87 GPA, Dean's List</span><span class="sw-item-year">2026</span></li>
+                            <li class="sw-item"><span class="sw-item-name">Hermanos de la Calle</span><span class="sw-item-detail">Volunteer, feeding and housing the homeless in Miami</span><span class="sw-item-year">2017 · Now</span></li>
+                            <li class="sw-item"><span class="sw-item-name">Unbound</span><span class="sw-item-detail">Junior Board Member</span><span class="sw-item-year">2020 to 2022</span></li>
+                        </ul>
+                    </div>
+                </section>
+            </main>
+
+            <footer class="sw-contact" id="contact">
+                <p class="sw-mono sw-kicker">Contact</p>
+                <a class="sw-email" href="mailto:Christie.William@icloud.com">Christie.William@icloud.com</a>
+                <div class="sw-base sw-mono">
+                    <span>© 2026 William T. Christie</span>
+                    <span>
+                        <a href="https://www.linkedin.com/in/christie-william" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                        <a href="WilliamChristie-CV.docx" download="WilliamChristie-CV.docx">CV</a>
+                        <a href="#top">Back to top</a>
+                    </span>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- ============ Hacker View ============ -->
     <div class="layout">
         <!-- Hacker Mode Header (hidden in boomer mode) -->
-        <header class="hacker-header">
+        <header class="hacker-header" aria-label="Hacker View">
             <div class="hacker-header-content">
                 <h1 class="hacker-name">William Christie</h1>
                 <div class="hacker-header-right">
@@ -57,221 +216,9 @@
             </div>
         </header>
 
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-content">
-                <div class="sidebar-header">
-                    <div class="photo-wrapper">
-                        <img src="headshot.jpg" alt="William T. Christie" class="profile-photo">
-                        <!-- Cyberpunk avatar for hacker mode - neon outline portrait -->
-                        <svg class="cyber-avatar" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <!-- Neon gradient for the outline -->
-                                <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#00ffff"/>
-                                    <stop offset="50%" style="stop-color:#ff00ff"/>
-                                    <stop offset="100%" style="stop-color:#39ff14"/>
-                                </linearGradient>
-                                <!-- Glow filter -->
-                                <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                                    <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
-                                    <feMerge>
-                                        <feMergeNode in="coloredBlur"/>
-                                        <feMergeNode in="SourceGraphic"/>
-                                    </feMerge>
-                                </filter>
-                            </defs>
-
-                            <!-- Head outline -->
-                            <path d="M50 8
-                                     C 72 8, 82 25, 82 42
-                                     C 82 52, 78 60, 72 66
-                                     L 68 72
-                                     L 68 76
-                                     L 32 76
-                                     L 32 72
-                                     L 28 66
-                                     C 22 60, 18 52, 18 42
-                                     C 18 25, 28 8, 50 8 Z"
-                                  fill="none"
-                                  stroke="url(#neonGradient)"
-                                  stroke-width="1.5"
-                                  filter="url(#glow)"/>
-
-                            <!-- Hair outline -->
-                            <path d="M22 38
-                                     C 22 20, 35 10, 50 10
-                                     C 65 10, 78 20, 78 38
-                                     C 75 32, 65 28, 50 28
-                                     C 35 28, 25 32, 22 38 Z"
-                                  fill="none"
-                                  stroke="url(#neonGradient)"
-                                  stroke-width="1.2"
-                                  filter="url(#glow)"/>
-
-                            <!-- Ears -->
-                            <path d="M18 42 C 14 42, 14 52, 18 52" fill="none" stroke="url(#neonGradient)" stroke-width="1.2" filter="url(#glow)"/>
-                            <path d="M82 42 C 86 42, 86 52, 82 52" fill="none" stroke="url(#neonGradient)" stroke-width="1.2" filter="url(#glow)"/>
-
-                            <!-- Pixel Sunglasses -->
-                            <rect x="26" y="40" width="20" height="10" fill="#000" stroke="#00ffff" stroke-width="1.5" filter="url(#glow)"/>
-                            <rect x="54" y="40" width="20" height="10" fill="#000" stroke="#00ffff" stroke-width="1.5" filter="url(#glow)"/>
-                            <rect x="46" y="43" width="8" height="4" fill="#000" stroke="#00ffff" stroke-width="1"/>
-                            <!-- Sunglasses reflection -->
-                            <line x1="28" y1="43" x2="34" y2="43" stroke="#00ffff" stroke-width="1" opacity="0.6"/>
-                            <line x1="56" y1="43" x2="62" y2="43" stroke="#00ffff" stroke-width="1" opacity="0.6"/>
-
-                            <!-- Nose outline -->
-                            <path d="M50 50 L 48 58 L 52 58 L 50 50" fill="none" stroke="url(#neonGradient)" stroke-width="1" filter="url(#glow)"/>
-
-                            <!-- Mouth/smile outline -->
-                            <path d="M42 64 Q 50 68, 58 64" fill="none" stroke="url(#neonGradient)" stroke-width="1.2" filter="url(#glow)"/>
-
-                            <!-- Neck outline -->
-                            <path d="M38 72 L 38 82 M 62 72 L 62 82" fill="none" stroke="url(#neonGradient)" stroke-width="1.2" filter="url(#glow)"/>
-
-                            <!-- Shoulders/suit outline -->
-                            <path d="M38 82
-                                     L 20 88
-                                     L 10 95
-                                     M 62 82
-                                     L 80 88
-                                     L 90 95"
-                                  fill="none"
-                                  stroke="url(#neonGradient)"
-                                  stroke-width="1.5"
-                                  filter="url(#glow)"/>
-
-                            <!-- Collar/lapels -->
-                            <path d="M38 82 L 44 92 L 50 85 L 56 92 L 62 82" fill="none" stroke="url(#neonGradient)" stroke-width="1.2" filter="url(#glow)"/>
-
-                            <!-- Tie outline -->
-                            <path d="M50 85 L 47 95 L 50 98 L 53 95 L 50 85" fill="none" stroke="#ff00ff" stroke-width="1" filter="url(#glow)"/>
-                        </svg>
-                    </div>
-                    <div class="name-row">
-                        <h1 class="name">William T. Christie</h1>
-                        <button class="palette-toggle" onclick="togglePalette()"></button>
-                    </div>
-                </div>
-                <p class="tagline">Builder<br>Finance & Business Consulting</p>
-
-                <nav class="nav">
-                    <a href="#experience">Experience</a>
-                    <a href="#projects">Projects</a>
-                    <a href="#education">Education</a>
-                    <a href="#involvement">Leadership</a>
-                </nav>
-
-                <div class="view-toggle-group boomer-view-toggle">
-                    <label class="view-toggle-option">
-                        <input type="checkbox" id="boomer-checkbox-sidebar" checked onchange="handleViewToggle('boomer')">
-                        <span class="checkmark"></span>
-                        <span class="view-label">Boomer View</span>
-                    </label>
-                    <label class="view-toggle-option">
-                        <input type="checkbox" id="hacker-checkbox-sidebar" onchange="handleViewToggle('hacker')">
-                        <span class="checkmark"></span>
-                        <span class="view-label">Hacker View</span>
-                    </label>
-                </div>
-
-                <div class="contact">
-                    <h4>Contact</h4>
-                    <a href="mailto:Christie.William@icloud.com">Christie.William@icloud.com</a>
-                    <a href="tel:+13054982171">305-498-2171</a>
-                    <a href="https://www.linkedin.com/in/christie-william" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                    <a href="WilliamChristie-CV.docx" download="WilliamChristie-CV.docx">Download CV</a>
-                </div>
-            </div>
-        </aside>
-
         <!-- Main Content -->
-        <main class="main">
+        <main class="main" aria-label="Hacker View">
             <div class="main-inner">
-            <!-- Welcome Section -->
-            <section class="welcome">
-                <h1 class="welcome-heading" data-text="Hey, I'm William!">Hey, I'm William!</h1>
-                <p class="welcome-text">I'm a University of Miami finance graduate working across finance, consulting, and AI, who loves tackling complex problems and building things that help businesses run smarter. When I'm not crunching numbers, writing code, or building pitch decks, you'll find me volunteering in my community or exploring Miami's food scene.</p>
-                <p class="welcome-subtext">Always learning. Always building. Always happy to connect!</p>
-                <div class="welcome-buttons">
-                    <a href="#experience" class="btn">About Me</a>
-                    <a href="mailto:Christie.William@icloud.com" class="btn btn-outline">Get in Touch</a>
-                </div>
-            </section>
-
-            <!-- Experience Section -->
-            <section id="experience" class="section collapsible">
-                <h2>Experience</h2>
-                <div class="section-content">
-                <article class="entry">
-                    <div class="entry-header">
-                        <h3>Fundamental Research Labs - Shortcut</h3>
-                        <span class="date">June - August 2026</span>
-                    </div>
-                    <p class="role">Go-to-Market Intern for Shortcut, an AI Excel agent built by an a16z-backed MIT spinout · Menlo Park, CA</p>
-                    <ul>
-                        <li>Managed frontline enterprise support for hedge fund, accounting, and financial services clients, resolving product issues daily</li>
-                        <li>Stress tested the agent against live client Excel workflows, surfacing failure cases and proposing fixes adopted by engineering</li>
-                        <li>Converted enterprise user feedback and competitive research into roadmap input delivered directly to the founding team</li>
-                    </ul>
-                </article>
-
-                <article class="entry">
-                    <div class="entry-header">
-                        <h3>Ernst & Young</h3>
-                        <span class="date">June - August 2025</span>
-                    </div>
-                    <p class="role">Summer Business Consulting Intern in regulatory reporting, FSO Consulting · New York, NY</p>
-                    <ul>
-                        <li>Ensured consistency across financial reports, including 10-Ks and Call Reports, for a top U.S. global bank with $30B+ in annual revenue, aligning with regulatory compliance standards</li>
-                        <li>Reviewed reporting outputs with client teams to meet requirements from regulatory institutions such as the Federal Reserve and SEC</li>
-                        <li>Created client-side onboarding materials introducing Transaction Testing practices for documentation and attribute validation processes across a multinational financial institution serving 100M+ customers worldwide</li>
-                    </ul>
-                </article>
-
-                <article class="entry">
-                    <div class="entry-header">
-                        <h3>Handoffs</h3>
-                        <span class="date">June - July 2024</span>
-                    </div>
-                    <p class="role">Summer Business Intern at a venture backed technology startup · New York, NY</p>
-                    <ul>
-                        <li>Reviewed AI and CRM data used to generate templated summaries to streamline business efficiency</li>
-                        <li>Assisted in market research and competitor offerings analysis</li>
-                        <li>Worked under CEO to edit multiple iterations of marketing/pitch deck for investors</li>
-                    </ul>
-                </article>
-
-                <article class="entry">
-                    <div class="entry-header">
-                        <h3>The Miami Native</h3>
-                        <span class="date">June - August 2023</span>
-                    </div>
-                    <p class="role">Summer Business Intern for a Miami culture &amp; literature magazine startup · Miami, FL</p>
-                    <ul>
-                        <li>Assisted in analysis of customer sign-up and deposit trends by cohort to develop subscription strategies</li>
-                        <li>Assisted in development of marketing/investment pitch deck for seed funding round</li>
-                        <li>Collaborated with team to create marketing and advertising materials</li>
-                        <li>Assisted in website design process with Executive Editor and CEO</li>
-                    </ul>
-                </article>
-
-                <article class="entry">
-                    <div class="entry-header">
-                        <h3>Toy Town</h3>
-                        <span class="date">June 2017 - August 2023</span>
-                    </div>
-                    <p class="role">Lead Sales Associate · Miami, FL</p>
-                    <ul>
-                        <li>Personally sold >$200k worth of merchandise at local toy store</li>
-                        <li>Monitored inventory levels to ensure sufficient product supply and track best-sellers</li>
-                        <li>Responsible for greeting customers, running cash register, opening/closing store</li>
-                    </ul>
-                </article>
-                </div>
-            </section>
-
             <!-- Projects Section -->
             <section id="projects" class="section">
                 <h2>Projects</h2>
@@ -281,7 +228,7 @@
                     <!-- ===== WORKING PROJECTS ===== -->
 
                     <!-- 1. Daily Affirmations with Billy Joel -->
-                    <a href="daily-affirmations-billy-joel/index.html" target="_blank" class="project-link">
+                    <a href="daily-affirmations-billy-joel/index.html" target="_blank" rel="noopener" class="project-link">
                         <article class="project-card" data-project="billy">
                             <div class="project-thumb">
                                 <svg viewBox="0 0 180 120" xmlns="http://www.w3.org/2000/svg">
@@ -324,7 +271,7 @@
                     </a>
 
                     <!-- 2. Buzzword Bingo -->
-                    <a href="buzzword-bingo/index.html" target="_blank" class="project-link">
+                    <a href="buzzword-bingo/index.html" target="_blank" rel="noopener" class="project-link">
                         <article class="project-card" data-project="buzzword">
                             <div class="project-thumb">
                                 <svg viewBox="0 0 180 120" xmlns="http://www.w3.org/2000/svg">
@@ -345,7 +292,7 @@
                     </a>
 
                     <!-- 3. LinkSmith -->
-                    <a href="LinkSmith/index.html" target="_blank" class="project-link">
+                    <a href="LinkSmith/index.html" target="_blank" rel="noopener" class="project-link">
                         <article class="project-card" data-project="linksmith">
                             <div class="project-thumb">
                                 <img src="LinkSmith/thumbnail.png" alt="LinkSmith icon" style="width:100%; height:100%; object-fit:cover;">
@@ -435,66 +382,6 @@
                 </div>
             </section>
 
-            <!-- Education Section -->
-            <section id="education" class="section collapsible">
-                <h2>Education</h2>
-                <div class="section-content">
-                <article class="entry">
-                    <div class="entry-header">
-                        <h3>University of Miami</h3>
-                        <span class="date">May 2026</span>
-                    </div>
-                    <p class="role">Miami Herbert Business School · Bachelor of Business Administration in Finance</p>
-                    <p class="details"><strong>GPA:</strong> 3.87 · Dean's List · 'Canes Achievement Scholarship</p>
-                    <p class="details"><strong>Coursework:</strong> Microeconomics, Macroeconomics, Business Analytics, Business Statistics</p>
-                </article>
-
-                <article class="entry">
-                    <div class="entry-header">
-                        <h3>Belen Jesuit Preparatory</h3>
-                        <span class="date">May 2022</span>
-                    </div>
-                    <p class="role">Miami, FL</p>
-                    <p class="details"><strong>GPA:</strong> 3.94</p>
-                </article>
-                </div>
-            </section>
-
-            <!-- Involvement Section -->
-            <section id="involvement" class="section collapsible">
-                <h2>Leadership & Community</h2>
-                <div class="section-content">
-                <article class="entry">
-                    <div class="entry-header">
-                        <h3>Hermanos de la Calle</h3>
-                        <span class="date">June 2017 - Present</span>
-                    </div>
-                    <p class="role">Volunteer · Miami, FL</p>
-                    <p class="details">Charity that feeds, rehabilitates and houses the homeless. Work directly in the streets of Downtown Miami, caring for the homeless, addicted and mentally ill.</p>
-                </article>
-
-                <article class="entry">
-                    <div class="entry-header">
-                        <h3>Unbound</h3>
-                        <span class="date">June 2020 - August 2022</span>
-                    </div>
-                    <p class="role">Junior Board Member · Miami, FL</p>
-                    <p class="details">Charity dedicated to tattoo removal of former gang-members and victims of human trafficking. Sourced partnerships with local non-profits and schools, and assisted with website design alongside front-end designers.</p>
-                </article>
-
-                <article class="entry">
-                    <div class="entry-header">
-                        <h3>Languages</h3>
-                    </div>
-                    <p class="details">English (native) · Spanish (conversational)</p>
-                </article>
-                </div>
-            </section>
-
-            <footer class="footer">
-                <p>&copy; 2026 William T. Christie</p>
-            </footer>
-
             <!-- Hacker Mode Footer (hidden in boomer mode) -->
             <footer class="hacker-footer">
                 <div class="hacker-footer-links">
@@ -518,19 +405,7 @@
             </filter>
         </defs>
     </svg>
-    <!-- Ripple transition overlay -->
-    <div class="ripple-overlay"></div>
-
-    <!-- SVG Filters for water distortion -->
-    <svg class="ripple-svg-filters" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-            <filter id="water-distort" x="-50%" y="-50%" width="200%" height="200%">
-                <feTurbulence id="water-turbulence" type="fractalNoise" baseFrequency="0.01 0.01" numOctaves="3" seed="1" result="noise"/>
-                <feDisplacementMap in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G" id="water-displacement"/>
-            </filter>
-        </defs>
-    </svg>
-
     <script src="script.js"></script>
+    <script src="rolodex.js"></script>
 </body>
 </html>

@@ -5,21 +5,16 @@
 
    TABLE OF CONTENTS
    -----------------
-   1. CSS VARIABLES ............. Color palettes, fonts, sizing
+   Boomer View (Swiss Minimal + Rolodex) has its own stylesheet, boomer.css.
+   Everything below styles Hacker View and the shared base it builds on.
+
+   1. CSS VARIABLES ............. Colors, fonts, sizing
    2. RESET & BASE .............. Box model, html/body defaults
-   3. LAYOUT .................... Flex container, sidebar/main split
+   3. LAYOUT .................... Flex container
    4. SCROLLBAR ................. Custom scrollbar styling
-   5. SIDEBAR ................... Fixed sidebar, profile, nav
-   6. VIEW TOGGLE ............... Boomer/Hacker mode checkboxes
-   7. CONTACT ................... Contact links section
-   8. MAIN CONTENT .............. Main scrollable area
-   9. WELCOME SECTION ........... Hero/welcome box
-   10. BUTTONS .................. Primary/outline button styles
+   8. MAIN CONTENT .............. Main content area
    11. SECTIONS ................. Content sections layout
    12. PROJECT CARDS ............ Project grid and cards
-   13. ENTRY CARDS .............. Experience/education entries
-   14. LISTS .................... ul/li styling
-   15. FOOTER ................... Footer styles
    16. LINKS .................... Global link styles
    17. RESPONSIVE ............... Mobile breakpoints (900px, 600px)
    18. PRINT .................... Print media queries
@@ -112,266 +107,6 @@ body {
 }
 
 /* ==========================================================================
-   5. SIDEBAR
-   ========================================================================== */
-.sidebar {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    width: var(--sidebar-width);
-    height: calc(100vh - 10px);
-    padding: 32px 24px 40px 24px;
-    border-right: 1px solid var(--color-border);
-    background-color: var(--color-bg);
-    border-radius: 4px 0 0 0;
-    z-index: 10;
-}
-
-.sidebar-content {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    height: 100%;
-}
-
-.sidebar-header {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-}
-
-.name-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    align-self: center;
-}
-
-.photo-wrapper {
-    position: relative;
-    width: 140px;
-    height: 140px;
-    flex-shrink: 0;
-    overflow: hidden;
-    align-self: center;
-    margin-top: 16px;
-}
-
-.profile-photo {
-    display: block;
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.cyber-avatar {
-    display: none;
-}
-
-.name {
-    font-family: var(--font-heading);
-    font-size: 18px;
-    font-weight: 700;
-    white-space: nowrap;
-    letter-spacing: -0.3px;
-    margin: 0;
-    color: var(--color-text);
-}
-
-.tagline {
-    font-size: 13px;
-    color: var(--color-text-muted);
-    margin-top: -8px;
-    line-height: 1.4;
-    align-self: center;
-    text-align: center;
-}
-
-.bio {
-    font-size: 14px;
-    color: var(--color-text-secondary);
-    line-height: 1.5;
-}
-
-/* --- Navigation --- */
-.nav {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding-top: 16px;
-    border-top: 1px solid var(--color-border);
-    align-items: center;
-    text-align: center;
-}
-
-.nav a {
-    font-size: 15px;
-    font-weight: 400;
-    color: var(--color-accent);
-    text-decoration: none;
-    transition: color 0.2s;
-}
-
-.nav a:hover {
-    color: var(--color-text);
-}
-
-.nav a.active {
-    color: var(--color-text);
-    font-weight: 600;
-}
-
-/* ==========================================================================
-   6. VIEW TOGGLE
-   ========================================================================== */
-.boomer-view-toggle {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    height: 90px;
-    border-top: 1px solid var(--color-border);
-    border-bottom: 1px solid var(--color-border);
-    align-items: center;
-    margin-bottom: -16px;
-}
-
-.boomer-view-toggle .view-toggle-option {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    user-select: none;
-    width: 130px;
-}
-
-.boomer-view-toggle .view-toggle-option input[type="checkbox"] {
-    display: none;
-}
-
-.boomer-view-toggle .view-toggle-option .checkmark {
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--color-accent);
-    border-radius: 4px;
-    background: transparent;
-    position: relative;
-    flex-shrink: 0;
-}
-
-.boomer-view-toggle .view-toggle-option input[type="checkbox"]:checked + .checkmark {
-    background: var(--color-accent);
-}
-
-.boomer-view-toggle .view-toggle-option input[type="checkbox"]:checked + .checkmark::after {
-    content: '✓';
-    color: var(--color-bg);
-    font-size: 14px;
-    font-weight: 700;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.boomer-view-toggle .view-toggle-option .view-label {
-    font-family: var(--font-heading);
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--color-text-secondary);
-}
-
-.boomer-view-toggle .view-toggle-option:hover .view-label {
-    color: var(--color-text);
-}
-
-/* Hide boomer view toggle in hacker mode */
-body.hacker-mode .boomer-view-toggle {
-    display: none;
-}
-
-.palette-toggle {
-    padding: 4px;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: 1px solid var(--color-border);
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.2s;
-    color: var(--color-text-muted);
-    flex-shrink: 0;
-}
-
-.palette-toggle svg {
-    width: 14px;
-    height: 14px;
-}
-
-.palette-toggle:hover {
-    border-color: var(--color-accent);
-    color: var(--color-accent);
-}
-
-/* ==========================================================================
-   7. CONTACT
-   ========================================================================== */
-.contact {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding-top: 16px;
-    margin-top: 0;
-    border-top: 1px solid var(--color-border);
-    align-items: center;
-    text-align: center;
-}
-
-.contact h4 {
-    font-family: var(--font-heading);
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--color-text);
-    margin-bottom: 8px;
-    text-transform: none;
-    letter-spacing: 0;
-}
-
-.contact a {
-    font-size: 14px;
-    color: var(--color-text-secondary);
-    text-decoration: none;
-    transition: color 0.2s;
-}
-
-.contact a:hover {
-    color: var(--color-accent);
-    text-decoration: underline;
-}
-
-.location {
-    font-size: 13px;
-    color: var(--color-text-muted);
-    margin-top: 8px;
-}
-
-/* Download CV icon */
-.contact a[download]::after {
-    content: ' ↓';
-    font-size: 12px;
-}
-
-/* External link indicator */
-.contact a[target="_blank"]::after {
-    content: ' ↗';
-    font-size: 11px;
-}
-
-/* ==========================================================================
    8. MAIN CONTENT
    ========================================================================== */
 .main {
@@ -389,105 +124,6 @@ body.hacker-mode .boomer-view-toggle {
     max-width: 800px;
     margin: 0 auto;
     padding-top: 48px;
-}
-
-/* ==========================================================================
-   9. WELCOME SECTION
-   ========================================================================== */
-.welcome {
-    margin-bottom: 48px;
-    padding: 32px;
-    background: var(--color-border);
-    border-radius: 12px;
-}
-
-.welcome-heading {
-    font-family: var(--font-heading);
-    font-size: 52px;
-    font-weight: 700;
-    letter-spacing: -1.5px;
-    margin-bottom: 24px;
-    line-height: 1.1;
-    color: var(--color-text);
-    width: 100%;
-}
-
-.welcome-text {
-    font-size: 18px;
-    line-height: 1.7;
-    color: var(--color-text-secondary);
-    width: 100%;
-    margin-bottom: 16px;
-}
-
-.welcome-subtext {
-    font-size: 16px;
-    color: var(--color-text-muted);
-    margin-bottom: 28px;
-}
-
-.welcome-buttons {
-    display: flex;
-    gap: 12px;
-}
-
-/* ==========================================================================
-   10. BUTTONS
-   ========================================================================== */
-
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 14px 24px;
-    font-family: var(--font-heading);
-    font-size: 15px;
-    font-weight: 600;
-    border-radius: 8px;
-    border: 2px solid var(--color-text);
-    background: var(--color-bg);
-    color: var(--color-text);
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-    transition: color 0.5s ease;
-}
-
-.btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 100%;
-    background: var(--color-text);
-    z-index: -1;
-    transition: width 0.5s ease;
-}
-
-.btn:hover {
-    color: var(--color-bg);
-    transition: color 0.3s ease;
-}
-
-.btn:hover::before {
-    width: 100%;
-    transition: width 0.3s ease;
-}
-
-.btn-outline {
-    border-color: var(--color-accent);
-    color: var(--color-accent);
-}
-
-.btn-outline::before {
-    background: var(--color-accent);
-}
-
-.btn-outline:hover {
-    color: var(--color-bg);
 }
 
 /* ==========================================================================
@@ -616,95 +252,6 @@ body.hacker-mode .project-card .desc-hacker {
 }
 
 /* ==========================================================================
-   13. ENTRY CARDS
-   ========================================================================== */
-.entry {
-    margin-bottom: 32px;
-    padding-bottom: 32px;
-    border-bottom: 1px solid var(--color-border);
-}
-
-.entry:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-}
-
-.entry-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 16px;
-    margin-bottom: 4px;
-}
-
-.entry h3 {
-    font-family: var(--font-heading);
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--color-text);
-}
-
-.date {
-    font-size: 14px;
-    color: var(--color-text-muted);
-    white-space: nowrap;
-}
-
-.role {
-    font-size: 15px;
-    color: var(--color-text-secondary);
-    margin-bottom: 12px;
-}
-
-.details {
-    font-size: 14px;
-    color: var(--color-text-secondary);
-    margin-bottom: 8px;
-}
-
-.details:last-child {
-    margin-bottom: 0;
-}
-
-.details strong {
-    color: var(--color-text);
-}
-
-/* ==========================================================================
-   14. LISTS
-   ========================================================================== */
-ul {
-    list-style: disc;
-    padding-left: 20px;
-    margin-top: 8px;
-}
-
-li {
-    font-size: 15px;
-    color: var(--color-text-secondary);
-    margin-bottom: 6px;
-    line-height: 1.5;
-}
-
-li:last-child {
-    margin-bottom: 0;
-}
-
-/* ==========================================================================
-   15. FOOTER
-   ========================================================================== */
-.footer {
-    margin-top: 48px;
-    padding-top: 24px;
-    border-top: 1px solid var(--color-border);
-}
-
-.footer p {
-    font-size: 13px;
-    color: var(--color-text-muted);
-}
-
-/* ==========================================================================
    16. LINKS
    ========================================================================== */
 a {
@@ -718,19 +265,6 @@ a {
 @media (max-width: 900px) {
     .layout {
         flex-direction: column;
-    }
-
-    .sidebar {
-        position: relative;
-        width: 100%;
-        height: auto;
-        padding: 32px 24px;
-        border-right: none;
-        border-bottom: 1px solid var(--color-border);
-    }
-
-    .sidebar-content {
-        max-width: 600px;
     }
 
     .main {
@@ -747,41 +281,8 @@ a {
 }
 
 @media (max-width: 600px) {
-    .entry-header {
-        flex-direction: column;
-        gap: 4px;
-    }
-
-    .date {
-        order: -1;
-        font-size: 13px;
-    }
-
     h2 {
         font-size: 24px;
-    }
-
-    .welcome-heading {
-        font-size: 36px;
-    }
-
-    .welcome-text {
-        font-size: 16px;
-    }
-
-    .welcome-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .btn {
-        width: 100%;
-        max-width: 280px;
-        justify-content: center;
-    }
-
-    .sidebar-header {
-        gap: 16px;
     }
 
     .main {
@@ -795,15 +296,6 @@ a {
 @media print {
     .layout {
         display: block;
-    }
-
-    .sidebar {
-        position: relative;
-        height: auto;
-        border: none;
-        padding: 0 0 24px 0;
-        margin-bottom: 24px;
-        border-bottom: 1px solid #ccc;
     }
 
     .main {
@@ -845,7 +337,6 @@ body.hacker-mode {
     letter-spacing: -0.3px;
 }
 
-body.hacker-mode .name,
 body.hacker-mode h1,
 body.hacker-mode h2,
 body.hacker-mode h3,
@@ -854,61 +345,6 @@ body.hacker-mode h4 {
     text-transform: none;
     letter-spacing: -0.3px;
     font-weight: 600;
-}
-
-/* Hide sidebar elements */
-.cyber-avatar {
-    display: none;
-}
-
-body.hacker-mode .profile-photo {
-    display: none !important;
-}
-
-body.hacker-mode .palette-toggle {
-    display: none !important;
-}
-
-/* Mode Toggle Button */
-.mode-toggle {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    padding: 12px;
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    background: var(--color-bg);
-    color: var(--color-text-muted);
-    cursor: pointer;
-    z-index: 10000;
-    transition: all 0.2s ease;
-}
-
-.mode-toggle:hover {
-    border-color: var(--color-text-muted);
-}
-
-.mode-toggle .mode-label {
-    display: none;
-    align-items: center;
-    justify-content: center;
-}
-
-.mode-toggle .mode-label.boomer {
-    display: flex;
-}
-
-.mode-icon {
-    width: 24px;
-    height: 24px;
-}
-
-body.hacker-mode .mode-toggle .mode-label.boomer {
-    display: none;
-}
-
-body.hacker-mode .mode-toggle .mode-label.hacker {
-    display: inline-flex;
 }
 
 /* --- Hacker Mode Layout --- */
@@ -1021,11 +457,6 @@ body.hacker-mode .view-toggle-option .view-label {
     color: #000;
 }
 
-/* Hide sidebar in hacker mode */
-body.hacker-mode .sidebar {
-    display: none !important;
-}
-
 /* Full-width main in hacker mode */
 body.hacker-mode .layout {
     flex-direction: column;
@@ -1051,15 +482,6 @@ body.hacker-mode .main-inner {
     max-width: 1400px;
     padding-top: 0;
     margin: 0 auto;
-}
-
-/* Hide welcome section and all non-project sections */
-body.hacker-mode .welcome,
-body.hacker-mode #experience,
-body.hacker-mode #education,
-body.hacker-mode #involvement,
-body.hacker-mode .footer {
-    display: none !important;
 }
 
 /* Projects Section - walzr.com style */
@@ -1181,18 +603,6 @@ body.hacker-mode .project-link {
     text-decoration: none;
 }
 
-/* Mode toggle - minimal */
-body.hacker-mode .mode-toggle {
-    border-color: #ddd;
-    color: #666;
-    background: #fff;
-    box-shadow: rgba(100, 100, 111, 0.1) 0px 4px 12px 0px;
-}
-
-body.hacker-mode .mode-toggle:hover {
-    border-color: #999;
-}
-
 /* Responsive for hacker mode */
 @media (max-width: 800px) {
     body.hacker-mode .hacker-header {
@@ -1302,37 +712,6 @@ body.hacker-mode .mode-toggle:hover {
     0% {
         opacity: 0;
         transform: translate(-50%, -50%) scale(0.5) translateY(-20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-    }
-}
-
-/* Boomer mode checkmark animation adjustments */
-.boomer-view-toggle .view-toggle-option .checkmark.animating-out::after {
-    animation: checkmarkFlyOutBoomer 0.4s ease-in forwards;
-}
-
-.boomer-view-toggle .view-toggle-option .checkmark.animating-in::after {
-    animation: checkmarkFlyInBoomer 0.4s ease-out forwards;
-}
-
-@keyframes checkmarkFlyOutBoomer {
-    0% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-    }
-    100% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.5) translateY(-15px);
-    }
-}
-
-@keyframes checkmarkFlyInBoomer {
-    0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.5) translateY(-15px);
     }
     100% {
         opacity: 1;

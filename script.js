@@ -1,6 +1,26 @@
 /* ============================================
    William T. Christie - Personal Website
+   script.js - view switching and Hacker View
+
+   Boomer View (Swiss Minimal + Rolodex) is in index.html,
+   boomer.css and rolodex.js. This file switches between
+   the two views and runs Hacker View.
    ============================================ */
+
+// ============================================
+// SAFE STORAGE
+// localStorage can throw (private windows, blocked
+// site data), so every read and write goes through here.
+// ============================================
+
+const store = {
+    get(key) {
+        try { return window.localStorage.getItem(key); } catch (e) { return null; }
+    },
+    set(key, value) {
+        try { window.localStorage.setItem(key, value); } catch (e) { /* not saved, that's fine */ }
+    }
+};
 
 // ============================================
 // HACKER MODE - Project Content
@@ -90,6 +110,10 @@ const projectContent = {
 let isHackerMode = false;
 let isTransitioning = false;
 
+function prefersReducedMotion() {
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+}
+
 function toggleMode() {
     if (isTransitioning) return;
     const targetMode = isHackerMode ? 'boomer' : 'hacker';
@@ -102,71 +126,51 @@ function handleViewToggle(mode) {
 
     // Don't transition if already in the target mode
     if ((mode === 'hacker' && isHackerMode) || (mode === 'boomer' && !isHackerMode)) {
+        updateViewCheckboxes();
         return;
     }
 
     isTransitioning = true;
 
-    // Get the relevant checkboxes based on current view
+    // Reduced motion: switch straight away, no static
+    if (prefersReducedMotion()) {
+        isHackerMode = mode === 'hacker';
+        completeTransition(mode);
+        return;
+    }
+
+    // Hacker View header checkboxes animate their checkmark before the static starts
     const currentCheckmark = isHackerMode
         ? document.querySelector('#hacker-checkbox')?.parentElement?.querySelector('.checkmark')
-        : document.querySelector('#boomer-checkbox-sidebar')?.parentElement?.querySelector('.checkmark');
-
-    const targetCheckmark = isHackerMode
-        ? document.querySelector('#boomer-checkbox')?.parentElement?.querySelector('.checkmark')
-        : document.querySelector('#hacker-checkbox-sidebar')?.parentElement?.querySelector('.checkmark');
-
-    // Get the clicked checkbox for ripple origin
-    const clickedCheckbox = mode === 'hacker'
-        ? (document.querySelector('#hacker-checkbox-sidebar')?.parentElement?.querySelector('.checkmark') ||
-           document.querySelector('#hacker-checkbox')?.parentElement?.querySelector('.checkmark'))
-        : (document.querySelector('#boomer-checkbox')?.parentElement?.querySelector('.checkmark') ||
-           document.querySelector('#boomer-checkbox-sidebar')?.parentElement?.querySelector('.checkmark'));
+        : null;
 
     // Step 1: Animate checkmark out
     if (currentCheckmark) {
         currentCheckmark.classList.add('animating-out');
     }
 
-    // Step 2: After checkmark flies out, update checkbox states and animate in
+    // Step 2: After checkmark flies out, update checkbox states
     setTimeout(() => {
-        // Update the actual checkbox states
-        if (mode === 'hacker') {
-            isHackerMode = true;
-        } else {
-            isHackerMode = false;
-        }
+        isHackerMode = mode === 'hacker';
         updateViewCheckboxes();
 
-        // Remove animating-out class
         if (currentCheckmark) {
             currentCheckmark.classList.remove('animating-out');
         }
 
-        // Animate checkmark into new position
-        const newCheckmark = mode === 'hacker'
-            ? document.querySelector('#hacker-checkbox-sidebar')?.parentElement?.querySelector('.checkmark')
-            : document.querySelector('#boomer-checkbox-sidebar')?.parentElement?.querySelector('.checkmark');
-
-        if (newCheckmark) {
-            newCheckmark.classList.add('animating-in');
-            setTimeout(() => {
-                newCheckmark.classList.remove('animating-in');
-            }, 400);
-        }
-
         // Step 3: Start static dissolve transition effect
-        startStaticDissolve(clickedCheckbox, mode);
-
-    }, 400); // Wait for checkmark fly-out animation
+        startStaticDissolve(mode);
+    }, currentCheckmark ? 400 : 0);
 }
 
-function startStaticDissolve(originElement, targetMode) {
-    const layout = document.querySelector('.layout');
-    if (!layout) {
+function startStaticDissolve(targetMode) {
+    // Both views fade, whichever one is showing
+    const layers = Array.from(document.querySelectorAll('.layout, .swiss'));
+    if (!layers.length) {
         completeTransition(targetMode);
         return;
     }
+    const setOpacity = (value) => layers.forEach((layer) => { layer.style.opacity = value; });
 
     // Create static noise overlay
     const staticOverlay = document.createElement('div');
@@ -204,9 +208,6 @@ function startStaticDissolve(originElement, targetMode) {
         const scanLineHeight = 60;
 
         for (let y = 0; y < canvas.height; y++) {
-            // Horizontal sync distortion - slight offset per line
-            const hSync = Math.sin(y * 0.1 + time * 0.01) * 2;
-
             // Scan line brightness boost
             const distToScanLine = Math.abs(y - scanLineY);
             const scanLineBrightness = distToScanLine < scanLineHeight
@@ -249,21 +250,21 @@ function startStaticDissolve(originElement, targetMode) {
         if (elapsed < dissolveIn) {
             // Dissolving in - increasing intensity
             intensity = (elapsed / dissolveIn) * maxIntensity;
-            layout.style.opacity = 1 - intensity;
+            setOpacity(1 - intensity);
         } else if (elapsed < dissolveIn + holdTime) {
             // Hold at full static - switch mode here
             intensity = maxIntensity;
-            layout.style.opacity = 0;
+            setOpacity(0);
         } else if (elapsed < totalTime) {
             // Dissolving out - decreasing intensity
             const outProgress = (elapsed - dissolveIn - holdTime) / dissolveOut;
             intensity = maxIntensity * (1 - outProgress);
-            layout.style.opacity = 1 - intensity;
+            setOpacity(1 - intensity);
         } else {
             // Done
             cancelAnimationFrame(animationId);
             staticOverlay.remove();
-            layout.style.opacity = 1;
+            layers.forEach((layer) => { layer.style.opacity = ''; });
             isTransitioning = false;
             return;
         }
@@ -277,71 +278,50 @@ function startStaticDissolve(originElement, targetMode) {
 
     // Switch mode at the midpoint (when fully covered by static)
     setTimeout(() => {
-        if (targetMode === 'hacker') {
-            document.body.classList.add('hacker-mode');
-            document.documentElement.classList.add('hacker-mode-html');
-            localStorage.setItem('siteMode', 'hacker');
-            randomizeHackerHeader();
-        } else {
-            document.body.classList.remove('hacker-mode');
-            document.documentElement.classList.remove('hacker-mode-html');
-            localStorage.setItem('siteMode', 'boomer');
-        }
-
-        void document.body.offsetHeight;
-
-        updateProjectContent();
-        updateWelcomeContent();
-        updateModeToggleTooltip();
-        updateViewCheckboxes();
-
-        window.scrollTo(0, 0);
-        document.querySelector('.main')?.scrollTo(0, 0);
+        applyMode(targetMode);
     }, dissolveIn + (holdTime / 2));
 }
 
-function completeTransition(targetMode) {
+function applyMode(targetMode) {
     if (targetMode === 'hacker') {
         document.body.classList.add('hacker-mode');
         document.documentElement.classList.add('hacker-mode-html');
-        localStorage.setItem('siteMode', 'hacker');
+        store.set('siteMode', 'hacker');
         randomizeHackerHeader();
     } else {
         document.body.classList.remove('hacker-mode');
         document.documentElement.classList.remove('hacker-mode-html');
-        localStorage.setItem('siteMode', 'boomer');
+        store.set('siteMode', 'boomer');
     }
 
+    // Keep ?view= in the address in step with the view, if it was used
+    try {
+        const url = new URL(window.location.href);
+        if (url.searchParams.has('view')) {
+            url.searchParams.set('view', targetMode);
+            window.history.replaceState(null, '', url.toString());
+        }
+    } catch (e) { /* older browsers: leave the address alone */ }
+
     updateProjectContent();
-    updateWelcomeContent();
-    updateModeToggleTooltip();
     updateViewCheckboxes();
 
     window.scrollTo(0, 0);
     document.querySelector('.main')?.scrollTo(0, 0);
+}
 
+function completeTransition(targetMode) {
+    applyMode(targetMode);
     isTransitioning = false;
 }
 
 function updateViewCheckboxes() {
-    // Hacker header checkboxes
+    // Hacker View header checkboxes
     const hackerCheckbox = document.getElementById('hacker-checkbox');
     const boomerCheckbox = document.getElementById('boomer-checkbox');
-    // Boomer sidebar checkboxes
-    const hackerCheckboxSidebar = document.getElementById('hacker-checkbox-sidebar');
-    const boomerCheckboxSidebar = document.getElementById('boomer-checkbox-sidebar');
 
     if (hackerCheckbox) hackerCheckbox.checked = isHackerMode;
     if (boomerCheckbox) boomerCheckbox.checked = !isHackerMode;
-    if (hackerCheckboxSidebar) hackerCheckboxSidebar.checked = isHackerMode;
-    if (boomerCheckboxSidebar) boomerCheckboxSidebar.checked = !isHackerMode;
-}
-
-function updateModeToggleTooltip() {
-    const btn = document.querySelector('.mode-toggle');
-    if (btn) {
-        btn.title = isHackerMode ? 'Switch to Boomer Mode' : 'Switch to Hacker Mode';
-    }
 }
 
 function updateProjectContent() {
@@ -367,51 +347,19 @@ function updateProjectContent() {
     }
 }
 
-function updateWelcomeContent() {
-    const heading = document.querySelector('.welcome-heading');
-    const text = document.querySelector('.welcome-text');
-    const subtext = document.querySelector('.welcome-subtext');
-
-    if (isHackerMode) {
-        heading.textContent = 'WELCOME_USER';
-        heading.setAttribute('data-text', 'WELCOME_USER');
-        text.textContent = 'William Christie // Finance & Code // Miami. I build tools that solve problems and break down complexity. University of Miami grad working across finance, consulting, and AI. Side projects always in progress.';
-        subtext.textContent = '> status: online // open to connect';
-    } else {
-        heading.textContent = "Hey, I'm William!";
-        heading.setAttribute('data-text', "Hey, I'm William!");
-        text.textContent = "I'm a University of Miami finance graduate working across finance, consulting, and AI, who loves tackling complex problems and building things that help businesses run smarter. When I'm not crunching numbers, writing code, or building pitch decks, you'll find me volunteering in my community or exploring Miami's food scene.";
-        subtext.textContent = 'Always learning. Always building. Always happy to connect!';
-    }
-}
-
 function initMode() {
-    // Check for URL parameter override
-    const urlParams = new URLSearchParams(window.location.search);
-    const viewParam = urlParams.get('view');
-
-    // URL parameter takes priority, then localStorage, then default to boomer
-    let mode;
-    if (viewParam === 'hacker' || viewParam === 'boomer') {
-        mode = viewParam;
-    } else {
-        mode = localStorage.getItem('siteMode') || 'boomer';
+    // The inline script in <head> already picked the view (URL, then saved choice, then Boomer)
+    let mode = window.__siteMode;
+    if (mode !== 'hacker' && mode !== 'boomer') {
+        const viewParam = new URLSearchParams(window.location.search).get('view');
+        mode = (viewParam === 'hacker' || viewParam === 'boomer') ? viewParam : (store.get('siteMode') || 'boomer');
     }
 
-    if (mode === 'hacker') {
-        isHackerMode = true;
-        document.body.classList.add('hacker-mode');
-        document.documentElement.classList.add('hacker-mode-html');
-    } else {
-        isHackerMode = false;
-        document.body.classList.remove('hacker-mode');
-        document.documentElement.classList.remove('hacker-mode-html');
-    }
+    isHackerMode = mode === 'hacker';
+    document.body.classList.toggle('hacker-mode', isHackerMode);
+    document.documentElement.classList.toggle('hacker-mode-html', isHackerMode);
 
-    // Update all content to match the mode
     updateProjectContent();
-    updateWelcomeContent();
-    updateModeToggleTooltip();
     updateViewCheckboxes();
 
     // Randomize hacker mode header color
@@ -446,9 +394,9 @@ const hackerIcons = [
 ];
 
 function randomizeHackerHeader() {
-    // Get last used indices from localStorage
-    const lastColorIndex = parseInt(localStorage.getItem('lastColorIndex') ?? -1);
-    const lastIconIndex = parseInt(localStorage.getItem('lastIconIndex') ?? -1);
+    // Get last used indices from storage
+    const lastColorIndex = parseInt(store.get('lastColorIndex') ?? -1, 10);
+    const lastIconIndex = parseInt(store.get('lastIconIndex') ?? -1, 10);
 
     // Pick a different color
     let colorIndex;
@@ -463,8 +411,8 @@ function randomizeHackerHeader() {
     } while (iconIndex === lastIconIndex && hackerIcons.length > 1);
 
     // Save current indices
-    localStorage.setItem('lastColorIndex', colorIndex);
-    localStorage.setItem('lastIconIndex', iconIndex);
+    store.set('lastColorIndex', colorIndex);
+    store.set('lastIconIndex', iconIndex);
 
     document.documentElement.style.setProperty('--hacker-header-color', hackerColors[colorIndex]);
 
@@ -474,201 +422,6 @@ function randomizeHackerHeader() {
     }
 }
 
-// ============================================
-// COLLAPSIBLE SECTIONS
-// ============================================
-
-function initCollapsibles() {
-    const collapsibles = document.querySelectorAll('.section.collapsible');
-
-    collapsibles.forEach(section => {
-        const header = section.querySelector('h2');
-        if (header) {
-            header.addEventListener('click', () => {
-                // Only toggle if in hacker mode
-                if (document.body.classList.contains('hacker-mode')) {
-                    section.classList.toggle('expanded');
-                }
-            });
-        }
-    });
-}
-
-// ============================================
-// COLOR PALETTES
-// ============================================
-
-// Color Palettes with SVG icons
-const palettes = [
-    {
-        id: 'sand',
-        name: 'Sand',
-        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 17c2-2 4-3 6-3s4 1 6 3 4 3 6 3"/><path d="M2 12c2-2 4-3 6-3s4 1 6 3 4 3 6 3"/></svg>',
-        bg: '#fdfbf7',
-        text: '#33302b',
-        textSecondary: '#5f5a52',
-        textMuted: '#8f887d',
-        border: '#e8e2d9',
-        accent: '#a69685'
-    },
-    {
-        id: 'sienna',
-        name: 'Sienna',
-        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>',
-        bg: '#faf6f3',
-        text: '#2a2220',
-        textSecondary: '#554946',
-        textMuted: '#857570',
-        border: '#e2d8d2',
-        accent: '#a0522d'
-    },
-    {
-        id: 'coral',
-        name: 'Coral',
-        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21c-3-3-7-5-7-10a7 7 0 1 1 14 0c0 5-4 7-7 10z"/></svg>',
-        bg: '#fefaf6',
-        text: '#2d2d2d',
-        textSecondary: '#5c5c5c',
-        textMuted: '#8a8a8a',
-        border: '#e8e0d5',
-        accent: '#e07a5f'
-    },
-    {
-        id: 'dusk',
-        name: 'Dusk',
-        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>',
-        bg: '#f9f6f5',
-        text: '#282428',
-        textSecondary: '#544f54',
-        textMuted: '#847d84',
-        border: '#e0d8d8',
-        accent: '#b56576'
-    },
-    {
-        id: 'mocha',
-        name: 'Mocha',
-        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a4 4 0 1 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8zM6 2v4M10 2v4M14 2v4"/></svg>',
-        bg: '#faf7f4',
-        text: '#352a24',
-        textSecondary: '#5e4d42',
-        textMuted: '#8a7768',
-        border: '#e3d9cf',
-        accent: '#6f4e37'
-    },
-    {
-        id: 'terracotta',
-        name: 'Terracotta',
-        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M7 4h10l-1 8H8L7 4zM6 12c-1 0-2 1-2 3s2 2 2 2h12s2 0 2-2-1-3-2-3"/></svg>',
-        bg: '#faf7f4',
-        text: '#2e2522',
-        textSecondary: '#5c4f48',
-        textMuted: '#8a7b72',
-        border: '#e5dbd4',
-        accent: '#c4654a'
-    },
-    {
-        id: 'stone',
-        name: 'Stone',
-        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>',
-        bg: '#f5f4f2',
-        text: '#2d2d2a',
-        textSecondary: '#58574f',
-        textMuted: '#85847a',
-        border: '#d9d7d2',
-        accent: '#78756d'
-    }
-];
-
-let currentPaletteIndex = 0;
-
-function applyPalette(index) {
-    const palette = palettes[index];
-    const root = document.documentElement;
-
-    root.style.setProperty('--color-bg', palette.bg);
-    root.style.setProperty('--color-text', palette.text);
-    root.style.setProperty('--color-text-secondary', palette.textSecondary);
-    root.style.setProperty('--color-text-muted', palette.textMuted);
-    root.style.setProperty('--color-border', palette.border);
-    root.style.setProperty('--color-accent', palette.accent);
-
-    // Update button to show current palette icon
-    const btn = document.querySelector('.palette-toggle');
-    if (btn) {
-        btn.innerHTML = palette.icon;
-        btn.title = palette.name;
-    }
-
-    // Save preference
-    localStorage.setItem('palette', palette.id);
-    currentPaletteIndex = index;
-}
-
-function togglePalette() {
-    const nextIndex = (currentPaletteIndex + 1) % palettes.length;
-    applyPalette(nextIndex);
-}
-
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize hacker mode
     initMode();
-    initCollapsibles();
-
-    // Load saved palette preference
-    const savedPalette = localStorage.getItem('palette');
-    const savedIndex = palettes.findIndex(p => p.id === savedPalette);
-    if (savedIndex !== -1) {
-        applyPalette(savedIndex);
-    } else {
-        applyPalette(0);
-    }
-
-    // Smooth scrolling for nav links (both sidebar and hacker nav)
-    const navLinks = document.querySelectorAll('.nav a[href^="#"], .hacker-nav a[href^="#"]');
-    const main = document.querySelector('.main');
-
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            const href = link.getAttribute('href');
-            if (href.startsWith('#')) {
-                e.preventDefault();
-                const target = document.querySelector(href);
-                if (target && main) {
-                    const targetPosition = target.offsetTop - 48;
-                    main.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            }
-        });
-    });
-
-    // Active nav state on scroll
-    if (main) {
-        const sections = document.querySelectorAll('.section[id]');
-
-        main.addEventListener('scroll', () => {
-            if (document.body.classList.contains('hacker-mode')) return;
-
-            let currentSection = '';
-            const scrollPos = main.scrollTop + 100;
-
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.offsetHeight;
-
-                if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-                    currentSection = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${currentSection}`) {
-                    link.classList.add('active');
-                }
-            });
-        });
-    }
 });
