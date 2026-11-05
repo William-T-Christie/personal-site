@@ -15,7 +15,7 @@ personal-site/
 ├── rolodex.js              # The spinning Rolodex in Boomer View
 ├── styles.css              # Hacker View styles and shared base
 ├── script.js               # View switching, CRT transition, Hacker View
-├── headshot.jpg            # Profile photo
+├── headshot-2026.jpg       # Profile photo
 ├── WilliamChristie-CV.docx
 │
 ├── buzzword-bingo/         # AI meeting analyzer
