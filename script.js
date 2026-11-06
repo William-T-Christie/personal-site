@@ -122,9 +122,9 @@ function toggleMode() {
 
 // ============================================
 // CRT TRANSITION SOUND
-// A synthesized channel change that plays under the static:
-// TV snow sweeping through a filter, a warbling pitch warp,
-// and a degauss thump as the new view appears.
+// A synthesized channel change that rolls in under the static like a wave:
+// soft TV hiss that swells, crests as the new view appears, then washes out,
+// with a gentle pitch warp and a low swell underneath.
 // Built with Web Audio, so there are no sound files to load.
 // ============================================
 
@@ -144,110 +144,129 @@ function unlockCrtAudio() {
     }
 }
 
+// Pink noise: softer and rounder than white noise, closer to surf than to buzz
 function getCrtNoiseBuffer(ac) {
     if (crtNoiseBuffer && crtNoiseBuffer.sampleRate === ac.sampleRate) return crtNoiseBuffer;
-    const length = Math.floor(ac.sampleRate * 1.4);
+    const length = Math.floor(ac.sampleRate * 2.6);
     const buffer = ac.createBuffer(1, length, ac.sampleRate);
     const data = buffer.getChannelData(0);
-    for (let i = 0; i < length; i++) data[i] = Math.random() * 2 - 1;
+    let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+    for (let i = 0; i < length; i++) {
+        const white = Math.random() * 2 - 1;
+        b0 = 0.99886 * b0 + white * 0.0555179;
+        b1 = 0.99332 * b1 + white * 0.0750759;
+        b2 = 0.96900 * b2 + white * 0.1538520;
+        b3 = 0.86650 * b3 + white * 0.3104856;
+        b4 = 0.55000 * b4 + white * 0.5329522;
+        b5 = -0.7616 * b5 - white * 0.0168980;
+        data[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.11;
+        b6 = white * 0.115926;
+    }
     crtNoiseBuffer = buffer;
     return buffer;
 }
 
-// Plays the warp on an AudioContext (or an OfflineAudioContext, for testing).
-// Timing matches the visual dissolve: 0.35s in, 0.2s hold, 0.4s out.
+// A smooth curve sampled from fn(u), u running 0 to 1, for setValueCurveAtTime
+function crtCurve(fn, points = 256) {
+    const curve = new Float32Array(points);
+    for (let i = 0; i < points; i++) curve[i] = fn(i / (points - 1));
+    return curve;
+}
+
+// The wave shape: eases up to a crest, then recedes with a small second swell
+function crtWave(u, crest) {
+    if (u <= crest) {
+        const s = Math.sin((Math.PI / 2) * (u / crest));
+        return s * s;
+    }
+    const r = (u - crest) / (1 - crest);
+    return Math.pow(1 - r, 2.2) * (0.82 + 0.18 * Math.cos(Math.PI * 3 * r));
+}
+
+// Plays the sound on an AudioContext (or an OfflineAudioContext, for testing).
+// The visual static runs 0.95s and swaps views at 0.45s. The sound crests
+// right at the swap, then keeps washing out for about a second afterwards.
 function playCrtWarp(ac, delay = 0) {
     if (!ac) return false;
     try {
-        const IN = 0.35, HOLD = 0.2, OUT = 0.4;
-        const END = IN + HOLD + OUT;
-        const SWAP = IN + HOLD / 2;               // when the new view appears
+        const SWAP = 0.45;                         // when the new view appears
+        const LENGTH = 2.1;                        // total length of the sound
+        const CREST = SWAP / LENGTH;
         const t0 = ac.currentTime + delay + 0.01;
-        const quiet = 0.0001;
+        const wave = (u) => crtWave(u, CREST);
 
         const master = ac.createGain();
-        master.gain.value = 0.55;
+        master.gain.value = 0.6;
         const limiter = ac.createDynamicsCompressor();
-        limiter.threshold.value = -14;
-        limiter.ratio.value = 6;
+        limiter.threshold.value = -16;
+        limiter.knee.value = 20;
+        limiter.ratio.value = 4;
         master.connect(limiter);
         limiter.connect(ac.destination);
 
-        // 1. TV snow: white noise through a band-pass that sweeps up and back down
+        // The wave rolls across the speakers, left to right
+        let out = master;
+        if (ac.createStereoPanner) {
+            const pan = ac.createStereoPanner();
+            pan.pan.setValueCurveAtTime(crtCurve((u) => -0.5 + Math.sin(u * Math.PI / 2)), t0, LENGTH);
+            pan.connect(master);
+            out = pan;
+        }
+
+        // 1. Surf: soft hiss through a low-pass that opens at the crest and closes as it recedes
         const noise = ac.createBufferSource();
         noise.buffer = getCrtNoiseBuffer(ac);
-        const band = ac.createBiquadFilter();
-        band.type = 'bandpass';
-        band.Q.value = 0.7;
-        band.frequency.setValueAtTime(500, t0);
-        band.frequency.exponentialRampToValueAtTime(3200, t0 + IN);
-        band.frequency.setValueAtTime(3200, t0 + IN + HOLD);
-        band.frequency.exponentialRampToValueAtTime(700, t0 + END);
-        const snow = ac.createGain();
-        snow.gain.setValueAtTime(quiet, t0);
-        snow.gain.exponentialRampToValueAtTime(0.5, t0 + IN);
-        snow.gain.setValueAtTime(0.5, t0 + IN + HOLD);
-        snow.gain.exponentialRampToValueAtTime(quiet, t0 + END);
-        // The 60 Hz flicker of a picture tube
-        const flicker = ac.createGain();
-        flicker.gain.value = 0.8;
-        const hum = ac.createOscillator();
-        hum.type = 'square';
-        hum.frequency.value = 60;
-        const humDepth = ac.createGain();
-        humDepth.gain.value = 0.2;
-        hum.connect(humDepth);
-        humDepth.connect(flicker.gain);
-        noise.connect(band);
-        band.connect(snow);
-        snow.connect(flicker);
-        flicker.connect(master);
+        const surfTone = ac.createBiquadFilter();
+        surfTone.type = 'lowpass';
+        surfTone.Q.value = 0.5;
+        surfTone.frequency.setValueCurveAtTime(crtCurve((u) => 350 + 3800 * wave(u)), t0, LENGTH);
+        const rumbleCut = ac.createBiquadFilter();
+        rumbleCut.type = 'highpass';
+        rumbleCut.frequency.value = 90;
+        const surf = ac.createGain();
+        surf.gain.setValueCurveAtTime(crtCurve((u) => 0.9 * wave(u)), t0, LENGTH);
+        noise.connect(rumbleCut);
+        rumbleCut.connect(surfTone);
+        surfTone.connect(surf);
+        surf.connect(out);
 
-        // 2. Warp: two detuned saws that bend down and back up, with a tape wobble
-        const warpFilter = ac.createBiquadFilter();
-        warpFilter.type = 'lowpass';
-        warpFilter.frequency.value = 1400;
-        warpFilter.Q.value = 4;
+        // 2. Warp: two soft triangle tones that bend down into the crest and float back up
+        const warpTone = ac.createBiquadFilter();
+        warpTone.type = 'lowpass';
+        warpTone.frequency.value = 900;
         const warp = ac.createGain();
-        warp.gain.setValueAtTime(quiet, t0);
-        warp.gain.exponentialRampToValueAtTime(0.22, t0 + IN * 0.8);
-        warp.gain.setValueAtTime(0.22, t0 + IN + HOLD);
-        warp.gain.exponentialRampToValueAtTime(quiet, t0 + END);
-        warpFilter.connect(warp);
-        warp.connect(master);
-        const wobble = ac.createOscillator();
-        wobble.frequency.value = 7;
-        const wobbleDepth = ac.createGain();
-        wobbleDepth.gain.value = 14;
-        wobble.connect(wobbleDepth);
-        const saws = [0, 21].map((cents) => {
-            const saw = ac.createOscillator();
-            saw.type = 'sawtooth';
-            saw.detune.value = cents;
-            saw.frequency.setValueAtTime(220, t0);
-            saw.frequency.exponentialRampToValueAtTime(48, t0 + SWAP);
-            saw.frequency.exponentialRampToValueAtTime(160, t0 + END);
-            wobbleDepth.connect(saw.frequency);
-            saw.connect(warpFilter);
-            return saw;
+        warp.gain.setValueCurveAtTime(crtCurve((u) => 0.09 * wave(u)), t0, LENGTH);
+        warpTone.connect(warp);
+        warp.connect(out);
+        const drift = ac.createOscillator();
+        drift.frequency.value = 3.5;
+        const driftDepth = ac.createGain();
+        driftDepth.gain.value = 6;
+        drift.connect(driftDepth);
+        const tones = [0, 9].map((cents) => {
+            const tone = ac.createOscillator();
+            tone.type = 'triangle';
+            tone.detune.value = cents;
+            tone.frequency.setValueCurveAtTime(crtCurve((u) => {
+                if (u <= CREST) return 330 - 200 * Math.sin((Math.PI / 2) * (u / CREST));
+                return 130 + 90 * Math.sin((Math.PI / 2) * ((u - CREST) / (1 - CREST)));
+            }), t0, LENGTH);
+            driftDepth.connect(tone.frequency);
+            tone.connect(warpTone);
+            return tone;
         });
 
-        // 3. Degauss thump as the new view appears
-        const thump = ac.createOscillator();
-        thump.type = 'sine';
-        thump.frequency.setValueAtTime(70, t0);
-        thump.frequency.setValueAtTime(70, t0 + SWAP);
-        thump.frequency.exponentialRampToValueAtTime(38, t0 + END + 0.2);
-        const thumpGain = ac.createGain();
-        thumpGain.gain.setValueAtTime(quiet, t0);
-        thumpGain.gain.setValueAtTime(quiet, t0 + SWAP);
-        thumpGain.gain.exponentialRampToValueAtTime(0.5, t0 + SWAP + 0.03);
-        thumpGain.gain.exponentialRampToValueAtTime(quiet, t0 + END + 0.25);
-        thump.connect(thumpGain);
-        thumpGain.connect(master);
+        // 3. Undertow: a low sine swell that rises into the crest, in place of a hard thump
+        const undertow = ac.createOscillator();
+        undertow.type = 'sine';
+        undertow.frequency.setValueCurveAtTime(crtCurve((u) => 62 - 22 * u), t0, LENGTH);
+        const undertowGain = ac.createGain();
+        undertowGain.gain.setValueCurveAtTime(crtCurve((u) => 0.35 * wave(u)), t0, LENGTH);
+        undertow.connect(undertowGain);
+        undertowGain.connect(master);
 
-        const stopAt = t0 + END + 0.3;
-        [noise, hum, wobble, thump, ...saws].forEach((node) => {
+        const stopAt = t0 + LENGTH + 0.05;
+        [noise, drift, undertow, ...tones].forEach((node) => {
             node.start(t0);
             node.stop(stopAt);
         });
